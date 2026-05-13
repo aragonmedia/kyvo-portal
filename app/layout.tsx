@@ -58,10 +58,13 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: '/og-image.png',     // 1200×630 — drop file in /public/
+        url: '/og-image.png',
+        // Standard 1200×630 — re-export your og-image.png at these exact
+        // dimensions for best results across Discord, iMessage, Twitter, etc.
         width: 1200,
         height: 630,
         alt: 'Kyvo — Higher Commissions. One Tap Away.',
+        type: 'image/png',
       },
     ],
   },
@@ -69,8 +72,16 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: TITLE,
     description: 'Boosted TikTok Shop commissions across partnered brands. One tap away.',
-    images: ['/og-image.png'],
-    creator: '@kyvoco',          // update if you have a Twitter handle
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Kyvo — Higher Commissions. One Tap Away.',
+      },
+    ],
+    creator: '@kyvoco',
+    site: '@kyvoco',
   },
   // Favicon set — references the exact filenames in /public/.
   // Order matters: browsers prefer .ico first, then .svg for scalable, then PNG fallback.
