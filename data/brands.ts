@@ -48,9 +48,9 @@ export const brands: Brand[] = [
     tagline: 'Premium nootropics — 35% Kyvo Boost, 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #1a0b3e 0%, #4a1d8a 35%, #7B3FE4 70%, #22F5A3 100%)',
-    // bannerImage: '/banners/natural-stacks.jpg',  // uncomment when uploaded
+    bannerImage: '/banners/natural-stacks.jpg',
+    logo: '/logos/natural-stacks.png',
     logoTile: { bg: '#1A1838', fg: '#22F5A3', initials: 'NS' },
-    // logo: '/logos/natural-stacks.png',  // uncomment when uploaded
     // ─── 41 products, sorted by items sold (descending) ────────────────
     links: [
       { productName: 'Dopamine Brain Food (60ct)', slug: 'dopamine-brain-food', itemsSold: 41112, price: '$28.95-$89.95', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXbgtdeElS' },
@@ -111,9 +111,9 @@ export const brands: Brand[] = [
     tagline: "Women's wellness — 35% Kyvo Boost, 50% MAX",
     bannerGradient:
       'linear-gradient(135deg, #2a0a3e 0%, #7a1d8a 40%, #E94BC1 80%, #FF6BCB 100%)',
-    // bannerImage: '/banners/bold-buns.jpg',
+    bannerImage: '/banners/bold-buns.jpg',
+    logo: '/logos/bold-buns.png',
     logoTile: { bg: '#2A1738', fg: '#FF6BCB', initials: 'BB' },
-    // logo: '/logos/bold-buns.png',
     // ─── 2 products, sorted by items sold (descending) ────────────────
     links: [
       { productName: 'Bold Buns Creatine for Women', slug: 'bold-buns-creatine', itemsSold: 55428, price: '$33.99-$38.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXs9cmdk5Q' },
@@ -135,9 +135,9 @@ export const brands: Brand[] = [
     tagline: 'Beauty & longevity — 35% Kyvo Boost, 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #0a1d3e 0%, #1d4a8a 40%, #5CC8FF 80%, #22F5A3 100%)',
-    // bannerImage: '/banners/fuel-nutrition.jpg',
+    bannerImage: '/banners/fuel-nutrition.jpg',
+    logo: '/logos/fuel-nutrition.png',
     logoTile: { bg: '#11203A', fg: '#5CC8FF', initials: 'FN' },
-    // logo: '/logos/fuel-nutrition.png',
     // ─── 4 products, sorted by items sold (descending) ────────────────
     links: [
       { productName: 'Multi Collagen Peptides Beauty Powder', slug: 'multi-collagen-peptides', itemsSold: 8539, price: '$35.00-$37.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXrt3AsGeX' },
@@ -160,8 +160,8 @@ export const brands: Brand[] = [
     highCommission: true,
     samplesIncluded: true,
     tagline: 'Megaseller supplements — 32% Kyvo Boost, 50% MAX',
+    logo: '/logos/toplux-nutrition.png',
     logoTile: { bg: '#1F1838', fg: '#9D4EDD', initials: 'TX' },
-    // logo: '/logos/toplux-nutrition.png',
     // ─── 7 products, sorted by items sold (descending) ────────────────
     links: [
       { productName: 'Magnesium Complex 1000mg (8 forms)', slug: 'magnesium-complex', itemsSold: 1385330, price: '$17.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXsVxpErPO' },
