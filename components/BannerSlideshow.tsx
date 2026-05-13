@@ -133,51 +133,58 @@ function Slide({
         />
       )}
 
+      {/*
+        Mobile-first layout: tighter horizontal padding on small screens so
+        the glass arrow buttons + content all fit on a 380px viewport.
+      */}
       <div className="relative z-10 h-full flex items-center justify-between
-                      px-16 sm:px-20 md:px-24 gap-4">
+                      px-14 sm:px-20 md:px-24 gap-3 sm:gap-4">
         {/* Left content — clickable area for opening the modal */}
         <button
           onClick={onBrandClick}
           className="text-left max-w-md min-w-0 group"
           aria-label={`Open ${brand.name} product links`}
         >
-          <div className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-white/70 mb-2">
-            Featured Partner · #{brand.priorityOrder ?? 1}
+          <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-kyvo-green mb-1.5 flex items-center gap-1.5">
+            <span className="inline-flex w-1.5 h-1.5 rounded-full bg-kyvo-green animate-pulse" />
+            50% MAX · Featured #{brand.priorityOrder ?? 1}
           </div>
-          <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white leading-tight tracking-tight">
+          <h2 className="font-display font-bold text-xl sm:text-3xl md:text-4xl text-white leading-tight tracking-tight">
             {brand.name}
           </h2>
           {brand.tagline && (
-            <p className="mt-2 text-sm sm:text-base text-white/80 max-w-sm line-clamp-2">
+            <p className="mt-1.5 sm:mt-2 text-xs sm:text-base text-white/80 max-w-sm line-clamp-2">
               {brand.tagline}
             </p>
           )}
 
-          {/* Tap-to-unlock CTA → Discord ticket */}
+          {/* Tap-to-unlock CTA → Discord ticket (mobile-first sizing) */}
           <a
             href={ticketUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="mt-4 inline-flex items-center gap-2 px-4 py-2
+            className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 sm:gap-2
+                       px-3 py-1.5 sm:px-4 sm:py-2
                        rounded-full bg-white text-kyvo-deep
-                       text-sm font-bold shadow-lg
+                       text-xs sm:text-sm font-bold shadow-lg
                        hover:scale-105 transition-transform"
           >
-            <LockIcon className="w-3.5 h-3.5" />
+            <LockIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             Tap to unlock
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
           </a>
         </button>
 
-        {/* Right — commission stamp */}
-        <div className="hidden sm:flex flex-col items-center justify-center relative shrink-0">
+        {/* Right — commission stamp.  Mobile-first sizing. */}
+        <div className="flex flex-col items-center justify-center relative shrink-0">
           <div className="absolute inset-0 rounded-full bg-kyvo-green/40 blur-2xl" />
-          <div className="relative bg-kyvo-void/40 backdrop-blur-md border border-white/30 rounded-2xl px-5 py-4 sm:px-7 sm:py-5">
-            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/70">
-              Commission
+          <div className="relative bg-kyvo-void/40 backdrop-blur-md border border-white/30 rounded-2xl
+                          px-3 py-2.5 sm:px-7 sm:py-5">
+            <div className="text-[8px] sm:text-xs font-semibold uppercase tracking-widest text-white/70 leading-none">
+              MAX
             </div>
-            <div className="font-display font-bold text-4xl sm:text-5xl text-kyvo-green leading-none mt-1">
+            <div className="font-display font-bold text-2xl sm:text-5xl text-kyvo-green leading-none mt-0.5 sm:mt-1">
               {brand.commissionRate}%
             </div>
           </div>

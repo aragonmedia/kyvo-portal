@@ -32,20 +32,18 @@ export const brands: Brand[] = [
     id: 'natural-stacks',
     name: 'Natural Stacks',
     niche: 'Health',
-    // Per Kyvo X Natural Stacks spreadsheet:
-    //   Affiliate partner commission = 15% (the "open" rate on TikTok Shop)
-    //   Creator commission           = 35% (the Kyvo Boost rate live on platform)
-    //   MAX tier                     = 50% (locked, unlocked via Discord ticket)
+    // Kyvo's negotiated rate for creators in this portal is 50% MAX.
+    // The 15% openCollabRate is what TikTok Shop's open affiliate program pays anyone.
     openCollabRate: 15,
-    commissionRate: 35,
-    maxCommission: 50,
+    commissionRate: 50,     // Headline number creators see on the banner + card
+    maxCommission: 50,      // Same as Kyvo Boost — confirms top-tier rate
     priority: true,
     priorityOrder: 1,
     trending: true,
     highCommission: true,
     samplesIncluded: true,
     // ticketUrl: 'https://discord.com/channels/.../...',  // TODO: paste per-brand ticket link
-    tagline: 'Premium nootropics — 35% Kyvo Boost, 50% MAX',
+    tagline: 'Premium nootropics & focus stacks — Unlock 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #1a0b3e 0%, #4a1d8a 35%, #7B3FE4 70%, #22F5A3 100%)',
     bannerImage: '/banners/natural-stacks.jpg',
@@ -100,15 +98,15 @@ export const brands: Brand[] = [
     id: 'bold-buns',
     name: 'Bold Buns',
     niche: 'Health',
-    // Spreadsheet: 35% creator / 15% affiliate partner.  Same model as Natural Stacks.
+    // Kyvo MAX rate is 50% for creators in this portal.
     openCollabRate: 15,
-    commissionRate: 35,
+    commissionRate: 50,
     maxCommission: 50,
     priority: true,
     priorityOrder: 2,
     highCommission: true,
     samplesIncluded: true,
-    tagline: "Women's wellness — 35% Kyvo Boost, 50% MAX",
+    tagline: "Women's wellness creatine & supplements — Unlock 50% MAX",
     bannerGradient:
       'linear-gradient(135deg, #2a0a3e 0%, #7a1d8a 40%, #E94BC1 80%, #FF6BCB 100%)',
     bannerImage: '/banners/bold-buns.jpg',
@@ -124,15 +122,15 @@ export const brands: Brand[] = [
     id: 'fuel-nutrition',
     name: 'Fuel Nutrition',
     niche: 'Health',
-    // Spreadsheet: 35% creator / 15% affiliate partner.  Same model as Natural Stacks.
+    // Kyvo MAX rate is 50% for creators in this portal.
     openCollabRate: 15,
-    commissionRate: 35,
+    commissionRate: 50,
     maxCommission: 50,
     priority: true,
     priorityOrder: 3,
     highCommission: true,
     samplesIncluded: true,
-    tagline: 'Beauty & longevity — 35% Kyvo Boost, 50% MAX',
+    tagline: 'Beauty, collagen & longevity — Unlock 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #0a1d3e 0%, #1d4a8a 40%, #5CC8FF 80%, #22F5A3 100%)',
     bannerImage: '/banners/fuel-nutrition.jpg',
