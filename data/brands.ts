@@ -33,15 +33,12 @@ export const brands: Brand[] = [
     name: 'Natural Stacks',
     niche: 'Health',
     // ─ Commission model ─
-    //   openCollabRate = 15% (TikTok Shop affiliate baseline anyone can earn)
+    //   openCollabRate = 20% (TikTok Shop affiliate baseline — Kevin confirmed)
     //   commissionRate = 35% (Kyvo Boost: what creators get when they tap product link)
     //   maxCommission  = 50% (LOCKED MAX tier: unlocked via Discord)
-    // The banner + brand card display maxCommission (50%) as the marketing headline.
-    // Individual product cards in the modal display commissionRate (35%) as the
-    // actual click-through rate, with the 50% MAX shown as a locked upsell row.
-    openCollabRate: 15,
-    commissionRate: 35,     // What creators actually get when they tap the link
-    maxCommission: 50,      // Locked top rate via Discord
+    openCollabRate: 20,
+    commissionRate: 35,
+    maxCommission: 50,
     maxTier: true,          // Qualifies for MAX Commissions filter + 50% banner
     priority: true,
     priorityOrder: 1,
@@ -105,9 +102,9 @@ export const brands: Brand[] = [
     id: 'bold-buns',
     name: 'Bold Buns',
     niche: 'Health',
-    openCollabRate: 15,
-    commissionRate: 35,     // What creators get when they tap the link
-    maxCommission: 50,      // Locked MAX via Discord
+    openCollabRate: 20,     // Kevin confirmed
+    commissionRate: 35,
+    maxCommission: 50,
     maxTier: true,
     priority: true,
     priorityOrder: 2,
@@ -130,7 +127,7 @@ export const brands: Brand[] = [
     id: 'fuel-nutrition',
     name: 'Fuel Nutrition',
     niche: 'Health',
-    openCollabRate: 15,
+    openCollabRate: 20,     // Kevin confirmed
     commissionRate: 35,
     maxCommission: 50,
     maxTier: true,
@@ -157,17 +154,17 @@ export const brands: Brand[] = [
     id: 'toplux-nutrition',
     name: 'Toplux Nutrition',
     niche: 'Health',
-    // Spreadsheet: 32% creator / 3% affiliate partner.  LOWER total payout than the
-    // 35%+15% brands above.  Open-collab base rate is just a placeholder estimate.
-    openCollabRate: 5,
+    // Kevin confirmed: 30% open collab, 32% Kyvo Boost (creator commission),
+    // 35% MAX (locked top rate available for Toplux specifically — NOT 50%
+    // like the priority brands).
+    openCollabRate: 30,
     commissionRate: 32,
-    maxCommission: 50,
-    // priority/slideshow: REMOVED — 32% creator rate, doesn't belong in MAX slideshow.
-    // Still appears in the brand grid below.
+    maxCommission: 35,
+    // priority/slideshow: REMOVED — only +5% boost over open, doesn't belong in MAX slideshow.
     highCommission: true,
     samplesIncluded: true,
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYBVnjFbzN',
-    tagline: 'Megaseller supplements — 32% Kyvo Boost, 50% MAX',
+    tagline: 'Megaseller supplements — 32% Kyvo Boost, 35% MAX',
     logo: '/logos/toplux-nutrition.png',
     logoTile: { bg: '#1F1838', fg: '#9D4EDD', initials: 'TX' },
     // ─── 7 products, sorted by items sold (descending) ────────────────
@@ -179,6 +176,30 @@ export const brands: Brand[] = [
       { productName: 'Resveratrol 1800mg Antioxidant', slug: 'resveratrol', itemsSold: 56280, price: '$17.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXrz1nmEOZ' },
       { productName: 'Dim Supplement 910mg', slug: 'dim-supplement', itemsSold: 13202, price: '$15.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXsW9YZF41' },
       { productName: 'Organic Beet Root Capsules', slug: 'beet-root-capsules', itemsSold: 12049, price: '$15.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXsW9Z7BAh' },
+    ],
+  },
+  {
+    id: 'nello-supercalm',
+    name: 'Nello Supercalm',
+    niche: 'Health',
+    // Spreadsheet:  20% open / 25% creator / 30% MAX.
+    openCollabRate: 20,
+    commissionRate: 25,
+    maxCommission: 30,
+    maxTier: false,       // 25% Kyvo Boost — below MAX tier threshold
+    highCommission: true, // +5% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYHeyjs9gZ',
+    tagline: 'Stress, mood & sleep support — Unlock 30% MAX',
+    logoTile: { bg: '#11183A', fg: '#4A8DFF', initials: 'NL' },
+    // logo: '/logos/nello-supercalm.png',
+    // ─── 5 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Calming Drink Mix (20 Servings)', slug: 'calming-drink-mix', itemsSold: 852032, price: '$33.96', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYHdobpl61' },
+      { productName: 'Tub 2-Pack (30 Servings)', slug: 'tub-2pack', itemsSold: 50663, price: '$67.42', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYHfc5nJZL' },
+      { productName: 'Calming Drink Mix — Lemon Berry', slug: 'calming-drink-mix-lemon', itemsSold: 45752, price: '$38.21', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYIclB4Nao' },
+      { productName: 'Best Selling Flavors Bundle (2-Pack)', slug: 'bundle-flavors-2pack', itemsSold: 28069, price: '$67.42', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYHdnAk4Nu' },
+      { productName: 'Variety Pack — Original Flavors', slug: 'variety-pack', itemsSold: 8005, price: '$30.55', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYIciYYYlA' },
     ],
   },
   // ────────────────────────────────────────────────────────────
