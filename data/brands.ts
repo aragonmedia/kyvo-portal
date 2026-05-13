@@ -224,6 +224,27 @@ export const brands: Brand[] = [
       { productName: 'Perfect Neck Wrinkle Care Set', slug: 'neck-wrinkle-care-set', itemsSold: 81305, price: '$67.42', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbEYSs14yL' },
     ],
   },
+  {
+    id: 'sacheu-beauty',
+    name: 'Sacheu Beauty',
+    niche: 'Beauty',
+    // Spreadsheet: 15% open / 25% creator / 30% MAX.  Viral TikTok lip-liner brand.
+    openCollabRate: 15,
+    commissionRate: 25,
+    maxCommission: 30,
+    maxTier: false,
+    highCommission: true,    // +10% over open rate — strong boost
+    samplesIncluded: false,
+    // showcaseUrl: NOT set — single-product brand, so the
+    // "ADD ALL TO SHOWCASE" CTA is auto-suppressed (gated on links.length > 1).
+    tagline: 'Viral peel-off lip liner stain — Unlock 30% MAX',
+    logo: '/logos/sacheu-beauty.png',
+    logoTile: { bg: '#2A0F1A', fg: '#FF7AA0', initials: 'SB' },
+    // ─── 1 product ─────────────────────────────────────────────────
+    links: [
+      { productName: 'Lip Liner Stay-N — Peel-Off Lip Stain', slug: 'lip-liner-stay-n', itemsSold: 2094767, price: '$14.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbiwekLR8P' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
