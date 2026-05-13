@@ -245,6 +245,27 @@ export const brands: Brand[] = [
       { productName: 'Lip Liner Stay-N — Peel-Off Lip Stain', slug: 'lip-liner-stay-n', itemsSold: 2094767, price: '$14.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbiwekLR8P' },
     ],
   },
+  {
+    id: 'pet-honesty',
+    name: 'Pet Honesty',
+    niche: 'Pet',
+    // Spreadsheet: 15% open / 25% creator / 35% MAX.  Natural pet supplements.
+    openCollabRate: 15,
+    commissionRate: 25,
+    maxCommission: 35,
+    maxTier: false,
+    highCommission: true,    // +10% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbwGBUFbJ7',
+    tagline: 'Dog dental & gut health — Unlock 35% MAX',
+    logo: '/logos/pet-honesty.png',
+    logoTile: { bg: '#2A1F1A', fg: '#FFB347', initials: 'PH' },
+    // ─── 2 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Dental Powder & Breath Freshener', slug: 'dental-powder', itemsSold: 42419, price: '$26.98', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbwCWG4zAW' },
+      { productName: 'Probiotics for Dogs', slug: 'probiotics', itemsSold: 18555, price: '$23.09', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbwjKnv62T' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
