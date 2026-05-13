@@ -63,9 +63,10 @@ export default function HomePage() {
         if (selectedNiches.length > 0 && !selectedNiches.includes(brand.niche as FilterCategory)) {
           return false;
         }
-        if (wantMax && brand.commissionRate < 50) return false;
+        // MAX Commissions: explicit maxTier flag (Natural Stacks, Bold Buns, Fuel)
+        if (wantMax && !brand.maxTier) return false;
         if (wantSamples && !brand.samplesIncluded) return false;
-        if (wantTrending && !(brand.trending || brand.commissionRate >= 50)) return false;
+        if (wantTrending && !(brand.trending || brand.maxTier)) return false;
         if (wantHigher && !brand.highCommission) return false;
       }
 
@@ -97,16 +98,20 @@ export default function HomePage() {
 
     return {
       'All Brands': filteredBySearch.length,
-      'MAX Commissions': filteredBySearch.filter((b) => b.commissionRate >= 50).length,
+      'MAX Commissions': filteredBySearch.filter((b) => b.maxTier).length,
       'Samples Included': filteredBySearch.filter((b) => b.samplesIncluded).length,
       Health: filteredBySearch.filter((b) => b.niche === 'Health').length,
       Beauty: filteredBySearch.filter((b) => b.niche === 'Beauty').length,
       Skincare: filteredBySearch.filter((b) => b.niche === 'Skincare').length,
       Pet: filteredBySearch.filter((b) => b.niche === 'Pet').length,
-      Trending: filteredBySearch.filter((b) => b.trending || b.commissionRate >= 50).length,
+      Trending: filteredBySearch.filter((b) => b.trending || b.maxTier).length,
       'Higher Commission': filteredBySearch.filter((b) => b.highCommission).length,
     } as const;
   }, [search]);
+
+  // Show MAX / BOOSTED section split only when "All Brands" is the only active
+  // filter (no other pills layered) and there's no active search.
+  const showSections = active.has('All Brands') && active.size === 1 && search.trim() === '';
 
   return (
     <>
@@ -127,6 +132,7 @@ export default function HomePage() {
         <BrandGrid
           brands={filtered}
           total={brands.length}
+          showSections={showSections}
           onBrandClick={(b) => setOpenBrand(b)}
         />
 

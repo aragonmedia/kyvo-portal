@@ -80,6 +80,9 @@ export function BrandModal({ brand, onClose }: Props) {
 
         {/* Product cards — sorted by items sold (descending) */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          {/* ADD ALL TO SHOWCASE — only when brand has multiple products */}
+          {brand.links.length > 1 && <ShowcaseAllCTA brand={brand} />}
+
           <div className="grid grid-cols-1 gap-3 sm:gap-4">
             {[...brand.links]
               .sort((a, b) => (b.itemsSold ?? 0) - (a.itemsSold ?? 0))
@@ -94,10 +97,71 @@ export function BrandModal({ brand, onClose }: Props) {
 }
 
 /**
+ * "ADD ALL TO SHOWCASE" CTA — sits above the product list when brand has >1
+ * product.  Encourages creators to grab the whole brand lineup at once.
+ * Wires to brand.showcaseUrl, falling back to ticketUrl, then DEFAULT_TICKET_URL.
+ */
+function ShowcaseAllCTA({ brand }: { brand: Brand }) {
+  const href = brand.showcaseUrl ?? brand.ticketUrl ?? DEFAULT_TICKET_URL;
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative block mb-4 overflow-hidden rounded-2xl
+                 bg-gradient-to-r from-kyvo-violet via-kyvo-purple to-kyvo-magenta
+                 hover:from-kyvo-magenta hover:to-kyvo-pink
+                 shadow-[0_4px_28px_rgba(123,63,228,0.35)]
+                 hover:shadow-[0_4px_32px_rgba(233,75,193,0.5)]
+                 transition-all duration-200"
+    >
+      {/* Subtle starfield overlay */}
+      <div
+        className="absolute inset-0 opacity-40 mix-blend-screen pointer-events-none"
+        style={{
+          backgroundImage:
+            'radial-gradient(1px 1px at 20% 30%, white, transparent), radial-gradient(1px 1px at 70% 60%, white, transparent), radial-gradient(1.5px 1.5px at 40% 80%, white, transparent)',
+        }}
+      />
+      <div className="relative flex items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/15 backdrop-blur
+                          border border-white/30 flex items-center justify-center shrink-0">
+            <PlusIcon className="w-5 h-5 text-white" />
+          </div>
+          <div className="min-w-0">
+            <div className="font-display font-bold text-sm sm:text-base text-white leading-tight">
+              Add All to Showcase
+            </div>
+            <div className="text-[10px] sm:text-xs text-white/75 leading-tight">
+              {brand.links.length} products · one tap to add the whole lineup
+            </div>
+          </div>
+        </div>
+        <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-kyvo-deep
+                        flex items-center justify-center
+                        group-hover:scale-110 transition-transform">
+          <ArrowUpRight className="w-4 h-4" />
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function PlusIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+         className={className} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+/**
  * Product card with 3-tier commission display:
  *   Row 1: Open Collab — base TikTok Shop rate (greyed)
  *   Row 2: Kyvo Boost — highlighted, click → opens affiliate URL
- *   Row 3: 🔒 MAX Tier — locked, click → opens Discord ticket
+ *   Row 3: 🔒 MAX Tier — locked, "Click to Unlock" → Discord
  */
 function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
   const openRate = brand.openCollabRate ?? 10;
@@ -155,7 +219,7 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
         />
         <TierRow
           label="MAX Tier"
-          sublabel="Open a Discord ticket to unlock"
+          sublabel="Click to Unlock"
           rate={maxRate}
           tone="locked"
           href={ticketUrl}

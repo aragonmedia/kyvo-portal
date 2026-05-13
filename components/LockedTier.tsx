@@ -68,7 +68,7 @@ export function LockedTier() {
               </h3>
               <p className="mt-2 text-sm sm:text-base text-white/75 max-w-xl">
                 Top creators get priority access to our highest-paying partnerships.
-                Open a ticket in our Discord to apply for the MAX tier.
+                Click to unlock the MAX tier and apply for boosted rates.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export function LockedTier() {
                             font-display font-bold text-sm sm:text-base
                             shadow-lg
                             group-hover:scale-105 transition-transform duration-300">
-              Open a ticket
+              Click to Unlock
               <ArrowRight className="w-4 h-4" />
             </div>
           </div>

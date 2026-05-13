@@ -58,8 +58,16 @@ export interface Brand {
   /** Used by the 'Samples Included' filter — brand sends physical samples to approved creators */
   samplesIncluded?: boolean;
 
-  /** Per-brand Discord ticket URL. Falls back to discord.gg/kyvo if not set. */
+  /** Per-brand Discord unlock URL. Falls back to discord.gg/kyvo if not set. */
   ticketUrl?: string;
+
+  /** Per-brand "Add all to TikTok showcase" URL. Falls back to ticketUrl/Discord. */
+  showcaseUrl?: string;
+
+  /** MAX tier — qualifies for MAX Commissions filter + 50% banner display.
+   *  Independent of commissionRate so we can keep the click-through rate (35%)
+   *  while still marketing the brand as MAX (50% via Discord). */
+  maxTier?: boolean;
 
   /** All product affiliate links for this brand */
   links: ProductLink[];

@@ -32,16 +32,23 @@ export const brands: Brand[] = [
     id: 'natural-stacks',
     name: 'Natural Stacks',
     niche: 'Health',
-    // Kyvo's negotiated rate for creators in this portal is 50% MAX.
-    // The 15% openCollabRate is what TikTok Shop's open affiliate program pays anyone.
+    // ─ Commission model ─
+    //   openCollabRate = 15% (TikTok Shop affiliate baseline anyone can earn)
+    //   commissionRate = 35% (Kyvo Boost: what creators get when they tap product link)
+    //   maxCommission  = 50% (LOCKED MAX tier: unlocked via Discord)
+    // The banner + brand card display maxCommission (50%) as the marketing headline.
+    // Individual product cards in the modal display commissionRate (35%) as the
+    // actual click-through rate, with the 50% MAX shown as a locked upsell row.
     openCollabRate: 15,
-    commissionRate: 50,     // Headline number creators see on the banner + card
-    maxCommission: 50,      // Same as Kyvo Boost — confirms top-tier rate
+    commissionRate: 35,     // What creators actually get when they tap the link
+    maxCommission: 50,      // Locked top rate via Discord
+    maxTier: true,          // Qualifies for MAX Commissions filter + 50% banner
     priority: true,
     priorityOrder: 1,
     trending: true,
     highCommission: true,
     samplesIncluded: true,
+    // showcaseUrl: 'https://...',  // optional override for "Add all to showcase" button
     // ticketUrl: 'https://discord.com/channels/.../...',  // TODO: paste per-brand ticket link
     tagline: 'Premium nootropics & focus stacks — Unlock 50% MAX',
     bannerGradient:
@@ -98,10 +105,10 @@ export const brands: Brand[] = [
     id: 'bold-buns',
     name: 'Bold Buns',
     niche: 'Health',
-    // Kyvo MAX rate is 50% for creators in this portal.
     openCollabRate: 15,
-    commissionRate: 50,
-    maxCommission: 50,
+    commissionRate: 35,     // What creators get when they tap the link
+    maxCommission: 50,      // Locked MAX via Discord
+    maxTier: true,
     priority: true,
     priorityOrder: 2,
     highCommission: true,
@@ -122,10 +129,10 @@ export const brands: Brand[] = [
     id: 'fuel-nutrition',
     name: 'Fuel Nutrition',
     niche: 'Health',
-    // Kyvo MAX rate is 50% for creators in this portal.
     openCollabRate: 15,
-    commissionRate: 50,
+    commissionRate: 35,
     maxCommission: 50,
+    maxTier: true,
     priority: true,
     priorityOrder: 3,
     highCommission: true,

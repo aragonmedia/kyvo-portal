@@ -6,9 +6,12 @@ interface Props {
 }
 
 export function BrandCard({ brand, onClick }: Props) {
-  // 🔥 shown on every 50%+ campaign, or any brand explicitly marked trending
-  const fire = brand.commissionRate >= 50 || brand.trending === true;
-  const isMax = brand.commissionRate >= 50;
+  // 🔥 shown on every MAX-tier brand or any brand explicitly marked trending
+  const isMax = brand.maxTier === true;
+  const fire = isMax || brand.trending === true;
+  // Headline rate shown on the card: prefer MAX (the marketing top number);
+  // otherwise show the actual click-through commissionRate.
+  const headlineRate = isMax ? (brand.maxCommission ?? brand.commissionRate) : brand.commissionRate;
 
   return (
     <button
@@ -56,7 +59,7 @@ export function BrandCard({ brand, onClick }: Props) {
                           flex items-center justify-center gap-1.5">
             <span>{brand.links.length} {brand.links.length === 1 ? 'link' : 'links'}</span>
             <span className="text-kyvo-dim">·</span>
-            <span>{brand.commissionRate}%</span>
+            <span>{headlineRate}%{isMax && <span className="text-[9px] ml-0.5 text-kyvo-magenta">MAX</span>}</span>
           </div>
         </div>
       </div>

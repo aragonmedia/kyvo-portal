@@ -8,7 +8,7 @@ import { DEFAULT_TICKET_URL } from '@/data/brands';
  * Auto-rotating priority-brands slideshow.
  * - Single visible banner, rotates every 5.5s, pauses on hover.
  * - Glass-bubble prev/next arrow buttons on each side (slide navigation).
- * - "Tap to unlock" CTA links to brand.ticketUrl (or default discord.gg/kyvo).
+ * - "Click to Unlock" CTA links to brand.ticketUrl (or default discord.gg/kyvo).
  * - Tapping the brand name / left content area opens the brand modal.
  */
 
@@ -111,13 +111,21 @@ function Slide({
         />
       )}
 
-      {/* Left-to-right dark gradient overlay — protects text legibility on photos */}
+      {/* Symmetric left+right vignette gradient — protects text legibility on BOTH
+          sides (left brand-name text + right commission stamp).  Transparent middle
+          lets the hero photo show through. */}
       {hasBannerImage && (
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(90deg, rgba(5,3,15,0.78) 0%, rgba(5,3,15,0.45) 45%, rgba(5,3,15,0.15) 100%)',
+              'linear-gradient(90deg, ' +
+              'rgba(5,3,15,0.78) 0%, ' +
+              'rgba(5,3,15,0.55) 18%, ' +
+              'rgba(5,3,15,0.20) 40%, ' +
+              'rgba(5,3,15,0.20) 60%, ' +
+              'rgba(5,3,15,0.55) 82%, ' +
+              'rgba(5,3,15,0.78) 100%)',
           }}
         />
       )}
@@ -158,7 +166,7 @@ function Slide({
             </p>
           )}
 
-          {/* Tap-to-unlock CTA → Discord ticket (mobile-first sizing) */}
+          {/* "Click to Unlock" CTA → Discord (mobile-first sizing) */}
           <a
             href={ticketUrl}
             target="_blank"
@@ -171,12 +179,12 @@ function Slide({
                        hover:scale-105 transition-transform"
           >
             <LockIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-            Tap to unlock
+            Click to Unlock
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
           </a>
         </button>
 
-        {/* Right — commission stamp.  Mobile-first sizing. */}
+        {/* Right — commission stamp showing MAX (locked top rate, marketing headline). */}
         <div className="flex flex-col items-center justify-center relative shrink-0">
           <div className="absolute inset-0 rounded-full bg-kyvo-green/40 blur-2xl" />
           <div className="relative bg-kyvo-void/40 backdrop-blur-md border border-white/30 rounded-2xl
@@ -185,7 +193,7 @@ function Slide({
               MAX
             </div>
             <div className="font-display font-bold text-2xl sm:text-5xl text-kyvo-green leading-none mt-0.5 sm:mt-1">
-              {brand.commissionRate}%
+              {brand.maxCommission ?? brand.commissionRate}%
             </div>
           </div>
         </div>
