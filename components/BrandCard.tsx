@@ -6,28 +6,45 @@ interface Props {
 }
 
 export function BrandCard({ brand, onClick }: Props) {
-  // 🔥 reserved for genuinely trending brands only (set `trending: true` sparingly in data/brands.ts)
-  const fire = brand.trending;
+  // 🔥 shown on every 50%+ campaign, or any brand explicitly marked trending
+  const fire = brand.commissionRate >= 50 || brand.trending === true;
+  const isMax = brand.commissionRate >= 50;
 
   return (
     <button
       onClick={onClick}
       className={`group relative text-left rounded-2xl
                   bg-kyvo-surface/70 hover:bg-kyvo-elevated
-                  border border-kyvo-border hover:border-kyvo-magenta/50
+                  border ${isMax ? 'border-kyvo-magenta/40' : 'border-kyvo-border'}
+                  hover:border-kyvo-magenta/60
                   p-4 sm:p-5
                   transition-all duration-200
                   shadow-kyvo-card hover:shadow-kyvo-card-hover
                   hover:-translate-y-0.5`}
     >
       {fire && (
-        <span className="absolute top-2.5 right-2.5 text-base sm:text-lg
-                         drop-shadow-[0_0_8px_rgba(255,107,0,0.8)]">
+        <span
+          className="absolute top-2.5 right-2.5 text-base sm:text-lg
+                     drop-shadow-[0_0_8px_rgba(255,107,0,0.8)]"
+          aria-label={isMax ? 'MAX commission tier' : 'Trending'}
+        >
           🔥
         </span>
       )}
 
-      <div className="flex flex-col items-center text-center gap-3">
+      {/* Samples included indicator (small pip in the top-left) */}
+      {brand.samplesIncluded && (
+        <span
+          className="absolute top-2.5 left-2.5 px-1.5 py-0.5 rounded-md
+                     text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
+                     bg-kyvo-green/15 text-kyvo-green border border-kyvo-green/30"
+          title="Samples included"
+        >
+          Sample
+        </span>
+      )}
+
+      <div className="flex flex-col items-center text-center gap-3 mt-2">
         <BrandTile brand={brand} />
 
         <div className="space-y-1">

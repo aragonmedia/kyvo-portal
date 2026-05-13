@@ -2,8 +2,7 @@
 
 import { useEffect } from 'react';
 import type { Brand, ProductLink } from '@/lib/types';
-
-const DISCORD_TICKET_URL = 'https://discord.gg/kyvo';
+import { DEFAULT_TICKET_URL } from '@/data/brands';
 
 interface Props {
   brand: Brand | null;
@@ -79,12 +78,14 @@ export function BrandModal({ brand, onClose }: Props) {
           </button>
         </div>
 
-        {/* Product cards */}
+        {/* Product cards — sorted by items sold (descending) */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           <div className="grid grid-cols-1 gap-3 sm:gap-4">
-            {brand.links.map((link, i) => (
-              <ProductCard key={i} link={link} brand={brand} />
-            ))}
+            {[...brand.links]
+              .sort((a, b) => (b.itemsSold ?? 0) - (a.itemsSold ?? 0))
+              .map((link, i) => (
+                <ProductCard key={link.slug ?? link.url ?? i} link={link} brand={brand} />
+              ))}
           </div>
         </div>
       </div>
@@ -103,6 +104,7 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
   const kyvoRate = link.commission ?? brand.commissionRate;
   const maxRate = brand.maxCommission ?? 50;
   const boostLift = kyvoRate - openRate;
+  const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
 
   return (
     <div className="relative rounded-2xl bg-kyvo-surface/70 border border-kyvo-border
@@ -111,17 +113,28 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
       <div className="flex items-center gap-4 p-4 sm:p-5 border-b border-kyvo-border/40">
         <ProductThumb link={link} brand={brand} />
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-white text-base sm:text-lg truncate">
+          <div className="font-semibold text-white text-sm sm:text-base leading-snug line-clamp-2">
             {link.productName}
           </div>
-          <div className="text-xs text-kyvo-muted mt-0.5 truncate">
-            {prettyUrl(link.url)}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-1 text-xs">
+            {link.price && (
+              <span className="font-bold text-white">{link.price}</span>
+            )}
+            {typeof link.itemsSold === 'number' && link.itemsSold > 0 && (
+              <>
+                {link.price && <span className="text-kyvo-dim">·</span>}
+                <span className="font-semibold text-kyvo-green">
+                  {formatItemsSold(link.itemsSold)} sold
+                </span>
+              </>
+            )}
+            {boostLift > 0 && (
+              <>
+                <span className="text-kyvo-dim">·</span>
+                <span className="font-semibold text-kyvo-green">+{boostLift}% boost</span>
+              </>
+            )}
           </div>
-          {boostLift > 0 && (
-            <div className="text-xs font-semibold text-kyvo-green mt-1">
-              +{boostLift}% boost vs. open rate
-            </div>
-          )}
         </div>
       </div>
 
@@ -145,7 +158,7 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
           sublabel="Open a Discord ticket to unlock"
           rate={maxRate}
           tone="locked"
-          href={DISCORD_TICKET_URL}
+          href={ticketUrl}
         />
       </div>
     </div>
@@ -293,14 +306,32 @@ function TierLeft({
 }
 
 function ProductThumb({ link, brand }: { link: ProductLink; brand: Brand }) {
-  if (link.image) {
+  // Resolve image source in priority order:
+  //   1. Explicit `link.image` path
+  //   2. Auto-derived from slug: /products/<brand-id>/<slug>.png
+  //   3. Fall back to brand's logoTile (colored initials)
+  const imageSrc =
+    link.image ?? (link.slug ? `/products/${brand.id}/${link.slug}.png` : null);
+
+  if (imageSrc) {
     return (
       <div className="w-14 h-14 rounded-xl bg-white p-1.5 shrink-0 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={link.image} alt={link.productName} className="w-full h-full object-contain" />
+        <img
+          src={imageSrc}
+          alt={link.productName}
+          className="w-full h-full object-contain"
+          onError={(e) => {
+            // If image file doesn't exist yet, hide it so the brand-tile fallback shows
+            (e.target as HTMLImageElement).style.display = 'none';
+            const parent = (e.target as HTMLImageElement).parentElement;
+            if (parent) parent.style.display = 'none';
+          }}
+        />
       </div>
     );
   }
+
   const tile = brand.logoTile ?? { bg: '#1A1838', fg: '#5CC8FF', initials: brand.name.slice(0, 2).toUpperCase() };
   return (
     <div
@@ -311,6 +342,13 @@ function ProductThumb({ link, brand }: { link: ProductLink; brand: Brand }) {
       {tile.initials}
     </div>
   );
+}
+
+/** Format items-sold count: 41112 → "41.1K", 5189 → "5.2K", 458 → "458" */
+function formatItemsSold(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return n.toLocaleString();
 }
 
 function ModalTile({ brand }: { brand: Brand }) {

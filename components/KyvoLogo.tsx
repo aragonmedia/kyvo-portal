@@ -2,13 +2,12 @@ import Image from 'next/image';
 
 /**
  * Kyvo logo. Uses the real galaxy logo at /public/kyvo-logo.png.
- * Default wordmark is "Powered by Kyvo" — two-line typographic treatment
- * with "Powered by" smaller and muted, "Kyvo" bold and white.
+ * Default wordmark is "Powered by Kyvo" on a single horizontal line.
  *
  * Props:
  *   size          — logo icon size in px (default 36)
  *   showWordmark  — show the text next to the icon (default true)
- *   variant       — "powered" (default) | "wordmark" (just 'kyvo') | "full" (Kyvo wordmark only)
+ *   variant       — "powered" (default) | "wordmark" (just 'kyvo') | "full" ("Kyvo")
  */
 export function KyvoLogo({
   size = 36,
@@ -37,20 +36,10 @@ export function KyvoLogo({
       </div>
 
       {showWordmark && variant === 'powered' && (
-        <div className="flex flex-col leading-none">
-          <span
-            className="text-[10px] uppercase tracking-[0.18em] text-kyvo-muted font-medium"
-            style={{ lineHeight: 1 }}
-          >
-            Powered by
-          </span>
-          <span
-            className="font-display text-lg font-bold tracking-tight text-white mt-0.5"
-            style={{ lineHeight: 1 }}
-          >
-            Kyvo
-          </span>
-        </div>
+        <span className="font-display text-base sm:text-lg font-semibold tracking-tight whitespace-nowrap">
+          <span className="text-kyvo-muted font-medium">Powered by </span>
+          <span className="text-white font-bold">Kyvo</span>
+        </span>
       )}
 
       {showWordmark && variant === 'wordmark' && (

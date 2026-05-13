@@ -1,13 +1,15 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import type { Brand } from '@/lib/types';
+import { DEFAULT_TICKET_URL } from '@/data/brands';
 
 /**
- * Stacked horizontal hero banners — one per 50% commission brand.
- * Always visible, no auto-rotation. Click any banner → opens brand modal.
- *
- * Kept the filename BannerSlideshow.tsx for upload simplicity, but this is
- * no longer a slideshow — it's a stack of always-visible banners.
+ * Auto-rotating priority-brands slideshow.
+ * - Single visible banner, rotates every 5.5s, pauses on hover.
+ * - Glass-bubble prev/next arrow buttons on each side (slide navigation).
+ * - "Tap to unlock" CTA links to brand.ticketUrl (or default discord.gg/kyvo).
+ * - Tapping the brand name / left content area opens the brand modal.
  */
 
 interface Props {
@@ -16,128 +18,211 @@ interface Props {
 }
 
 export function BannerSlideshow({ brands, onBrandClick }: Props) {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused || brands.length <= 1) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % brands.length);
+    }, 5500);
+    return () => clearInterval(id);
+  }, [paused, brands.length]);
+
   if (brands.length === 0) return null;
 
+  const prev = () => setIndex((i) => (i - 1 + brands.length) % brands.length);
+  const next = () => setIndex((i) => (i + 1) % brands.length);
+
   return (
-    <section className="px-4 mt-6">
-      <div className="mx-auto max-w-7xl space-y-3 sm:space-y-4">
-        {brands.map((brand) => (
-          <HeroBanner key={brand.id} brand={brand} onClick={() => onBrandClick(brand)} />
-        ))}
+    <section
+      className="relative px-4 mt-6"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="mx-auto max-w-7xl relative">
+        <div
+          className="relative overflow-hidden rounded-3xl
+                     h-[280px] sm:h-[340px] md:h-[400px]
+                     shadow-kyvo-glow border border-kyvo-border/60"
+        >
+          {brands.map((brand, i) => (
+            <Slide
+              key={brand.id}
+              brand={brand}
+              active={i === index}
+              onBrandClick={() => onBrandClick(brand)}
+            />
+          ))}
+
+          {/* Glass arrow buttons */}
+          <GlassArrow direction="left" onClick={prev} />
+          <GlassArrow direction="right" onClick={next} />
+
+          {/* Slide dots */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            {brands.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === index
+                    ? 'w-8 bg-white'
+                    : 'w-1.5 bg-white/40 hover:bg-white/70'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-function HeroBanner({ brand, onClick }: { brand: Brand; onClick: () => void }) {
-  const openRate = brand.openCollabRate ?? 10;
-  const kyvoRate = brand.commissionRate;
-  const boostLift = kyvoRate - openRate;
+function Slide({
+  brand,
+  active,
+  onBrandClick,
+}: {
+  brand: Brand;
+  active: boolean;
+  onBrandClick: () => void;
+}) {
+  const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
+  const hasBannerImage = Boolean(brand.bannerImage);
 
   return (
-    <button
-      onClick={onClick}
-      className="group relative w-full overflow-hidden rounded-2xl sm:rounded-3xl
-                 h-[180px] sm:h-[200px] md:h-[220px]
-                 border border-kyvo-border/60 hover:border-white/30
-                 shadow-kyvo-card hover:shadow-kyvo-card-hover
-                 transition-all duration-300
-                 text-left"
+    <div
+      className={`absolute inset-0 transition-opacity duration-700 ease-out
+                  ${active ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
       style={{
+        // Fall back to gradient if no banner image set
         background:
           brand.bannerGradient ||
           'linear-gradient(135deg, #1a0b3e 0%, #4a1d8a 50%, #7B3FE4 100%)',
       }}
-      aria-label={`Open ${brand.name} product links`}
     >
-      {/* Starfield overlay */}
-      <div
-        className="absolute inset-0 opacity-50 mix-blend-screen pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(1px 1px at 12% 24%, white, transparent), radial-gradient(1px 1px at 73% 31%, white, transparent), radial-gradient(1.5px 1.5px at 45% 78%, white, transparent), radial-gradient(1px 1px at 88% 65%, white, transparent), radial-gradient(1px 1px at 12% 84%, white, transparent), radial-gradient(1px 1px at 55% 12%, white, transparent)',
-        }}
-      />
+      {/* Banner photo layer (if set) — cover-fit, sits above the gradient fallback */}
+      {hasBannerImage && (
+        <div
+          className="absolute inset-0 bg-center bg-cover pointer-events-none"
+          style={{ backgroundImage: `url(${brand.bannerImage})` }}
+        />
+      )}
 
-      {/* Content */}
+      {/* Left-to-right dark gradient overlay — protects text legibility on photos */}
+      {hasBannerImage && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(5,3,15,0.78) 0%, rgba(5,3,15,0.45) 45%, rgba(5,3,15,0.15) 100%)',
+          }}
+        />
+      )}
+
+      {/* Starfield overlay (only on gradient-only slides — photos don't need it) */}
+      {!hasBannerImage && (
+        <div
+          className="absolute inset-0 opacity-50 mix-blend-screen pointer-events-none"
+          style={{
+            backgroundImage:
+              'radial-gradient(1px 1px at 12% 22%, white, transparent), radial-gradient(1px 1px at 73% 31%, white, transparent), radial-gradient(1.5px 1.5px at 45% 78%, white, transparent), radial-gradient(1px 1px at 88% 65%, white, transparent), radial-gradient(1px 1px at 12% 84%, white, transparent), radial-gradient(1px 1px at 55% 12%, white, transparent)',
+          }}
+        />
+      )}
+
       <div className="relative z-10 h-full flex items-center justify-between
-                      px-5 sm:px-8 md:px-10 gap-4">
-        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
-          <BannerLogo brand={brand} />
-
-          <div className="min-w-0">
-            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.18em]
-                            text-white/70 mb-1">
-              50% Kyvo Boost · Top Tier
-            </div>
-            <h2 className="font-display font-bold text-xl sm:text-2xl md:text-3xl
-                           text-white leading-tight tracking-tight truncate">
-              {brand.name}
-            </h2>
-            {brand.tagline && (
-              <p className="mt-1 text-xs sm:text-sm text-white/80 line-clamp-2 max-w-md">
-                {brand.tagline}
-              </p>
-            )}
+                      px-16 sm:px-20 md:px-24 gap-4">
+        {/* Left content — clickable area for opening the modal */}
+        <button
+          onClick={onBrandClick}
+          className="text-left max-w-md min-w-0 group"
+          aria-label={`Open ${brand.name} product links`}
+        >
+          <div className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-white/70 mb-2">
+            Featured Partner · #{brand.priorityOrder ?? 1}
           </div>
-        </div>
+          <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white leading-tight tracking-tight">
+            {brand.name}
+          </h2>
+          {brand.tagline && (
+            <p className="mt-2 text-sm sm:text-base text-white/80 max-w-sm line-clamp-2">
+              {brand.tagline}
+            </p>
+          )}
 
-        {/* Right side — commission stamp + CTA */}
-        <div className="flex flex-col items-end gap-2 sm:gap-3 shrink-0">
-          <div className="relative">
-            <div className="absolute inset-0 rounded-2xl bg-kyvo-green/30 blur-2xl" />
-            <div className="relative bg-kyvo-void/50 backdrop-blur-md
-                            border border-white/20 rounded-2xl
-                            px-3 py-2 sm:px-4 sm:py-3 text-right">
-              <div className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-white/70 leading-none">
-                Commission
-              </div>
-              <div className="font-display font-bold text-2xl sm:text-3xl md:text-4xl
-                              text-kyvo-green leading-none mt-1">
-                {kyvoRate}%
-              </div>
-              {boostLift > 0 && (
-                <div className="text-[9px] sm:text-[10px] font-semibold text-white/80 mt-1 leading-none">
-                  +{boostLift}% vs open
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5
-                          rounded-full bg-white text-kyvo-deep
-                          text-xs font-bold
-                          group-hover:scale-105 transition-transform">
+          {/* Tap-to-unlock CTA → Discord ticket */}
+          <a
+            href={ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="mt-4 inline-flex items-center gap-2 px-4 py-2
+                       rounded-full bg-white text-kyvo-deep
+                       text-sm font-bold shadow-lg
+                       hover:scale-105 transition-transform"
+          >
+            <LockIcon className="w-3.5 h-3.5" />
             Tap to unlock
-            <ArrowRight className="w-3 h-3" />
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </button>
+
+        {/* Right — commission stamp */}
+        <div className="hidden sm:flex flex-col items-center justify-center relative shrink-0">
+          <div className="absolute inset-0 rounded-full bg-kyvo-green/40 blur-2xl" />
+          <div className="relative bg-kyvo-void/40 backdrop-blur-md border border-white/30 rounded-2xl px-5 py-4 sm:px-7 sm:py-5">
+            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-white/70">
+              Commission
+            </div>
+            <div className="font-display font-bold text-4xl sm:text-5xl text-kyvo-green leading-none mt-1">
+              {brand.commissionRate}%
+            </div>
           </div>
         </div>
       </div>
-    </button>
+    </div>
   );
 }
 
-function BannerLogo({ brand }: { brand: Brand }) {
-  if (brand.logo) {
-    return (
-      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white p-1.5 shrink-0
-                      overflow-hidden border border-white/30">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={brand.logo} alt={brand.name} className="w-full h-full object-contain" />
-      </div>
-    );
-  }
-  const tile = brand.logoTile ?? { bg: '#1A1838', fg: '#5CC8FF', initials: brand.name.slice(0, 2).toUpperCase() };
+/**
+ * Glass-bubble arrow button — left or right edge of slideshow.
+ * Cycles slides (prev/next). Frosted-glass + gradient ring on hover.
+ */
+function GlassArrow({
+  direction,
+  onClick,
+}: {
+  direction: 'left' | 'right';
+  onClick: () => void;
+}) {
+  const isLeft = direction === 'left';
   return (
-    <div
-      className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl shrink-0
-                 flex items-center justify-center
-                 font-display font-bold text-xl
-                 border border-white/30 shadow-lg"
-      style={{ background: tile.bg, color: tile.fg }}
+    <button
+      onClick={onClick}
+      aria-label={isLeft ? 'Previous brand' : 'Next brand'}
+      className={`absolute top-1/2 -translate-y-1/2 z-30
+                  ${isLeft ? 'left-3 sm:left-4' : 'right-3 sm:right-4'}
+                  w-11 h-11 sm:w-12 sm:h-12
+                  rounded-full
+                  bg-white/15 backdrop-blur-md
+                  border border-white/30
+                  text-white
+                  flex items-center justify-center
+                  shadow-[0_4px_24px_rgba(0,0,0,0.35)]
+                  hover:bg-white/25 hover:border-white/50
+                  hover:shadow-[0_4px_30px_rgba(233,75,193,0.45)]
+                  active:scale-95
+                  transition-all duration-200`}
     >
-      {tile.initials}
-    </div>
+      {isLeft ? (
+        <ArrowLeft className="w-5 h-5" />
+      ) : (
+        <ArrowRight className="w-5 h-5" />
+      )}
+    </button>
   );
 }
 
@@ -146,6 +231,25 @@ function ArrowRight({ className = '' }: { className?: string }) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
          className={className} strokeLinecap="round" strokeLinejoin="round">
       <path d="M5 12h14M13 5l7 7-7 7" />
+    </svg>
+  );
+}
+
+function ArrowLeft({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+         className={className} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 12H5M11 5l-7 7 7 7" />
+    </svg>
+  );
+}
+
+function LockIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+         className={className} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   );
 }
