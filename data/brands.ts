@@ -202,6 +202,28 @@ export const brands: Brand[] = [
       { productName: 'Variety Pack — Original Flavors', slug: 'variety-pack', itemsSold: 8005, price: '$30.55', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYIciYYYlA' },
     ],
   },
+  {
+    id: 'dr-melaxin',
+    name: 'Dr Melaxin',
+    niche: 'Skincare',
+    // Spreadsheet: 15% open / 20% creator / 25% MAX.  K-beauty / Korean cosmetics.
+    openCollabRate: 15,
+    commissionRate: 20,
+    maxCommission: 25,
+    maxTier: false,
+    highCommission: true,    // +5% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbCoKc6UQg',
+    tagline: 'K-beauty for brightening & dark spots — Unlock 25% MAX',
+    logo: '/logos/dr-melaxin.png',
+    logoTile: { bg: '#2A1532', fg: '#E94BC1', initials: 'DM' },
+    // ─── 3 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Peel Shot Glow Rice Ampoule Duo', slug: 'peel-shot-glow-rice', itemsSold: 852032, price: '$38.70', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbDiVtYsMb' },
+      { productName: 'TX Cream 50ml — Tranexamic Acid', slug: 'tx-cream', itemsSold: 128666, price: '$23.40', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbEe2a4EUo' },
+      { productName: 'Perfect Neck Wrinkle Care Set', slug: 'neck-wrinkle-care-set', itemsSold: 81305, price: '$67.42', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbEYSs14yL' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
