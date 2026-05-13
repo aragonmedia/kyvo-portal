@@ -191,8 +191,8 @@ export const brands: Brand[] = [
     samplesIncluded: false,
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYHeyjs9gZ',
     tagline: 'Stress, mood & sleep support — Unlock 30% MAX',
+    logo: '/logos/nello-supercalm.png',
     logoTile: { bg: '#11183A', fg: '#4A8DFF', initials: 'NL' },
-    // logo: '/logos/nello-supercalm.png',
     // ─── 5 products, sorted by items sold (descending) ────────────────
     links: [
       { productName: 'Calming Drink Mix (20 Servings)', slug: 'calming-drink-mix', itemsSold: 852032, price: '$33.96', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYHdobpl61' },

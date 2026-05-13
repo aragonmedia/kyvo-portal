@@ -72,20 +72,18 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
     creator: '@kyvoco',          // update if you have a Twitter handle
   },
+  // Favicon set — references the exact filenames in /public/.
+  // Order matters: browsers prefer .ico first, then .svg for scalable, then PNG fallback.
   icons: {
-    // Standard favicon — SVG is auto-served for modern browsers
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon.ico', sizes: 'any' },                                       // legacy browsers
+      { url: '/favicon.svg', type: 'image/svg+xml' },                              // modern browsers (scalable)
+      { url: '/favicon-96x96.png', type: 'image/png', sizes: '96x96' },            // PNG fallback
     ],
-    // iOS home-screen icon (when user "Add to Home Screen" on iPhone)
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },       // iOS home screen
     ],
-    // Android home-screen icon
-    other: [
-      { rel: 'icon', url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-    ],
+    shortcut: ['/favicon.ico'],
   },
   // Web manifest enables PWA "Add to Home Screen" with proper branding
   manifest: '/site.webmanifest',
