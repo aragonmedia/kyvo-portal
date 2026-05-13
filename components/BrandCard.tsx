@@ -6,7 +6,8 @@ interface Props {
 }
 
 export function BrandCard({ brand, onClick }: Props) {
-  const fire = brand.trending || brand.highCommission;
+  // 🔥 reserved for genuinely trending brands only (set `trending: true` sparingly in data/brands.ts)
+  const fire = brand.trending;
 
   return (
     <button

@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect } from 'react';
-import type { Brand } from '@/lib/types';
+import type { Brand, ProductLink } from '@/lib/types';
+
+const DISCORD_TICKET_URL = 'https://discord.gg/kyvo';
 
 interface Props {
   brand: Brand | null;
@@ -9,7 +11,6 @@ interface Props {
 }
 
 export function BrandModal({ brand, onClose }: Props) {
-  // Lock body scroll + handle Escape key
   useEffect(() => {
     if (!brand) return;
     document.body.style.overflow = 'hidden';
@@ -34,13 +35,11 @@ export function BrandModal({ brand, onClose }: Props) {
       aria-modal="true"
       aria-label={`${brand.name} affiliate links`}
     >
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-kyvo-void/80 backdrop-blur-md" />
 
-      {/* Panel */}
       <div
-        className="relative w-full sm:max-w-2xl
-                   max-h-[90vh] sm:max-h-[85vh]
+        className="relative w-full sm:max-w-3xl
+                   max-h-[92vh] sm:max-h-[88vh]
                    bg-kyvo-deep border border-kyvo-border
                    rounded-t-3xl sm:rounded-3xl
                    shadow-kyvo-glow
@@ -48,12 +47,12 @@ export function BrandModal({ brand, onClose }: Props) {
                    animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Drag handle (mobile) */}
+        {/* Mobile drag handle */}
         <div className="sm:hidden pt-3 pb-1 flex justify-center">
           <div className="w-10 h-1 rounded-full bg-kyvo-border" />
         </div>
 
-        {/* Header */}
+        {/* Brand header */}
         <div className="flex items-start justify-between gap-4 p-5 sm:p-6 border-b border-kyvo-border/50">
           <div className="flex items-center gap-4">
             <ModalTile brand={brand} />
@@ -61,9 +60,12 @@ export function BrandModal({ brand, onClose }: Props) {
               <div className="font-display font-bold text-xl sm:text-2xl text-white">
                 {brand.name}
               </div>
-              <div className="text-sm text-kyvo-green font-semibold mt-0.5">
-                {brand.commissionRate}% commission · {brand.links.length}{' '}
-                {brand.links.length === 1 ? 'link' : 'links'}
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-xs font-semibold text-kyvo-muted">{brand.niche}</span>
+                <span className="text-kyvo-dim">·</span>
+                <span className="text-xs font-semibold text-kyvo-green">
+                  {brand.links.length} {brand.links.length === 1 ? 'product' : 'products'}
+                </span>
               </div>
             </div>
           </div>
@@ -77,46 +79,236 @@ export function BrandModal({ brand, onClose }: Props) {
           </button>
         </div>
 
-        {/* Links list */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-2">
-          {brand.links.map((link, i) => {
-            const commission = link.commission ?? brand.commissionRate;
-            return (
-              <a
-                key={i}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between gap-4
-                           px-4 py-4 rounded-xl
-                           bg-kyvo-surface/70 hover:bg-kyvo-elevated
-                           border border-kyvo-border hover:border-kyvo-violet/60
-                           transition-all"
-              >
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-white truncate">
-                    {link.productName}
-                  </div>
-                  <div className="text-xs text-kyvo-muted mt-0.5 truncate">
-                    {prettyUrl(link.url)}
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <div className="text-sm font-bold text-kyvo-green">
-                    {commission}%
-                  </div>
-                  <div className="w-9 h-9 rounded-full
-                                  bg-gradient-to-br from-kyvo-violet to-kyvo-magenta
-                                  flex items-center justify-center
-                                  group-hover:scale-110 transition-transform">
-                    <ArrowUpRight className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-              </a>
-            );
-          })}
+        {/* Product cards */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4">
+            {brand.links.map((link, i) => (
+              <ProductCard key={i} link={link} brand={brand} />
+            ))}
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Product card with 3-tier commission display:
+ *   Row 1: Open Collab — base TikTok Shop rate (greyed)
+ *   Row 2: Kyvo Boost — highlighted, click → opens affiliate URL
+ *   Row 3: 🔒 MAX Tier — locked, click → opens Discord ticket
+ */
+function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
+  const openRate = brand.openCollabRate ?? 10;
+  const kyvoRate = link.commission ?? brand.commissionRate;
+  const maxRate = brand.maxCommission ?? 50;
+  const boostLift = kyvoRate - openRate;
+
+  return (
+    <div className="relative rounded-2xl bg-kyvo-surface/70 border border-kyvo-border
+                    overflow-hidden">
+      {/* Product header */}
+      <div className="flex items-center gap-4 p-4 sm:p-5 border-b border-kyvo-border/40">
+        <ProductThumb link={link} brand={brand} />
+        <div className="flex-1 min-w-0">
+          <div className="font-semibold text-white text-base sm:text-lg truncate">
+            {link.productName}
+          </div>
+          <div className="text-xs text-kyvo-muted mt-0.5 truncate">
+            {prettyUrl(link.url)}
+          </div>
+          {boostLift > 0 && (
+            <div className="text-xs font-semibold text-kyvo-green mt-1">
+              +{boostLift}% boost vs. open rate
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 3-tier commission rows */}
+      <div className="p-3 sm:p-4 space-y-2">
+        <TierRow
+          label="Open Collab"
+          sublabel="TikTok Shop base rate"
+          rate={openRate}
+          tone="muted"
+        />
+        <TierRow
+          label="Kyvo Boost"
+          sublabel="Tap to earn at this rate"
+          rate={kyvoRate}
+          tone="primary"
+          href={link.url}
+        />
+        <TierRow
+          label="MAX Tier"
+          sublabel="Open a Discord ticket to unlock"
+          rate={maxRate}
+          tone="locked"
+          href={DISCORD_TICKET_URL}
+        />
+      </div>
+    </div>
+  );
+}
+
+function TierRow({
+  label,
+  sublabel,
+  rate,
+  tone,
+  href,
+}: {
+  label: string;
+  sublabel: string;
+  rate: number;
+  tone: 'muted' | 'primary' | 'locked';
+  href?: string;
+}) {
+  const base =
+    'group flex items-center justify-between gap-3 px-4 py-3 rounded-xl border transition-all';
+
+  if (tone === 'muted') {
+    return (
+      <div className={`${base} bg-kyvo-void/40 border-kyvo-border/60 cursor-default`}>
+        <TierLeft icon={<UnlockIcon className="w-4 h-4" />} label={label} sublabel={sublabel} muted />
+        <div className="text-base font-display font-bold text-kyvo-muted shrink-0">
+          {rate}%
+        </div>
+      </div>
+    );
+  }
+
+  if (tone === 'primary') {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${base}
+                    bg-gradient-to-r from-kyvo-green/15 to-kyvo-green/5
+                    border-kyvo-green/40
+                    hover:from-kyvo-green/25 hover:to-kyvo-green/10
+                    hover:border-kyvo-green/70
+                    hover:shadow-[0_0_24px_rgba(34,245,163,0.25)]`}
+      >
+        <TierLeft
+          icon={<BoltIcon className="w-4 h-4 text-kyvo-green" />}
+          label={label}
+          sublabel={sublabel}
+        />
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="text-lg sm:text-xl font-display font-bold text-kyvo-green leading-none">
+            {rate}%
+          </div>
+          <div className="w-8 h-8 rounded-full bg-kyvo-green text-kyvo-void
+                          flex items-center justify-center
+                          group-hover:scale-110 transition-transform">
+            <ArrowUpRight className="w-4 h-4" />
+          </div>
+        </div>
+      </a>
+    );
+  }
+
+  // tone === 'locked'
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${base}
+                  relative overflow-hidden
+                  bg-gradient-to-r from-kyvo-violet/20 via-kyvo-purple/15 to-kyvo-magenta/20
+                  border-kyvo-magenta/40
+                  hover:border-kyvo-magenta/80
+                  hover:shadow-[0_0_28px_rgba(233,75,193,0.35)]
+                  animate-pulse-glow`}
+    >
+      <div
+        className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none"
+        style={{
+          backgroundImage:
+            'radial-gradient(1px 1px at 20% 30%, white, transparent), radial-gradient(1px 1px at 70% 60%, white, transparent), radial-gradient(1.5px 1.5px at 40% 80%, #FF6BCB, transparent)',
+        }}
+      />
+      <TierLeft
+        icon={<LockIcon className="w-4 h-4 text-kyvo-magenta" />}
+        label={label}
+        sublabel={sublabel}
+        accent
+      />
+      <div className="relative flex items-center gap-2 shrink-0">
+        <div className="text-lg sm:text-xl font-display font-bold text-white leading-none">
+          {rate}%
+        </div>
+        <div className="w-8 h-8 rounded-full
+                        bg-gradient-to-br from-kyvo-violet to-kyvo-magenta
+                        flex items-center justify-center
+                        group-hover:scale-110 transition-transform">
+          <LockIcon className="w-3.5 h-3.5 text-white" />
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function TierLeft({
+  icon,
+  label,
+  sublabel,
+  muted = false,
+  accent = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  sublabel: string;
+  muted?: boolean;
+  accent?: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-3 min-w-0">
+      <div
+        className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0
+                    ${
+                      muted
+                        ? 'bg-kyvo-elevated text-kyvo-muted'
+                        : accent
+                          ? 'bg-kyvo-magenta/15 text-kyvo-magenta'
+                          : 'bg-kyvo-green/15 text-kyvo-green'
+                    }`}
+      >
+        {icon}
+      </div>
+      <div className="min-w-0">
+        <div className={`text-sm font-bold leading-tight ${muted ? 'text-kyvo-muted' : 'text-white'}`}>
+          {label}
+        </div>
+        <div className="text-[11px] text-kyvo-muted leading-tight mt-0.5 truncate">
+          {sublabel}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProductThumb({ link, brand }: { link: ProductLink; brand: Brand }) {
+  if (link.image) {
+    return (
+      <div className="w-14 h-14 rounded-xl bg-white p-1.5 shrink-0 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={link.image} alt={link.productName} className="w-full h-full object-contain" />
+      </div>
+    );
+  }
+  const tile = brand.logoTile ?? { bg: '#1A1838', fg: '#5CC8FF', initials: brand.name.slice(0, 2).toUpperCase() };
+  return (
+    <div
+      className="w-14 h-14 rounded-xl shrink-0 flex items-center justify-center
+                 font-display font-bold text-base border border-white/10"
+      style={{ background: tile.bg, color: tile.fg }}
+    >
+      {tile.initials}
     </div>
   );
 }
@@ -164,6 +356,34 @@ function ArrowUpRight({ className = '' }: { className?: string }) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
          className={className} strokeLinecap="round" strokeLinejoin="round">
       <path d="M7 17 17 7M7 7h10v10" />
+    </svg>
+  );
+}
+
+function UnlockIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+         className={className} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+    </svg>
+  );
+}
+
+function LockIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+         className={className} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
+
+function BoltIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" />
     </svg>
   );
 }
