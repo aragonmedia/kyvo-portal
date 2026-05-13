@@ -1,0 +1,15 @@
+{
+  "name": "Kyvo — Higher Commissions. One Tap Away.",
+  "short_name": "Kyvo",
+  "description": "Boosted TikTok Shop commissions across partnered brands.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05030F",
+  "theme_color": "#05030F",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/favicon.png", "type": "image/png", "sizes": "32x32" },
+    { "src": "/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}

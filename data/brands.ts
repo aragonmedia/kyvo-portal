@@ -48,7 +48,7 @@ export const brands: Brand[] = [
     trending: true,
     highCommission: true,
     samplesIncluded: true,
-    // showcaseUrl: 'https://...',  // optional override for "Add all to showcase" button
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYAsDa9aHy',
     // ticketUrl: 'https://discord.com/channels/.../...',  // TODO: paste per-brand ticket link
     tagline: 'Premium nootropics & focus stacks — Unlock 50% MAX',
     bannerGradient:
@@ -113,6 +113,7 @@ export const brands: Brand[] = [
     priorityOrder: 2,
     highCommission: true,
     samplesIncluded: true,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYB79WV7sy',
     tagline: "Women's wellness creatine & supplements — Unlock 50% MAX",
     bannerGradient:
       'linear-gradient(135deg, #2a0a3e 0%, #7a1d8a 40%, #E94BC1 80%, #FF6BCB 100%)',
@@ -137,6 +138,7 @@ export const brands: Brand[] = [
     priorityOrder: 3,
     highCommission: true,
     samplesIncluded: true,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYB0Rq3EsB',
     tagline: 'Beauty, collagen & longevity — Unlock 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #0a1d3e 0%, #1d4a8a 40%, #5CC8FF 80%, #22F5A3 100%)',
@@ -147,7 +149,7 @@ export const brands: Brand[] = [
     links: [
       { productName: 'Multi Collagen Peptides Beauty Powder', slug: 'multi-collagen-peptides', itemsSold: 8539, price: '$35.00-$37.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXrt3AsGeX' },
       { productName: 'Fuel Beauty 24-IN-1 Hair, Skin & Nails', slug: 'fuel-beauty-24in1', itemsSold: 807, price: '$28.70', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXsE84YQNg' },
-      { productName: 'Multi Collagen Peptides (3-Pack)', slug: 'multi-collagen-peptides-3pack', itemsSold: 469, price: '$90.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXrstdf2zB' },
+      // Multi Collagen Peptides (3-Pack) removed — no longer active
       { productName: 'Longevity+ Daily Wellness', slug: 'longevity-plus', itemsSold: 58, price: '$20.00-$80.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQXrt3BhFg2' },
     ],
   },
@@ -164,6 +166,7 @@ export const brands: Brand[] = [
     // Still appears in the brand grid below.
     highCommission: true,
     samplesIncluded: true,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQYBVnjFbzN',
     tagline: 'Megaseller supplements — 32% Kyvo Boost, 50% MAX',
     logo: '/logos/toplux-nutrition.png',
     logoTile: { bg: '#1F1838', fg: '#9D4EDD', initials: 'TX' },
@@ -179,51 +182,8 @@ export const brands: Brand[] = [
     ],
   },
   // ────────────────────────────────────────────────────────────
-  // Open-campaign / non-sample brands (higher commission than open
-  // collab but Kyvo doesn't ship samples for these)
+  // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
-  {
-    id: 'placeholder-brand-5',
-    name: 'Brand Five',
-    niche: 'Beauty',
-    openCollabRate: 10,
-    commissionRate: 25,
-    maxCommission: 50,
-    highCommission: true,
-    samplesIncluded: false,
-    logoTile: { bg: '#1A1838', fg: '#5CC8FF', initials: 'B5' },
-    links: [
-      { productName: 'Replace with real product', url: 'https://example.com/replace-me' },
-    ],
-  },
-  {
-    id: 'placeholder-brand-6',
-    name: 'Brand Six',
-    niche: 'Skincare',
-    openCollabRate: 10,
-    commissionRate: 25,
-    maxCommission: 50,
-    highCommission: true,
-    samplesIncluded: false,
-    logoTile: { bg: '#1A1838', fg: '#E94BC1', initials: 'B6' },
-    links: [
-      { productName: 'Replace with real product', url: 'https://example.com/replace-me' },
-    ],
-  },
-  {
-    id: 'placeholder-brand-7',
-    name: 'Brand Seven',
-    niche: 'Pet',
-    openCollabRate: 8,
-    commissionRate: 25,
-    maxCommission: 50,
-    highCommission: true,
-    samplesIncluded: false,
-    logoTile: { bg: '#1A1838', fg: '#22F5A3', initials: 'B7' },
-    links: [
-      { productName: 'Replace with real product', url: 'https://example.com/replace-me' },
-    ],
-  },
 ];
 
 /** Default Discord ticket URL when a brand doesn't have its own ticketUrl set */
