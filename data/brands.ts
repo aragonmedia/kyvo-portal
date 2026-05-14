@@ -403,6 +403,34 @@ export const brands: Brand[] = [
       { productName: 'Extra Strength Energy Gum (Peppermint)', slug: 'peppermint-extra-strength', itemsSold: 3353, price: '$29.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeK9CZO4eH' },
     ],
   },
+  {
+    id: 'clean-nutra',
+    name: 'Clean Nutra',
+    niche: 'Health',
+    // Spreadsheet has product-level variance — top 4 sellers at 25% open,
+    // bottom 3 at 15% open. 28% Kyvo Boost / 30% MAX consistent across all.
+    openCollabRate: 25,   // brand default (top sellers)
+    commissionRate: 28,
+    maxCommission: 30,
+    maxTier: false,
+    highCommission: true,
+    samplesIncluded: false,
+    expiresAt: '2026-06-26',  // RENEWABLE
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeQzYpozGN',
+    tagline: 'Liquid herbal supplements & adaptogens — Unlock 30% MAX',
+    logo: '/logos/clean-nutra.png',
+    logoTile: { bg: '#1A2A18', fg: '#B8E08F', initials: 'CN' },
+    // ─── 7 products, sorted by items sold; per-product openCollabRate where it differs ─
+    links: [
+      { productName: 'Cinnamon Berberine Drops', slug: 'cinnamon-berberine', itemsSold: 107293, price: '$22.45', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeQgYDS7Bs' },
+      { productName: 'Maca Root + Ashwagandha Drops', slug: 'maca-ashwagandha', itemsSold: 73092, price: '$22.45', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQePv1SKyTq' },
+      { productName: 'Creatine for Women', slug: 'creatine-for-women', itemsSold: 34030, price: '$29.95', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQePxMPaS06' },
+      { productName: 'Thyroid Support Drops', slug: 'thyroid-support', itemsSold: 8572, price: '$22.45', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeQknESUrc' },
+      { productName: 'PlantFlow Moringa Drops', slug: 'moringa-drops', itemsSold: 3655, price: '$22.45', openCollabRate: 15, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeQ3isnO7e' },
+      { productName: 'Celluvive NAD+ Drops', slug: 'nad-drops', itemsSold: 3166, price: '$22.45', openCollabRate: 15, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeRKnCrsNT' },
+      { productName: 'Botaniguard Oil of Oregano', slug: 'oil-of-oregano', itemsSold: 2706, price: '$22.45', openCollabRate: 15, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeRZaTtd6h' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
