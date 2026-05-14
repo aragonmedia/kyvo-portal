@@ -290,6 +290,27 @@ export const brands: Brand[] = [
       { productName: 'Inner Harmony Duo', slug: 'inner-harmony-duo', itemsSold: 35073, price: '$39.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQcvNFsRGN9' },
     ],
   },
+  {
+    id: 'jiyuskin',
+    name: 'JiYuSkin',
+    niche: 'Skincare',
+    // Spreadsheet: 25% open / 30% creator / 35% MAX.  Korean toner pads.
+    openCollabRate: 25,
+    commissionRate: 30,
+    maxCommission: 35,
+    maxTier: false,
+    highCommission: true,    // +5% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdrqQZZkUO',
+    tagline: 'Korean anti-aging toner pads — Unlock 35% MAX',
+    logo: '/logos/jiyuskin.png',
+    logoTile: { bg: '#2A1F1A', fg: '#FFC79E', initials: 'JY' },
+    // ─── 2 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Anti-Aging Toner Pads (100 ct)', slug: 'toner-pads', itemsSold: 252553, price: '$42.95', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdtjJ7aHUp' },
+      { productName: 'Anti-Aging Toner Pads (2-Pack)', slug: 'toner-pads-2pack', itemsSold: 49245, price: '$72.53', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdtjiOyplq' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
