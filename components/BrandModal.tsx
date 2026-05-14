@@ -164,9 +164,12 @@ function PlusIcon({ className = '' }: { className?: string }) {
  *   Row 3: 🔒 MAX Tier — locked, "Click to Unlock" → Discord
  */
 function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
-  const openRate = brand.openCollabRate ?? 10;
+  // Per-product overrides take precedence over brand-level rates. This matters
+  // when products in the same brand have different TikTok Shop rates — show what
+  // the creator will actually earn, never generalize.
+  const openRate = link.openCollabRate ?? brand.openCollabRate ?? 10;
   const kyvoRate = link.commission ?? brand.commissionRate;
-  const maxRate = brand.maxCommission ?? 50;
+  const maxRate = link.maxCommission ?? brand.maxCommission ?? 50;
   const boostLift = kyvoRate - openRate;
   const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
 

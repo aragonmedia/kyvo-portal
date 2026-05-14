@@ -311,6 +311,29 @@ export const brands: Brand[] = [
       { productName: 'Anti-Aging Toner Pads (2-Pack)', slug: 'toner-pads-2pack', itemsSold: 49245, price: '$72.53', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdtjiOyplq' },
     ],
   },
+  {
+    id: 'betterbrand',
+    name: 'Betterbrand',
+    niche: 'Health',
+    // Per-product open collab rates differ on Betterbrand — tea bags are at
+    // 15% open while gummies are at 20% open. Brand-level openCollabRate is a
+    // fallback; each product entry overrides with its real rate.
+    openCollabRate: 15,        // fallback baseline (matches tea bags)
+    commissionRate: 23,        // Kyvo Boost (consistent across products)
+    maxCommission: 25,         // MAX (consistent across products)
+    maxTier: false,
+    highCommission: true,
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdxwatdhEy',
+    tagline: 'Lung detox & respiratory wellness — Unlock 25% MAX',
+    logo: '/logos/betterbrand.png',
+    logoTile: { bg: '#0A2A2A', fg: '#5FCEC1', initials: 'Bt' },
+    // ─── 2 products, sorted by items sold; per-product openCollabRate set explicitly ─
+    links: [
+      { productName: 'Herbal Lung Detox Tea Bags', slug: 'lung-detox-tea', itemsSold: 133411, price: '$22.95', openCollabRate: 15, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdyrEOXR2X' },
+      { productName: 'Mullein Lung Detox Gummies', slug: 'lung-detox-gummies', itemsSold: 54399, price: '$34.95', openCollabRate: 20, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdyn961HiB' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────

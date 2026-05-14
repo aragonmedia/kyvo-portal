@@ -18,6 +18,12 @@ export interface ProductLink {
   price?: string;
   /** Override the brand's Kyvo Boost rate for this specific product */
   commission?: number;
+  /** Override the brand's open-collab (TikTok Shop baseline) rate for this product.
+   *  Use when products in the same brand have different open collab rates — never
+   *  generalize or average. Accuracy over marketing. */
+  openCollabRate?: number;
+  /** Override the brand's MAX commission for this specific product */
+  maxCommission?: number;
   /** Optional product thumbnail. Use /products/<brand-id>/<slug>.png convention. */
   image?: string;
 }
