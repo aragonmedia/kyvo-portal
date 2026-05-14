@@ -379,6 +379,30 @@ export const brands: Brand[] = [
       { productName: 'Vitamin B12 Strawberry Liquid Drops (2-Pack)', slug: 'b12-drops-strawberry', itemsSold: 7830, price: '$14.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeCP4ptPUE' },
     ],
   },
+  {
+    id: 'neurogum',
+    name: 'NeuroGum',
+    niche: 'Health',
+    // Spreadsheet: 15% open / 23% creator / 25% MAX.  Rates consistent across products.
+    openCollabRate: 15,
+    commissionRate: 23,
+    maxCommission: 25,
+    maxTier: false,
+    highCommission: true,    // +8% over open rate
+    samplesIncluded: true,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeGioHR7yO',
+    tagline: 'Energy & focus gum with L-theanine — Unlock 25% MAX',
+    logo: '/logos/neurogum.png',
+    logoTile: { bg: '#0A0F2E', fg: '#8AA6FF', initials: 'NG' },
+    // ─── 5 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Energy Gum (Peppermint)', slug: 'energy-peppermint', itemsSold: 957865, price: '$24.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeI4Kb6og4' },
+      { productName: 'Decaf Memory & Focus Gum (Peppermint)', slug: 'decaf-peppermint', itemsSold: 21850, price: '$27.88', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeIWUiqdps' },
+      { productName: 'Variety Pack Energy Gum', slug: 'variety-pack', itemsSold: 15981, price: '$24.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeJ05SBMdb' },
+      { productName: 'Extra Strength Energy Gum (Spearmint)', slug: 'spearmint-extra-strength', itemsSold: 3391, price: '$26.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeItN2dN1e' },
+      { productName: 'Extra Strength Energy Gum (Peppermint)', slug: 'peppermint-extra-strength', itemsSold: 3353, price: '$29.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeK9CZO4eH' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
