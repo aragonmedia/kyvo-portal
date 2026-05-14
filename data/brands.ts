@@ -334,6 +334,29 @@ export const brands: Brand[] = [
       { productName: 'Mullein Lung Detox Gummies', slug: 'lung-detox-gummies', itemsSold: 54399, price: '$34.95', openCollabRate: 20, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQdyn961HiB' },
     ],
   },
+  {
+    id: 'bloom-nutrition',
+    name: 'Bloom Nutrition',
+    niche: 'Health',
+    // Spreadsheet: 20% open / 23% creator / 25% MAX.  Rates consistent across products.
+    openCollabRate: 20,
+    commissionRate: 23,
+    maxCommission: 25,
+    maxTier: false,
+    highCommission: true,    // +3% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQe6ypb4kx5',
+    tagline: 'Creatine, greens & energy — Unlock 25% MAX',
+    logo: '/logos/bloom-nutrition.png',
+    logoTile: { bg: '#2A1525', fg: '#FFA8BC', initials: 'BL' },
+    // ─── 4 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Creatine Gummies', slug: 'creatine-gummies', itemsSold: 112123, price: '$16.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQe7d4fRCqM' },
+      { productName: 'Creatine Monohydrate Powder (40 servings)', slug: 'creatine-powder', itemsSold: 101009, price: '$14.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQe7lVrSPuB' },
+      { productName: 'Energy Sticks (10 sticks)', slug: 'energy-sticks', itemsSold: 41650, price: '$6.49', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQe7qkaIIY7' },
+      { productName: 'Greens & Superfoods Powder (2-Pack)', slug: 'greens-superfoods', itemsSold: 23941, price: '$45.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQe8JDsEACT' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
