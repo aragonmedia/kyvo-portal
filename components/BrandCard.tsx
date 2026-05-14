@@ -35,17 +35,29 @@ export function BrandCard({ brand, onClick }: Props) {
         </span>
       )}
 
-      {/* Samples included indicator (small pip in the top-left) */}
-      {brand.samplesIncluded && (
-        <span
-          className="absolute top-2.5 left-2.5 px-1.5 py-0.5 rounded-md
-                     text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
-                     bg-kyvo-green/15 text-kyvo-green border border-kyvo-green/30"
-          title="Samples included"
-        >
-          Sample
-        </span>
-      )}
+      {/* Top-left indicator stack: Sample pip + Renewable pip (stackable) */}
+      <div className="absolute top-2.5 left-2.5 flex flex-col items-start gap-1">
+        {brand.samplesIncluded && (
+          <span
+            className="px-1.5 py-0.5 rounded-md
+                       text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
+                       bg-kyvo-green/15 text-kyvo-green border border-kyvo-green/30"
+            title="Samples included"
+          >
+            Sample
+          </span>
+        )}
+        {brand.expiresAt && (
+          <span
+            className="px-1.5 py-0.5 rounded-md
+                       text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
+                       bg-amber-400/15 text-amber-300 border border-amber-400/30"
+            title={`Campaign expires ${brand.expiresAt} — renewable`}
+          >
+            Until {formatExpiresShort(brand.expiresAt)}
+          </span>
+        )}
+      </div>
 
       <div className="flex flex-col items-center text-center gap-3 mt-2">
         <BrandTile brand={brand} />
@@ -65,6 +77,17 @@ export function BrandCard({ brand, onClick }: Props) {
       </div>
     </button>
   );
+}
+
+/** Format an ISO date string (YYYY-MM-DD) as 'Jun 26' style */
+function formatExpiresShort(isoDate: string): string {
+  try {
+    const d = new Date(`${isoDate}T00:00:00`);
+    if (Number.isNaN(d.getTime())) return isoDate;
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  } catch {
+    return isoDate;
+  }
 }
 
 function BrandTile({ brand }: { brand: Brand }) {

@@ -357,6 +357,28 @@ export const brands: Brand[] = [
       { productName: 'Greens & Superfoods Powder (2-Pack)', slug: 'greens-superfoods', itemsSold: 23941, price: '$45.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQe8JDsEACT' },
     ],
   },
+  {
+    id: 'nusava',
+    name: 'Nusava',
+    niche: 'Health',
+    // Spreadsheet: 22% open / 27% creator / 30% MAX.  B12 liquid supplements.
+    openCollabRate: 22,
+    commissionRate: 27,
+    maxCommission: 30,
+    maxTier: false,
+    highCommission: true,    // +5% over open rate
+    samplesIncluded: false,
+    expiresAt: '2026-06-26',  // RENEWABLE — flag set; card shows 'Until Jun 26'
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeBUgkYeHA',
+    tagline: 'B12 liquid drops for energy & focus — Unlock 30% MAX',
+    logo: '/logos/nusava.png',
+    logoTile: { bg: '#2A2818', fg: '#FFE48F', initials: 'NV' },
+    // ─── 2 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Vitamin B12 Liquid Drops (2-Pack)', slug: 'b12-drops-original', itemsSold: 202910, price: '$16.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeB6bZc9oJ' },
+      { productName: 'Vitamin B12 Strawberry Liquid Drops (2-Pack)', slug: 'b12-drops-strawberry', itemsSold: 7830, price: '$14.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeCP4ptPUE' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────

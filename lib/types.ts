@@ -75,6 +75,10 @@ export interface Brand {
    *  while still marketing the brand as MAX (50% via Discord). */
   maxTier?: boolean;
 
+  /** Campaign expiration date (ISO YYYY-MM-DD). When set, the brand card
+   *  shows a subtle 'Until MMM DD' pill so renewals are easy to spot. */
+  expiresAt?: string;
+
   /** All product affiliate links for this brand */
   links: ProductLink[];
 }
