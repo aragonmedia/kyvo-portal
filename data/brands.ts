@@ -266,6 +266,30 @@ export const brands: Brand[] = [
       { productName: 'Probiotics for Dogs', slug: 'probiotics', itemsSold: 18555, price: '$23.09', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQbwjKnv62T' },
     ],
   },
+  {
+    id: 'physicians-choice',
+    name: "Physician's Choice",
+    niche: 'Health',
+    // Spreadsheet: 20% open / 23% creator / 25% MAX.  Gut + women's wellness.
+    openCollabRate: 20,
+    commissionRate: 23,
+    maxCommission: 25,
+    maxTier: false,
+    highCommission: true,    // +3% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQcrw49X7hp',
+    tagline: "Gut & women's wellness probiotics — Unlock 25% MAX",
+    logo: '/logos/physicians-choice.png',
+    logoTile: { bg: '#1A2A22', fg: '#7FE0B8', initials: 'PC' },
+    // ─── 5 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Hack Your Tummy Bundle', slug: 'hack-your-tummy-bundle', itemsSold: 705482, price: '$38.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQcxJ0DO0jm' },
+      { productName: 'Vaginal Probiotic', slug: 'vaginal-probiotic', itemsSold: 293623, price: '$22.44', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQcxlGIyVab' },
+      { productName: 'Digestive Enzymes', slug: 'digestive-enzymes', itemsSold: 283776, price: '$15.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQczxkpWo2u' },
+      { productName: 'Gut Guardian Bundle', slug: 'gut-guardian-bundle', itemsSold: 150414, price: '$68.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQcvLjsBaQ4' },
+      { productName: 'Inner Harmony Duo', slug: 'inner-harmony-duo', itemsSold: 35073, price: '$39.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQcvNFsRGN9' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────

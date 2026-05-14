@@ -16,7 +16,10 @@ const body = Manrope({
   weight: ['400', '500', '600', '700'],
 });
 
-const SITE_URL = 'https://kyvoco.com';
+// Primary canonical URL — this is what social platforms display when the
+// portal is shared. Subdomain of kyvoco.com → 'poweredby.kyvoco.com'
+// (Powered by Kyvo branding, kept short for verbal sharing in TikToks).
+const SITE_URL = 'https://poweredby.kyvoco.com';
 const TITLE = 'Kyvo — Higher Commissions. One Tap Away.';
 const DESCRIPTION =
   'Browse partnered brands and tap product links to earn boosted TikTok Shop commissions instantly. Built for creators by Kyvo.';
