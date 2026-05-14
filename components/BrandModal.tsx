@@ -172,6 +172,9 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
   const maxRate = link.maxCommission ?? brand.maxCommission ?? 50;
   const boostLift = kyvoRate - openRate;
   const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
+  // Per-product samples flag — falls back to brand-level. Mixed-sample brands
+  // (some products Yes, some No) set link.samplesIncluded explicitly per row.
+  const hasSamples = link.samplesIncluded ?? brand.samplesIncluded ?? false;
 
   return (
     <div className="relative rounded-2xl bg-kyvo-surface/70 border border-kyvo-border
@@ -180,8 +183,20 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
       <div className="flex items-center gap-4 p-4 sm:p-5 border-b border-kyvo-border/40">
         <ProductThumb link={link} brand={brand} />
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-white text-sm sm:text-base leading-snug line-clamp-2">
-            {link.productName}
+          <div className="flex items-start justify-between gap-2">
+            <div className="font-semibold text-white text-sm sm:text-base leading-snug line-clamp-2 flex-1 min-w-0">
+              {link.productName}
+            </div>
+            {hasSamples && (
+              <span
+                className="shrink-0 px-1.5 py-0.5 rounded-md
+                           text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
+                           bg-kyvo-green/15 text-kyvo-green border border-kyvo-green/30"
+                title="Sample included for approved creators"
+              >
+                Sample
+              </span>
+            )}
           </div>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-1 text-xs">
             {link.price && (

@@ -24,6 +24,9 @@ export interface ProductLink {
   openCollabRate?: number;
   /** Override the brand's MAX commission for this specific product */
   maxCommission?: number;
+  /** Per-product samples flag. Falls back to brand.samplesIncluded if not set.
+   *  Set explicitly when a brand has MIXED samples (some products yes, some no). */
+  samplesIncluded?: boolean;
   /** Optional product thumbnail. Use /products/<brand-id>/<slug>.png convention. */
   image?: string;
 }

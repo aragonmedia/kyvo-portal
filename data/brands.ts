@@ -431,6 +431,78 @@ export const brands: Brand[] = [
       { productName: 'Botaniguard Oil of Oregano', slug: 'oil-of-oregano', itemsSold: 2706, price: '$22.45', openCollabRate: 15, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeRZaTtd6h' },
     ],
   },
+  {
+    id: 'qure-skincare',
+    name: 'Qure Skincare',
+    niche: 'Beauty',
+    // Spreadsheet: patches at 15% open, 2-month bundle at 18% open.
+    // 23% Kyvo Boost / 25% MAX consistent.
+    openCollabRate: 15,   // brand default (top seller)
+    commissionRate: 23,
+    maxCommission: 25,
+    maxTier: false,
+    highCommission: true,
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeYwIF2DCa',
+    tagline: 'Micro-infusion patches for dark spots — Unlock 25% MAX',
+    logo: '/logos/qure-skincare.png',
+    logoTile: { bg: '#1F1A2A', fg: '#C8B8FF', initials: 'QS' },
+    // ─── 2 products, sorted by items sold; bundle has per-product openCollabRate ─────
+    links: [
+      { productName: 'Micro-Infusion Targeted Patches (8 pairs)', slug: 'micro-infusion-patches', itemsSold: 10589, price: '$59.25', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeYgO4yxGZ' },
+      { productName: 'Micro-Infusion 2-Month Bundle (Dark Spots)', slug: 'micro-infusion-bundle-dark-spots', itemsSold: 8600, price: '$100.80', openCollabRate: 18, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeYilxRPmc' },
+    ],
+  },
+  {
+    id: 'medicube',
+    name: 'Medicube',
+    niche: 'Skincare',
+    // Spreadsheet: 15% open / 18% creator / 20% MAX.  Rates consistent across all 31 products.
+    openCollabRate: 15,
+    commissionRate: 18,
+    maxCommission: 20,
+    maxTier: false,
+    highCommission: true,    // +3% over open rate
+    samplesIncluded: true,   // Brand qualifies for filter — SOME products have samples
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQefJ1IQCHK',
+    tagline: 'K-beauty skincare sets & PDRN collagen — Unlock 20% MAX',
+    logo: '/logos/medicube.png',
+    logoTile: { bg: '#0F1F2A', fg: '#B8E8FF', initials: 'MC' },
+    // ─── 31 products, sorted by items sold; per-product samplesIncluded explicit ─────
+    links: [
+      { productName: 'Glass Glow Skincare Set (8 products)', slug: 'glass-glow-set', itemsSold: 507410, price: '$92.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQekqoivW9M' },
+      { productName: 'Glow in a Week Set', slug: 'glow-in-a-week-set', itemsSold: 186669, price: '$78.99', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQekrxYOW4G' },
+      { productName: 'PDRN Pink Collagen Gel Mask', slug: 'pdrn-pink-collagen-mask', itemsSold: 161365, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeksUaSo8i' },
+      { productName: 'Hypochlorous Acid Rice Peel Shot', slug: 'rice-peel-shot', itemsSold: 146650, price: '$34.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQelnXfSZI5' },
+      { productName: 'Mix & Match Boba Cream Set', slug: 'boba-cream-set', itemsSold: 134329, price: '$37.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeku2Hl2lJ' },
+      { productName: 'Mix & Match Toner Pads', slug: 'mix-match-toner-pads', itemsSold: 117025, price: '$35.90', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoxGtPwRB' },
+      { productName: 'Milky Glow Lock Collagen Duo', slug: 'milky-glow-duo', itemsSold: 114395, price: '$34.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoQDkbo3S' },
+      { productName: 'No-Cast Collagen Sunscreen SPF 50', slug: 'collagen-sunscreen', itemsSold: 91853, price: '$22.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoPisSKcr' },
+      { productName: "Miranda's Barrier Support Set", slug: 'mirandas-barrier-set', itemsSold: 84072, price: '$58.99', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoPA6b2LD' },
+      { productName: 'Kojic Acid Turmeric Night Mask', slug: 'kojic-turmeric-night-mask', itemsSold: 81838, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoqoskovA' },
+      { productName: 'Smooth & Clear Body Care Set', slug: 'body-care-set', itemsSold: 81335, price: '$30.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeovj4Q6m3' },
+      { productName: 'Mix & Match Eye Serum Set', slug: 'eye-serum-set', itemsSold: 77169, price: '$40.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoqT62Ysq' },
+      { productName: 'Clear & Glow Budget Set', slug: 'budget-glow-set', itemsSold: 69044, price: '$52.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoN85FIJD' },
+      { productName: 'PDRN Pink Caffeine Eye Patches', slug: 'pdrn-eye-patch', itemsSold: 62512, price: '$20.90', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoM0Qe91D' },
+      { productName: 'Salmon DNA Home Aesthetic Duo', slug: 'salmon-dna-duo', itemsSold: 57321, price: '$36.90', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoLMwkefA' },
+      { productName: 'Kojic Acid Turmeric Power Duo', slug: 'kojic-turmeric-power-duo', itemsSold: 53348, price: '$35.99', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoL6OFFyo' },
+      { productName: 'PDRN Pink Collagen Capsule Cream', slug: 'pdrn-pink-capsule-cream', itemsSold: 49326, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeotUkowmt' },
+      { productName: 'Double Cleansing Duo', slug: 'double-cleansing-duo', itemsSold: 45086, price: '$28.99', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeooNlHSmM' },
+      { productName: 'Rosemary PDRN Set', slug: 'rosemary-pdrn-set', itemsSold: 34750, price: '$28.99', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeonwk5Qhg' },
+      { productName: 'Kojic Acid Turmeric Peel Shot', slug: 'kojic-turmeric-peel-shot', itemsSold: 32931, price: '$34.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeonbhqT1l' },
+      { productName: 'PDRN Pink Collagen Toner Pads', slug: 'pdrn-toner-pad', itemsSold: 32689, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoHpdQNvc' },
+      { productName: 'Kojic Acid Turmeric Toner Pads', slug: 'kojic-turmeric-toner-pad', itemsSold: 32185, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoHDEd27I' },
+      { productName: 'PDRN Pink One-Day Serum', slug: 'pdrn-one-day-serum', itemsSold: 30753, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoFjq41Nx' },
+      { productName: 'Kojic Acid Golden Glow Set', slug: 'kojic-golden-glow-set', itemsSold: 25286, price: '$98.99', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoFBl6OO0' },
+      { productName: 'Celebrity Glass Skin Duo', slug: 'celebrity-glass-skin-duo', itemsSold: 24706, price: '$218.99', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoeqpB62P' },
+      { productName: 'PDRN Exosome Shot Serum', slug: 'pdrn-exosome-serum', itemsSold: 23160, price: '$22.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoCKmCdgr' },
+      { productName: 'Double Cleanse to Glow Duo', slug: 'double-cleanse-glow-duo', itemsSold: 19227, price: '$28.99', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeodqpkhKJ' },
+      { productName: 'Hypochlorous Acid Peel Masks', slug: 'hypochlorous-peel-masks', itemsSold: 17128, price: '$22.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoASbJdPZ' },
+      { productName: 'Deodorant', slug: 'deodorant', itemsSold: 16456, price: '$22.00', samplesIncluded: true, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeocfeGUGx' },
+      { productName: 'Wrapped in Glow Trio', slug: 'wrapped-in-glow-trio', itemsSold: 10655, price: '$58.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeoiqcAeDq' },
+      { productName: 'Pink & Gold Jelly Mist Duo', slug: 'jelly-mist-duo', itemsSold: 10051, price: '$44.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeo8Yl2EwW' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
