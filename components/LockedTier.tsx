@@ -1,4 +1,9 @@
-const DISCORD_TICKET_URL = 'https://discord.gg/kyvo';
+// Discord MAX-unlock deep-link — matches DEFAULT_TICKET_URL in data/brands.ts.
+// Points to the specific message in the Kyvo Discord that walks creators
+// through the MAX tier unlock flow. (NOT the general invite — the header
+// + footer Discord buttons still link to discord.gg/kyvo for new visitors.)
+const DISCORD_TICKET_URL =
+  'https://discord.com/channels/1407225718089191444/1432664324429709393/1504410437180194878';
 
 export function LockedTier() {
   return (

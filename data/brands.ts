@@ -508,8 +508,13 @@ export const brands: Brand[] = [
   // ────────────────────────────────────────────────────────────
 ];
 
-/** Default Discord ticket URL when a brand doesn't have its own ticketUrl set */
-export const DEFAULT_TICKET_URL = 'https://discord.gg/kyvo';
+/** Default Discord MAX-unlock URL — deep-link to the specific message inside
+ *  the Kyvo Discord that explains how to unlock the MAX tier. Used by every
+ *  "Click to Unlock" CTA on the banner slideshow AND every product's MAX tier
+ *  row in the brand modal. Individual brands can override per-brand via
+ *  brand.ticketUrl when they have their own dedicated thread/channel. */
+export const DEFAULT_TICKET_URL =
+  'https://discord.com/channels/1407225718089191444/1432664324429709393/1504410437180194878';
 
 /** Brands shown in the auto-rotating slideshow, ordered by priorityOrder */
 export const priorityBrands = brands
