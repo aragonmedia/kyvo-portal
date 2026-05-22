@@ -503,6 +503,33 @@ export const brands: Brand[] = [
       { productName: 'Pink & Gold Jelly Mist Duo', slug: 'jelly-mist-duo', itemsSold: 10051, price: '$44.00', samplesIncluded: false, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeo8Yl2EwW' },
     ],
   },
+  {
+    id: 'o-positiv',
+    name: 'O Positiv',
+    niche: 'Health',
+    // Spreadsheet: 25% open / 28% creator / 30% MAX.  Rates consistent across products.
+    openCollabRate: 25,
+    commissionRate: 28,
+    maxCommission: 30,
+    maxTier: false,
+    highCommission: true,    // +3% over open rate
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRNg1alRxMq',
+    tagline: "Women's probiotics & hormone wellness — Unlock 30% MAX",
+    logo: '/logos/o-positiv.png',
+    logoTile: { bg: '#2A1F2A', fg: '#FFB5C8', initials: 'OP' },
+    // ─── 8 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: "URO Women's Probiotics (60ct)", slug: 'uro-womens-probiotics', itemsSold: 1250770, price: '$21.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIReVpcH3' },
+      { productName: 'URO Boric Acid Vaginal Support', slug: 'uro-boric-acid', itemsSold: 279405, price: '$16.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIs7MrLnZ' },
+      { productName: 'URO pH Balanced Probiotic Wash', slug: 'uro-ph-wash', itemsSold: 105178, price: '$14.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROISjdPaYm' },
+      { productName: 'Wet & Wild Bundle', slug: 'wet-wild-bundle', itemsSold: 67365, price: '$36.98', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIsglUjsx' },
+      { productName: "Men's Health Supplement", slug: 'mens-health', itemsSold: 64856, price: '$22.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIUiFZjWm' },
+      { productName: 'FLO Hormone Balance & Cycle Support', slug: 'flo-hormone-balance', itemsSold: 59556, price: '$31.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROJ8fb6piy' },
+      { productName: 'Vaginal Balance Duo', slug: 'vaginal-balance-duo', itemsSold: 27666, price: '$33.98', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIup9ASBS' },
+      { productName: 'URO Vaginal Moisture & Mood Capsules', slug: 'uro-moisture-mood', itemsSold: 18852, price: '$24.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIY5AtXJb' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
