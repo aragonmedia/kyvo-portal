@@ -570,6 +570,29 @@ export const brands: Brand[] = [
       { productName: 'Batana Oil Conditioner', slug: 'batana-conditioner', itemsSold: 10, price: '$23.71', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTw4BIobab' },
     ],
   },
+  {
+    id: 'maelys',
+    name: 'Maëlys',
+    niche: 'Beauty',
+    // Spreadsheet: 25% open / 30% creator / 35% MAX.  Single-product brand —
+    // viral body-firming mousse.  Single product → "ADD ALL TO SHOWCASE" CTA
+    // is auto-suppressed (gated on links.length > 1).
+    openCollabRate: 25,
+    commissionRate: 30,
+    maxCommission: 35,
+    maxTier: false,
+    highCommission: true,    // +5% over open rate
+    samplesIncluded: false,
+    isNew: true,             // NEW pip on the brand card
+    // showcaseUrl: NOT set — single product → no Add All needed
+    tagline: 'Body firming mousse-to-oil — Unlock 35% MAX',
+    logo: '/logos/maelys.png',
+    logoTile: { bg: '#2A1525', fg: '#FFA8BC', initials: 'MA' },
+    // ─── 1 product ─────────────────────────────────────────────────
+    links: [
+      { productName: 'Get-Taut Body Firming Mousse-to-Oil', slug: 'get-taut-mousse', itemsSold: 5416, price: '$41.65', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWeLW2dRmc' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
