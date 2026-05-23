@@ -593,6 +593,28 @@ export const brands: Brand[] = [
       { productName: 'Get-Taut Body Firming Mousse-to-Oil', slug: 'get-taut-mousse', itemsSold: 5416, price: '$41.65', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWeLW2dRmc' },
     ],
   },
+  {
+    id: 'wonderskin',
+    name: 'Wonderskin',
+    niche: 'Beauty',
+    // Spreadsheet: 16% open / 18% creator / 20% MAX.  Longwear lip + eye makeup.
+    openCollabRate: 16,
+    commissionRate: 18,
+    maxCommission: 20,
+    maxTier: false,
+    highCommission: true,    // +2% over open rate
+    samplesIncluded: false,
+    isNew: true,             // NEW pip on the brand card
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWfre3zrvj',
+    tagline: 'Lipliners & longwear makeup — Unlock 20% MAX',
+    logo: '/logos/wonderskin.png',
+    logoTile: { bg: '#2A1525', fg: '#FFB0C8', initials: 'WS' },
+    // ─── 2 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: '1440 Longwear Eyeliner', slug: 'longwear-eyeliner', itemsSold: 160215, price: '$18.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWhE64N0VR' },
+      { productName: '360 Contour Lip Liner', slug: 'contour-lipliner', itemsSold: 77673, price: '$18.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWhE9lQahu' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
