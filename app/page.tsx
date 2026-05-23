@@ -16,6 +16,12 @@ import { Footer } from '@/components/Footer';
 
 const NICHE_FILTERS: FilterCategory[] = ['Health', 'Beauty', 'Skincare', 'Pet'];
 
+/** Sum of all product itemsSold for a brand. Used by the "Items Sold" sort pill
+ *  to rank brand cards highest → lowest. Products without itemsSold contribute 0. */
+function totalItemsSold(brand: Brand): number {
+  return brand.links.reduce((sum, l) => sum + (l.itemsSold ?? 0), 0);
+}
+
 export default function HomePage() {
   const [search, setSearch] = useState('');
   // Multi-select filter set. Empty = show everything.
@@ -50,6 +56,7 @@ export default function HomePage() {
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     const allMode = active.has('All Brands');
+    const wantItemsSort = active.has('Items Sold');
 
     // Within niches → OR.   Across other filters → AND.
     const selectedNiches = NICHE_FILTERS.filter((n) => active.has(n));
@@ -58,8 +65,14 @@ export default function HomePage() {
     const wantTrending = active.has('Trending');
     const wantHigher = active.has('Higher Commission');
 
-    return brands.filter((brand) => {
-      if (!allMode) {
+    const matched = brands.filter((brand) => {
+      // "Items Sold" is a sort, NOT a filter — treat it as transparent for the
+      // gating logic below so it can be combined with niche/MAX/etc. pills.
+      const onlySortActive =
+        !allMode &&
+        active.size === 1 &&
+        wantItemsSort;
+      if (!allMode && !onlySortActive) {
         if (selectedNiches.length > 0 && !selectedNiches.includes(brand.niche as FilterCategory)) {
           return false;
         }
@@ -82,6 +95,16 @@ export default function HomePage() {
       }
       return true;
     });
+
+    // Sort: when "Items Sold" pill is active, rank brands by total units sold
+    // across all their product links (highest first). Otherwise preserve the
+    // hand-curated order from data/brands.ts.
+    if (wantItemsSort) {
+      return [...matched].sort(
+        (a, b) => totalItemsSold(b) - totalItemsSold(a),
+      );
+    }
+    return matched;
   }, [search, active]);
 
   // Per-pill counts (respect search, ignore other filters)
@@ -110,8 +133,13 @@ export default function HomePage() {
   }, [search]);
 
   // Show MAX / BOOSTED section split only when "All Brands" is the only active
-  // filter (no other pills layered) and there's no active search.
-  const showSections = active.has('All Brands') && active.size === 1 && search.trim() === '';
+  // filter (no other pills layered), no search, and the "Items Sold" sort is
+  // NOT active — section splits would break the strict #1, #2, #3 ranking.
+  const showSections =
+    active.has('All Brands') &&
+    active.size === 1 &&
+    search.trim() === '' &&
+    !active.has('Items Sold');
 
   return (
     <>

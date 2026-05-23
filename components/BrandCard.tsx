@@ -35,8 +35,19 @@ export function BrandCard({ brand, onClick }: Props) {
         </span>
       )}
 
-      {/* Top-left indicator stack: Sample pip + Renewable pip (stackable) */}
+      {/* Top-left indicator stack: NEW + Sample + Renewable pips (stackable) */}
       <div className="absolute top-2.5 left-2.5 flex flex-col items-start gap-1">
+        {brand.isNew && (
+          <span
+            className="px-1.5 py-0.5 rounded-md
+                       text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
+                       bg-kyvo-cyan/15 text-kyvo-cyan border border-kyvo-cyan/40
+                       shadow-[0_0_12px_rgba(92,200,255,0.35)]"
+            title="Newly added brand"
+          >
+            NEW
+          </span>
+        )}
         {brand.samplesIncluded && (
           <span
             className="px-1.5 py-0.5 rounded-md

@@ -82,6 +82,11 @@ export interface Brand {
    *  shows a subtle 'Until MMM DD' pill so renewals are easy to spot. */
   expiresAt?: string;
 
+  /** NEW badge — shown as a green pip on the brand card. Lets creators quickly
+   *  spot freshly-added brands. Set manually when launching a new brand; clear
+   *  after a couple of weeks. */
+  isNew?: boolean;
+
   /** All product affiliate links for this brand */
   links: ProductLink[];
 }
@@ -90,6 +95,7 @@ export type FilterCategory =
   | 'All Brands'
   | 'MAX Commissions'
   | 'Samples Included'
+  | 'Items Sold'
   | 'Health'
   | 'Beauty'
   | 'Skincare'

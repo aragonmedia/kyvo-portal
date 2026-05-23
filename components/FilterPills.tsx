@@ -14,6 +14,7 @@ import type { FilterCategory } from '@/lib/types';
 const PILLS: FilterCategory[] = [
   'MAX Commissions',  // leftmost, most prominent
   'All Brands',
+  'Items Sold',       // sort: rank brands by total units sold descending
   'Samples Included',
   'Health',
   'Beauty',
@@ -22,6 +23,9 @@ const PILLS: FilterCategory[] = [
   'Trending',
   'Higher Commission',
 ];
+
+/** Pills that SORT instead of filtering — no count badge, ranking icon. */
+const SORT_PILLS = new Set<FilterCategory>(['Items Sold']);
 
 interface Props {
   active: Set<FilterCategory>;
@@ -54,9 +58,12 @@ export function FilterPills({ active, onToggle, counts }: Props) {
 function MobileFilterDropdown({ active, onToggle, counts }: Props) {
   const [open, setOpen] = useState(false);
   const allActive = active.has('All Brands') || active.size === 0;
+  // Sort pills are intentionally excluded from the "X filters active" count
+  // (they re-order, they don't filter).
   const activeFilterCount = active.has('All Brands')
     ? 0
-    : Array.from(active).filter((p) => p !== 'All Brands').length;
+    : Array.from(active).filter((p) => p !== 'All Brands' && !SORT_PILLS.has(p)).length;
+  const sortActive = Array.from(active).some((p) => SORT_PILLS.has(p));
 
   // Close panel on Escape
   useEffect(() => {
@@ -69,10 +76,14 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
   }, [open]);
 
   const summary = allActive
-    ? 'All Brands'
-    : activeFilterCount === 1
-      ? Array.from(active).find((p) => p !== 'All Brands')
-      : `${activeFilterCount} filters`;
+    ? sortActive
+      ? 'All Brands · Sorted'
+      : 'All Brands'
+    : activeFilterCount === 0 && sortActive
+      ? 'Sorted by Items Sold'
+      : activeFilterCount === 1
+        ? Array.from(active).find((p) => p !== 'All Brands' && !SORT_PILLS.has(p))
+        : `${activeFilterCount} filters${sortActive ? ' · sorted' : ''}`;
 
   return (
     <div className="relative">
@@ -134,6 +145,7 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
           <div className="max-h-[60vh] overflow-y-auto p-2 space-y-1">
             {PILLS.map((pill) => {
               const isAll = pill === 'All Brands';
+              const isSort = SORT_PILLS.has(pill);
               const isActive = isAll ? allActive : active.has(pill);
               const isHighlight =
                 pill === 'MAX Commissions' || pill === 'Samples Included';
@@ -152,7 +164,9 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
                                 isActive
                                   ? isHighlight
                                     ? 'bg-gradient-to-r from-kyvo-magenta/20 to-kyvo-pink/15 border border-kyvo-magenta/50'
-                                    : 'bg-gradient-to-r from-kyvo-violet/20 to-kyvo-magenta/15 border border-kyvo-violet/50'
+                                    : isSort
+                                      ? 'bg-gradient-to-r from-kyvo-cyan/15 to-kyvo-violet/15 border border-kyvo-cyan/50'
+                                      : 'bg-gradient-to-r from-kyvo-violet/20 to-kyvo-magenta/15 border border-kyvo-violet/50'
                                   : 'hover:bg-kyvo-elevated border border-transparent'
                               }`}
                 >
@@ -165,13 +179,21 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
                       {pill === 'Samples Included' && (
                         <PackageIcon className="w-3.5 h-3.5 text-kyvo-magenta" />
                       )}
+                      {pill === 'Items Sold' && (
+                        <RankIcon className="w-3.5 h-3.5 text-kyvo-cyan" />
+                      )}
                       <span className={`text-sm font-semibold
                                         ${isActive ? 'text-white' : 'text-kyvo-text'}`}>
                         {pill}
                       </span>
+                      {isSort && (
+                        <span className="text-[9px] uppercase tracking-widest text-kyvo-dim font-bold">
+                          sort
+                        </span>
+                      )}
                     </div>
                   </div>
-                  {typeof count === 'number' && (
+                  {!isSort && typeof count === 'number' && (
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0
                                        ${isActive
                                          ? 'bg-white/25 text-white'
@@ -214,9 +236,10 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
 
 function DesktopPillRow({ active, onToggle, counts }: Props) {
   const allActive = active.has('All Brands') || active.size === 0;
+  // Sort pills are intentionally excluded from the "X filters active" count.
   const activeFilterCount = active.has('All Brands')
     ? 0
-    : Array.from(active).filter((p) => p !== 'All Brands').length;
+    : Array.from(active).filter((p) => p !== 'All Brands' && !SORT_PILLS.has(p)).length;
 
   return (
     <>
@@ -247,6 +270,7 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
       <div className="flex gap-2 flex-wrap justify-center pb-1">
         {PILLS.map((pill) => {
           const isAll = pill === 'All Brands';
+          const isSort = SORT_PILLS.has(pill);
           const isActive = isAll ? allActive : active.has(pill);
           const isHighlight = pill === 'MAX Commissions' || pill === 'Samples Included';
           const count = counts?.[pill];
@@ -263,19 +287,26 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
                             isActive
                               ? isHighlight
                                 ? 'bg-gradient-to-r from-kyvo-magenta to-kyvo-pink text-white border-transparent shadow-[0_4px_24px_rgba(233,75,193,0.45)]'
-                                : 'bg-gradient-to-r from-kyvo-violet to-kyvo-magenta text-white border-transparent shadow-[0_4px_24px_rgba(123,63,228,0.4)]'
+                                : isSort
+                                  ? 'bg-gradient-to-r from-kyvo-cyan to-kyvo-violet text-white border-transparent shadow-[0_4px_24px_rgba(92,200,255,0.4)]'
+                                  : 'bg-gradient-to-r from-kyvo-violet to-kyvo-magenta text-white border-transparent shadow-[0_4px_24px_rgba(123,63,228,0.4)]'
                               : isHighlight
                                 ? 'bg-kyvo-magenta/8 text-kyvo-magenta border-kyvo-magenta/40 hover:border-kyvo-magenta/80 hover:bg-kyvo-magenta/15'
-                                : 'bg-kyvo-surface/60 text-kyvo-muted border-kyvo-border hover:text-white hover:border-kyvo-violet/60'
+                                : isSort
+                                  ? 'bg-kyvo-cyan/8 text-kyvo-cyan border-kyvo-cyan/40 hover:border-kyvo-cyan/80 hover:bg-kyvo-cyan/15'
+                                  : 'bg-kyvo-surface/60 text-kyvo-muted border-kyvo-border hover:text-white hover:border-kyvo-violet/60'
                           }`}
             >
-              {isActive && !isAll && <CheckIcon className="w-3.5 h-3.5" />}
+              {isActive && !isAll && !isSort && <CheckIcon className="w-3.5 h-3.5" />}
               {pill === 'MAX Commissions' && !isActive && <FireSpan />}
               {pill === 'Samples Included' && !isActive && (
                 <PackageIcon className="w-3.5 h-3.5" />
               )}
+              {pill === 'Items Sold' && (
+                <RankIcon className="w-3.5 h-3.5" />
+              )}
               {pill}
-              {typeof count === 'number' && (
+              {!isSort && typeof count === 'number' && (
                 <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full
                                    ${isActive
                                      ? 'bg-white/25 text-white'
@@ -283,6 +314,12 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
                                        ? 'bg-kyvo-magenta/20 text-kyvo-magenta'
                                        : 'bg-kyvo-elevated text-kyvo-dim'}`}>
                   {count}
+                </span>
+              )}
+              {isSort && (
+                <span className={`text-[9px] uppercase tracking-widest font-bold
+                                   ${isActive ? 'text-white/70' : 'text-kyvo-dim'}`}>
+                  sort
                 </span>
               )}
             </button>
@@ -317,6 +354,27 @@ function CheckBox({ active, highlight }: { active: boolean; highlight: boolean }
 
 function FireSpan() {
   return <span className="text-xs leading-none" aria-hidden>🔥</span>;
+}
+
+function RankIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      {/* Bar chart — bars increase right-to-left to suggest "ranked" ordering */}
+      <path d="M3 20h18" />
+      <rect x="5" y="13" width="3.2" height="6" rx="0.6" />
+      <rect x="10.4" y="9" width="3.2" height="10" rx="0.6" />
+      <rect x="15.8" y="5" width="3.2" height="14" rx="0.6" />
+    </svg>
+  );
 }
 
 function PackageIcon({ className = '' }: { className?: string }) {

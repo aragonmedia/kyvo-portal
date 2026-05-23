@@ -530,6 +530,46 @@ export const brands: Brand[] = [
       { productName: 'URO Vaginal Moisture & Mood Capsules', slug: 'uro-moisture-mood', itemsSold: 18852, price: '$24.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJROIY5AtXJb' },
     ],
   },
+  {
+    id: 'lebanta-haircare',
+    name: 'Lebanta Haircare',
+    niche: 'Beauty',
+    // Spreadsheet: 20% open / 35% creator / 50% MAX.  Rates consistent across products.
+    // Batana oil hair growth — Honduran cosmetic blend with castor, pumpkin seed,
+    // coconut & rosemary. All 12 SKUs ship with creator samples.
+    openCollabRate: 20,
+    commissionRate: 35,
+    maxCommission: 50,
+    maxTier: true,           // 50% MAX qualifies for MAX tier
+    priority: true,          // slideshow YES
+    priorityOrder: 4,        // after Natural Stacks (1), Bold Buns (2), Fuel (3)
+    trending: true,
+    highCommission: true,    // +15% over open rate
+    samplesIncluded: true,   // ALL products ship with samples
+    isNew: true,             // NEW pip on the brand card
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTv0Kv0pJ7',
+    tagline: 'Batana oil hair growth & scalp care — Unlock 50% MAX',
+    bannerGradient:
+      'linear-gradient(135deg, #1a0b3e 0%, #4a1d4a 35%, #8B5A3C 70%, #E6C087 100%)',
+    bannerImage: '/banners/lebanta-haircare.jpg',
+    logo: '/logos/lebanta-haircare.png',
+    logoTile: { bg: '#2A1F1A', fg: '#E6C087', initials: 'LH' },
+    // ─── 12 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Batana Oil for Hair Growth (2-Pack)', slug: 'batana-oil-2pk', itemsSold: 28188, price: '$34.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTo9Uve3GZ' },
+      { productName: 'Wonder Growth Oil — Batana Blend (4oz)', slug: 'wonder-growth-oil', itemsSold: 19978, price: '$19.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTv5TaDkl3' },
+      { productName: 'Hair Growth Spray (2-Pack, 120ml)', slug: 'hair-growth-spray-2pk', itemsSold: 3748, price: '$34.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTtx0EEOz0' },
+      { productName: 'Batana Oil for Hair Growth (3-Pack)', slug: 'batana-oil-3pk', itemsSold: 2941, price: '$44.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTvlf3WnzI' },
+      { productName: 'Raw Batana Oil 4oz (1-Pack)', slug: 'raw-batana-oil-1pk', itemsSold: 1589, price: '$27.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTvnSPmbw7' },
+      { productName: 'Hair Growth Spray (120ml)', slug: 'hair-growth-spray-1pk', itemsSold: 263, price: '$27.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTvor7Plnb' },
+      { productName: 'Hair Growth Spray & Wonder Growth Serum Duo Set', slug: 'spray-serum-duo', itemsSold: 167, price: '$56.96', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTweZKApdi' },
+      { productName: 'Raw Batana Oil 4oz (2-Pack)', slug: 'raw-batana-oil-2pk', itemsSold: 130, price: '$39.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTwyU6e7Tq' },
+      { productName: 'Hair Growth Spray (3-Pack, 120ml)', slug: 'hair-growth-spray-3pk', itemsSold: 91, price: '$49.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTw7s5mVs7' },
+      { productName: 'Raw Batana Oil 4oz (3-Pack)', slug: 'raw-batana-oil-3pk', itemsSold: 58, price: '$49.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTwwnOrMQu' },
+      { productName: 'Batana Oil Shampoo', slug: 'batana-shampoo', itemsSold: 12, price: '$23.71', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTw5PkPX7W' },
+      { productName: 'Batana Oil Conditioner', slug: 'batana-conditioner', itemsSold: 10, price: '$23.71', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTw4BIobab' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
