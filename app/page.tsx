@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from 'react';
 import { brands, priorityBrands } from '@/data/brands';
-import type { Brand, FilterCategory } from '@/lib/types';
+import type { Brand, FilterCategory, Niche } from '@/lib/types';
+import { niches } from '@/lib/types';
 
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
@@ -73,8 +74,14 @@ export default function HomePage() {
         active.size === 1 &&
         wantItemsSort;
       if (!allMode && !onlySortActive) {
-        if (selectedNiches.length > 0 && !selectedNiches.includes(brand.niche as FilterCategory)) {
-          return false;
+        if (selectedNiches.length > 0) {
+          // Brand passes if ANY of its niches matches ANY selected niche pill
+          // (cross-category brands surface in multiple filters).
+          const brandNiches = niches(brand);
+          const matchesAny = brandNiches.some((n) =>
+            selectedNiches.includes(n as FilterCategory),
+          );
+          if (!matchesAny) return false;
         }
         // MAX Commissions: explicit maxTier flag (Natural Stacks, Bold Buns, Fuel)
         if (wantMax && !brand.maxTier) return false;
@@ -86,7 +93,7 @@ export default function HomePage() {
       if (q) {
         const hay = [
           brand.name,
-          brand.niche,
+          ...niches(brand),
           ...brand.links.map((l) => l.productName),
         ]
           .join(' ')
@@ -112,21 +119,23 @@ export default function HomePage() {
     const q = search.trim().toLowerCase();
     const filteredBySearch = q
       ? brands.filter((b) =>
-          [b.name, b.niche, ...b.links.map((l) => l.productName)]
+          [b.name, ...niches(b), ...b.links.map((l) => l.productName)]
             .join(' ')
             .toLowerCase()
             .includes(q),
         )
       : brands;
 
+    const hasNiche = (b: Brand, n: Niche) => niches(b).includes(n);
+
     return {
       'All Brands': filteredBySearch.length,
       'MAX Commissions': filteredBySearch.filter((b) => b.maxTier).length,
       'Samples Included': filteredBySearch.filter((b) => b.samplesIncluded).length,
-      Health: filteredBySearch.filter((b) => b.niche === 'Health').length,
-      Beauty: filteredBySearch.filter((b) => b.niche === 'Beauty').length,
-      Skincare: filteredBySearch.filter((b) => b.niche === 'Skincare').length,
-      Pet: filteredBySearch.filter((b) => b.niche === 'Pet').length,
+      Health: filteredBySearch.filter((b) => hasNiche(b, 'Health')).length,
+      Beauty: filteredBySearch.filter((b) => hasNiche(b, 'Beauty')).length,
+      Skincare: filteredBySearch.filter((b) => hasNiche(b, 'Skincare')).length,
+      Pet: filteredBySearch.filter((b) => hasNiche(b, 'Pet')).length,
       Trending: filteredBySearch.filter((b) => b.trending || b.maxTier).length,
       'Higher Commission': filteredBySearch.filter((b) => b.highCommission).length,
     } as const;

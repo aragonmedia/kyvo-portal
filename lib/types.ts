@@ -38,7 +38,11 @@ export interface Brand {
   logo?: string;
   /** Fallback colored tile when no logo image exists */
   logoTile?: { bg: string; fg: string; initials: string };
-  niche: Niche;
+  /** Niche category. Use a single string for single-category brands, or an
+   *  array for cross-category brands (e.g. hair/skin/nails supplements belong
+   *  in both 'Health' and 'Beauty' filters). Use the `niches()` helper to
+   *  always read as an array. */
+  niche: Niche | Niche[];
 
   /** ───────── 3-tier commission model ─────────
    *  openCollabRate  = base rate the brand offers on TikTok Shop to ANY creator
@@ -89,6 +93,12 @@ export interface Brand {
 
   /** All product affiliate links for this brand */
   links: ProductLink[];
+}
+
+/** Always-an-array view of brand.niche. Use this everywhere instead of
+ *  branching on `Array.isArray(brand.niche)` at the call site. */
+export function niches(brand: Brand): Niche[] {
+  return Array.isArray(brand.niche) ? brand.niche : [brand.niche];
 }
 
 export type FilterCategory =

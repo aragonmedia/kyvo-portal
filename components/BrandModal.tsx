@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import type { Brand, ProductLink } from '@/lib/types';
+import { niches } from '@/lib/types';
 import { DEFAULT_TICKET_URL } from '@/data/brands';
 
 interface Props {
@@ -60,7 +61,9 @@ export function BrandModal({ brand, onClose }: Props) {
                 {brand.name}
               </div>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-xs font-semibold text-kyvo-muted">{brand.niche}</span>
+                <span className="text-xs font-semibold text-kyvo-muted">
+                  {niches(brand).join(' · ')}
+                </span>
                 <span className="text-kyvo-dim">·</span>
                 <span className="text-xs font-semibold text-kyvo-green">
                   {brand.links.length} {brand.links.length === 1 ? 'product' : 'products'}

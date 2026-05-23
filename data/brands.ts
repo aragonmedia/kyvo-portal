@@ -615,6 +615,31 @@ export const brands: Brand[] = [
       { productName: '360 Contour Lip Liner', slug: 'contour-lipliner', itemsSold: 77673, price: '$18.00', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWhE9lQahu' },
     ],
   },
+  {
+    id: 'rainbow-nutrients',
+    name: 'Rainbow Nutrients',
+    // Cross-category: hair/skin/nails supplement — files under BOTH Health
+    // (supplement form factor) and Beauty (target outcomes), so it surfaces
+    // in either niche filter.
+    niche: ['Health', 'Beauty'],
+    // Spreadsheet: 30% open / 32% creator / 35% MAX.  Rates consistent across products.
+    openCollabRate: 30,
+    commissionRate: 32,
+    maxCommission: 35,
+    maxTier: false,
+    highCommission: true,    // +2% over open rate
+    samplesIncluded: false,
+    isNew: true,             // NEW pip on the brand card
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWi3blOyw1',
+    tagline: '24-in-1 hair, skin & nails vitamins — Unlock 35% MAX',
+    logo: '/logos/rainbow-nutrients.png',
+    logoTile: { bg: '#1F1A2A', fg: '#FFB8E0', initials: 'RN' },
+    // ─── 2 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: '24-in-1 Hair Growth Vitamins (60-day supply)', slug: 'hair-growth-vitamins-60day', itemsSold: 124469, price: '$24.16', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWiwzloH6q' },
+      { productName: '24-in-1 Hair Growth Vitamins (120-day supply, 2-pack)', slug: 'hair-growth-vitamins-120day', itemsSold: 39443, price: '$33.90', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWixcHTtvL' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
