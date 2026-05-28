@@ -28,13 +28,18 @@ const DESCRIPTION =
  * Open Graph + Twitter card configuration drives how the URL renders when
  * pasted into Discord, iMessage, Twitter, Slack, WhatsApp, etc.
  *
- * Upload spec for the social preview image:
- *   File path:  /public/og-image.png  (or .jpg)
- *   Dimensions: 1200 × 630 px  (Facebook/Twitter standard)
- *   File size:  Under 1 MB
- *   Format:     PNG or JPG, sRGB color space
+ * WhatsApp quirk: its preview crawler silently drops OG images larger than
+ * ~300KB. Discord/iMessage/Twitter happily render 1MB PNGs but WhatsApp
+ * falls back to "no image" if the file is too big. So we ship the JPEG
+ * variant FIRST in the images array (~100KB, WhatsApp-friendly) and keep
+ * the higher-fidelity PNG as a secondary entry for platforms that pick it.
  *
- * If /public/og-image.png is missing, link previews still render with the
+ * Upload spec for the social preview image:
+ *   File path:  /public/og-image.jpg  (preferred — under 300KB)
+ *   Dimensions: 1200 × 630 px  (Facebook/Twitter standard)
+ *   Format:     JPEG @ quality 85, sRGB color space
+ *
+ * If /public/og-image.jpg is missing, link previews still render with the
  * title + description but no image. Drop the file in and the next deploy
  * picks it up automatically.
  */
@@ -61,9 +66,16 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
+        // WhatsApp-friendly JPEG (~100KB) listed FIRST so WhatsApp picks it.
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Kyvo — Higher Commissions. One Tap Away.',
+        type: 'image/jpeg',
+      },
+      {
+        // Higher-fidelity PNG fallback for platforms that prefer PNG.
         url: '/og-image.png',
-        // Standard 1200×630 — re-export your og-image.png at these exact
-        // dimensions for best results across Discord, iMessage, Twitter, etc.
         width: 1200,
         height: 630,
         alt: 'Kyvo — Higher Commissions. One Tap Away.',
@@ -77,7 +89,7 @@ export const metadata: Metadata = {
     description: 'Boosted TikTok Shop commissions across partnered brands. One tap away.',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Kyvo — Higher Commissions. One Tap Away.',
