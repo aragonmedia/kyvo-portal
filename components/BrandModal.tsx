@@ -83,6 +83,12 @@ export function BrandModal({ brand, onClose }: Props) {
 
         {/* Product cards — sorted by items sold (descending) */}
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+          {/* "Register for samples" CTA — only when brand has a registration URL.
+              Sits at the very top of the modal body for maximum visibility. */}
+          {brand.sampleRegistrationUrl && (
+            <SampleRegistrationCTA url={brand.sampleRegistrationUrl} />
+          )}
+
           {/* ADD ALL TO SHOWCASE — only when brand has multiple products */}
           {brand.links.length > 1 && <ShowcaseAllCTA brand={brand} />}
 
@@ -151,6 +157,63 @@ function ShowcaseAllCTA({ brand }: { brand: Brand }) {
   );
 }
 
+/**
+ * "Register for samples" CTA — appears when brand.sampleRegistrationUrl is set.
+ * Distinct green-glow treatment so it doesn't get confused with the violet
+ * "Add All to Showcase" CTA. Opens the registration URL (usually a Google
+ * Form or Typeform) in a new tab.
+ */
+function SampleRegistrationCTA({ url }: { url: string }) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative block mb-4 overflow-hidden rounded-2xl
+                 bg-gradient-to-r from-kyvo-green/25 via-kyvo-green/15 to-kyvo-cyan/20
+                 border border-kyvo-green/45
+                 hover:border-kyvo-green/80
+                 hover:shadow-[0_0_28px_rgba(34,245,163,0.35)]
+                 transition-all duration-200"
+    >
+      <div className="relative flex items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl
+                          bg-kyvo-green/20 border border-kyvo-green/40
+                          flex items-center justify-center shrink-0">
+            <PackageIcon className="w-5 h-5 text-kyvo-green" />
+          </div>
+          <div className="min-w-0">
+            <div className="font-display font-bold text-sm sm:text-base text-white leading-tight">
+              Register for Samples
+            </div>
+            <div className="text-[10px] sm:text-xs text-kyvo-green/85 leading-tight">
+              Free product samples for approved creators
+            </div>
+          </div>
+        </div>
+        <div className="shrink-0 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-kyvo-green text-kyvo-void
+                        flex items-center justify-center
+                        group-hover:scale-110 transition-transform">
+          <ArrowUpRight className="w-4 h-4" />
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function PackageIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
+         className={className} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="m7.5 4.27 9 5.15" />
+      <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+      <path d="M3.27 6.96 12 12.01l8.73-5.05" />
+      <path d="M12 22.08V12" />
+    </svg>
+  );
+}
+
 function PlusIcon({ className = '' }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -172,7 +235,12 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
   // the creator will actually earn, never generalize.
   const openRate = link.openCollabRate ?? brand.openCollabRate ?? 10;
   const kyvoRate = link.commission ?? brand.commissionRate;
-  const maxRate = link.maxCommission ?? brand.maxCommission ?? 50;
+  // maxRate is OPTIONAL — when the brand gives the top rate to everyone (e.g.
+  // Whyte: 20% Kyvo Boost = 20% MAX), there's nothing to unlock. Suppress the
+  // locked tier entirely in that case rather than show a redundant row.
+  const rawMax = link.maxCommission ?? brand.maxCommission;
+  const showLockedMax = typeof rawMax === 'number' && rawMax > kyvoRate;
+  const maxRate = rawMax ?? kyvoRate;
   const boostLift = kyvoRate - openRate;
   const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
   // Per-product samples flag — falls back to brand-level. Mixed-sample brands
@@ -238,13 +306,15 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
           tone="primary"
           href={link.url}
         />
-        <TierRow
-          label="MAX Tier"
-          sublabel="Click to Unlock"
-          rate={maxRate}
-          tone="locked"
-          href={ticketUrl}
-        />
+        {showLockedMax && (
+          <TierRow
+            label="MAX Tier"
+            sublabel="Click to Unlock"
+            rate={maxRate}
+            tone="locked"
+            href={ticketUrl}
+          />
+        )}
       </div>
     </div>
   );

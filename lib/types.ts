@@ -91,8 +91,33 @@ export interface Brand {
    *  after a couple of weeks. */
   isNew?: boolean;
 
+  /** Optional URL for sample registration (Google Forms, Typeform, etc.).
+   *  When set, the BrandModal shows a prominent "Register for samples" CTA
+   *  that opens this URL in a new tab. Use this for brands that gate sample
+   *  shipments behind a registration flow (often a QR code in TikTok bio). */
+  sampleRegistrationUrl?: string;
+
   /** All product affiliate links for this brand */
   links: ProductLink[];
+}
+
+/** Reward campaign — "Generate X GMV earn $X" style promotions a brand runs
+ *  for creators. Rendered as a highlighted card in the homepage Rewards
+ *  section between the slideshow and search. Tap to zoom the image. */
+export interface RewardCampaign {
+  /** brand.id this campaign belongs to. Used to look up brand metadata
+   *  (logo + name) so the card stays in sync with the brand record. */
+  brandId: string;
+  /** Path under /public/rewards/<brand-id>.png (or .jpg). Required — the
+   *  image IS the headline of the card. */
+  image: string;
+  /** Optional short headline shown above the image. */
+  title?: string;
+  /** Optional one-line description shown below the image. */
+  description?: string;
+  /** Optional CTA URL the entire card links to in addition to the zoom modal.
+   *  Defaults to opening the zoom-image modal only. */
+  href?: string;
 }
 
 /** Always-an-array view of brand.niche. Use this everywhere instead of

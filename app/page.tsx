@@ -1,13 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { brands, priorityBrands } from '@/data/brands';
+import { brands, priorityBrands, rewardCampaigns } from '@/data/brands';
 import type { Brand, FilterCategory, Niche } from '@/lib/types';
 import { niches } from '@/lib/types';
 
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { BannerSlideshow } from '@/components/BannerSlideshow';
+import { RewardCampaigns } from '@/components/RewardCampaigns';
 import { SearchBar } from '@/components/SearchBar';
 import { FilterPills } from '@/components/FilterPills';
 import { BrandGrid } from '@/components/BrandGrid';
@@ -161,6 +162,11 @@ export default function HomePage() {
           brands={priorityBrands}
           onBrandClick={(b) => setOpenBrand(b)}
         />
+
+        {/* Reward Campaigns — sits BELOW the slideshow (per Kevin's call) so
+            the MAX brand slideshow keeps top-of-page prominence. Tap any
+            campaign card to zoom the image. */}
+        <RewardCampaigns campaigns={rewardCampaigns} brands={brands} />
 
         <SearchBar value={search} onChange={setSearch} />
 

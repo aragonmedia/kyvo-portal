@@ -1,4 +1,4 @@
-import type { Brand } from '@/lib/types';
+import type { Brand, RewardCampaign } from '@/lib/types';
 
 /**
  * KYVO PARTNERED BRANDS
@@ -640,6 +640,39 @@ export const brands: Brand[] = [
       { productName: '24-in-1 Hair Growth Vitamins (120-day supply, 2-pack)', slug: 'hair-growth-vitamins-120day', itemsSold: 39443, price: '$33.90', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWixcHTtvL' },
     ],
   },
+  {
+    id: 'whyte',
+    name: 'Whyte',
+    // Cross-category: organic oral care — files under BOTH Health (oral
+    // hygiene) and Beauty (teeth whitening), so it surfaces in either filter.
+    niche: ['Health', 'Beauty'],
+    // Spreadsheet: 15% open / 20% creator.  Whyte gives the TOP rate (20%) to
+    // EVERY creator with NO Discord unlock — leave maxCommission undefined so
+    // BrandModal suppresses the locked MAX row entirely.  Open Collab and
+    // Kyvo Boost are the only two tiers shown.
+    openCollabRate: 15,
+    commissionRate: 20,
+    // maxCommission: intentionally OMITTED — Whyte gives top rate to everyone.
+    maxTier: false,
+    highCommission: true,    // +5% over open rate
+    samplesIncluded: true,
+    isNew: true,             // NEW pip on the brand card
+    sampleRegistrationUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLScfSU27q_s0CIA3_qJVH9OX-yrcyW4_azhc68aWKvXlcSLzrQ/viewform?pli=1',
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH6f4Me9ev',
+    tagline: 'Organic oil pulling & teeth whitening — 20% flat for all creators',
+    logo: '/logos/whyte.png',
+    logoTile: { bg: '#1A1A22', fg: '#E8C8FF', initials: 'WH' },
+    // ─── 6 products, sorted by items sold (descending) ────────────────
+    links: [
+      { productName: 'Organic Oil Pulling Rinse (Spearmint, 8oz)', slug: 'oil-pulling-spearmint', itemsSold: 15676, price: '$15.17', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH7WF7AeOr' },
+      { productName: 'Purple Teeth Brightening Powder (15g, Mint)', slug: 'purple-brightening-powder', itemsSold: 13716, price: '$21.99-$60.99', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH8w81WKCT' },
+      { productName: 'Clove Oil Pulling Rinse (Bubblegum, 8oz)', slug: 'oil-pulling-clove-bubblegum', itemsSold: 3124, price: '$19.30', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH7qOyJ3QO' },
+      { productName: 'Cinnamon Coconut Oil Pulling Rinse (8oz)', slug: 'oil-pulling-cinnamon', itemsSold: 1764, price: '$15.17', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH91HXWqhG' },
+      { productName: 'Oil Pulling Rinse + Whitening Powder Bundle', slug: 'rinse-powder-bundle', itemsSold: 172, price: '$38.50', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH8stXUZwF' },
+      { productName: '3-Flavor Coconut Mouthwash Bundle (8oz × 3)', slug: 'three-flavor-bundle', itemsSold: 88, price: '$87.40', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH9ZeNmpCD' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
@@ -660,3 +693,27 @@ export const priorityBrands = brands
 
 /** Backwards-compat — heroBrands was the previous stacked-banner export */
 export const heroBrands = priorityBrands;
+
+/**
+ * REWARD CAMPAIGNS — "Generate $X GMV earn $X" style promotions.
+ *
+ * Rendered as highlighted cards in the section between the slideshow and
+ * search. Tap a card to zoom the image. The image IS the headline of each
+ * card — keep it self-explanatory so creators understand the offer at a
+ * glance without needing to read the optional title/description fields.
+ *
+ * Image conventions:
+ *   /public/rewards/<brand-id>.png or .jpg
+ *   Roughly 800×800 to 1200×800 — readable on mobile zoom modal
+ *   Under 300KB ideal for fast load
+ *
+ * To add a campaign: drop the image in /public/rewards/, then add an entry
+ * here referencing brandId. Multiple campaigns per brand are allowed.
+ */
+export const rewardCampaigns: RewardCampaign[] = [
+  {
+    brandId: 'whyte',
+    image: '/rewards/whyte.png',
+    // title + description optional — image speaks for itself
+  },
+];
