@@ -103,18 +103,30 @@ export interface Brand {
 
 /** Reward campaign — "Generate X GMV earn $X" style promotions a brand runs
  *  for creators. Rendered as a highlighted card in the homepage Rewards
- *  section between the slideshow and search. Tap to zoom the image. */
+ *  section between the slideshow and search. Tap the card to zoom the
+ *  image (or render the PDF if documentUrl is set). */
 export interface RewardCampaign {
   /** brand.id this campaign belongs to. Used to look up brand metadata
    *  (logo + name) so the card stays in sync with the brand record. */
   brandId: string;
-  /** Path under /public/rewards/<brand-id>.png (or .jpg). Required — the
-   *  image IS the headline of the card. */
+  /** Card preview thumbnail — JPEG or PNG under ~300KB.
+   *  Path under /public/rewards/<brand-id>.<ext>. The image IS the headline
+   *  of the card on the homepage. For PDF campaigns, this should be a
+   *  raster preview generated from the first page of the PDF. */
   image: string;
+  /** Optional path to a high-quality PDF version of the campaign material.
+   *  When set, the zoom modal renders the PDF in an iframe instead of the
+   *  preview image — preserves crisp text/graphics for desktop creators. */
+  documentUrl?: string;
   /** Optional short headline shown above the image. */
   title?: string;
   /** Optional one-line description shown below the image. */
   description?: string;
+  /** Optional registration URL. When set, the card renders a prominent
+   *  "Register for Campaign" CTA below the image. */
+  registrationUrl?: string;
+  /** Override the default "Register for Campaign" CTA label. */
+  registrationLabel?: string;
   /** Optional CTA URL the entire card links to in addition to the zoom modal.
    *  Defaults to opening the zoom-image modal only. */
   href?: string;

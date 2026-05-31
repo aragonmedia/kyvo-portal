@@ -713,7 +713,15 @@ export const heroBrands = priorityBrands;
 export const rewardCampaigns: RewardCampaign[] = [
   {
     brandId: 'whyte',
-    image: '/rewards/whyte.png',
-    // title + description optional — image speaks for itself
+    // JPEG preview for the card thumbnail (fast load, ~220KB).
+    image: '/rewards/whyte.jpg',
+    // High-quality PDF source — opened in an iframe by the zoom modal so
+    // creators get the original crisp graphics + readable text.
+    documentUrl: '/rewards/whyte.pdf',
+    // "CLIMB THE CROWN" creator rewards campaign — uses the same Whyte
+    // sample-registration Google Form as the gate.
+    registrationUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLScfSU27q_s0CIA3_qJVH9OX-yrcyW4_azhc68aWKvXlcSLzrQ/viewform?pli=1',
+    // registrationLabel: defaults to "Register for Campaign"
   },
 ];

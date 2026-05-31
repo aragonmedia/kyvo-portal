@@ -43,9 +43,10 @@ export function RewardCampaigns({ campaigns, brands }: Props) {
 
         {/* Horizontal scrolling row of campaign cards.
             On mobile: one-and-a-half cards visible so the row reads as scrollable.
-            On desktop: cards line up and fill the row. */}
+            On desktop: with few cards the row stays centered; with many it scrolls. */}
         <div className="-mx-4 px-4 overflow-x-auto no-scrollbar">
-          <div className="flex gap-3 sm:gap-4 pb-2 snap-x snap-mandatory">
+          <div className="flex gap-3 sm:gap-4 pb-2 snap-x snap-mandatory
+                          justify-start sm:justify-center">
             {campaigns.map((c) => {
               const brand = brandById.get(c.brandId);
               return (
@@ -86,9 +87,13 @@ function CampaignCard({
   brand: Brand | undefined;
   onZoom: () => void;
 }) {
+  // We use a <div> wrapper (not <button>) so we can nest the "Register for
+  // Campaign" button cleanly without invalid <button-in-button> HTML.
+  // The image area is its own button that triggers the zoom.
+  const registrationLabel = campaign.registrationLabel ?? 'Register for Campaign';
+
   return (
-    <button
-      onClick={onZoom}
+    <div
       className="group relative shrink-0 snap-start
                  w-[280px] sm:w-[340px] md:w-[380px]
                  rounded-2xl
@@ -99,49 +104,55 @@ function CampaignCard({
                  hover:shadow-[0_4px_32px_rgba(92,200,255,0.4)]
                  transition-all duration-200
                  hover:-translate-y-0.5
-                 overflow-hidden text-left"
-      aria-label={`Zoom ${brand?.name ?? 'campaign'} reward details`}
+                 overflow-hidden flex flex-col"
     >
-      {/* Brand chip on top-left */}
-      {brand && (
-        <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5
-                        px-2 py-1 rounded-full
-                        bg-kyvo-void/70 backdrop-blur-md border border-white/20">
-          <BrandMiniLogo brand={brand} />
-          <span className="text-[10px] font-bold text-white uppercase tracking-wider">
-            {brand.name}
-          </span>
+      {/* Clickable image region — opens zoom modal */}
+      <button
+        onClick={onZoom}
+        className="relative text-left"
+        aria-label={`Zoom ${brand?.name ?? 'campaign'} reward details`}
+      >
+        {/* Brand chip on top-left */}
+        {brand && (
+          <div className="absolute top-2.5 left-2.5 z-10 flex items-center gap-1.5
+                          px-2 py-1 rounded-full
+                          bg-kyvo-void/70 backdrop-blur-md border border-white/20">
+            <BrandMiniLogo brand={brand} />
+            <span className="text-[10px] font-bold text-white uppercase tracking-wider">
+              {brand.name}
+            </span>
+          </div>
+        )}
+
+        {/* Zoom-icon chip top-right (telegraphs interactivity) */}
+        <div className="absolute top-2.5 right-2.5 z-10
+                        w-7 h-7 rounded-full
+                        bg-kyvo-void/70 backdrop-blur-md border border-white/20
+                        flex items-center justify-center
+                        group-hover:bg-kyvo-cyan group-hover:text-kyvo-deep
+                        group-hover:scale-110
+                        transition-all duration-200
+                        text-white">
+          <ZoomIcon className="w-3.5 h-3.5" />
         </div>
-      )}
 
-      {/* Zoom-icon chip top-right (telegraphs interactivity) */}
-      <div className="absolute top-2.5 right-2.5 z-10
-                      w-7 h-7 rounded-full
-                      bg-kyvo-void/70 backdrop-blur-md border border-white/20
-                      flex items-center justify-center
-                      group-hover:bg-kyvo-cyan group-hover:text-kyvo-deep
-                      group-hover:scale-110
-                      transition-all duration-200
-                      text-white">
-        <ZoomIcon className="w-3.5 h-3.5" />
-      </div>
-
-      {/* Campaign image — `object-top` anchors tall infographics so the
-          brand headline shows in the card preview (e.g. "CLIMB THE CROWN"
-          on the Whyte campaign). Tap to zoom for the full readable image. */}
-      <div className="aspect-[5/4] w-full bg-kyvo-deep overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={campaign.image}
-          alt={campaign.title ?? `${brand?.name ?? 'Brand'} reward campaign`}
-          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-          loading="lazy"
-        />
-      </div>
+        {/* Campaign image — `object-top` anchors tall infographics so the
+            brand headline shows in the card preview (e.g. "CLIMB THE CROWN"
+            on the Whyte campaign). Tap to zoom for the full readable image. */}
+        <div className="aspect-[5/4] w-full bg-kyvo-deep overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={campaign.image}
+            alt={campaign.title ?? `${brand?.name ?? 'Brand'} reward campaign`}
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
+        </div>
+      </button>
 
       {/* Optional title + description footer */}
       {(campaign.title || campaign.description) && (
-        <div className="px-3 py-2.5 sm:px-4 sm:py-3 border-t border-kyvo-cyan/20">
+        <div className="px-3 pt-2.5 sm:px-4 sm:pt-3 border-t border-kyvo-cyan/20">
           {campaign.title && (
             <div className="font-display font-bold text-sm text-white leading-tight">
               {campaign.title}
@@ -154,7 +165,31 @@ function CampaignCard({
           )}
         </div>
       )}
-    </button>
+
+      {/* "Register for Campaign" CTA — sits directly below the image so the
+          offer is one tap away. Opens registration URL in a new tab. */}
+      {campaign.registrationUrl && (
+        <a
+          href={campaign.registrationUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="mx-3 sm:mx-4 mt-3 mb-3 sm:mb-4
+                     inline-flex items-center justify-center gap-2
+                     px-4 py-2.5 rounded-xl
+                     bg-gradient-to-r from-kyvo-cyan via-kyvo-violet to-kyvo-magenta
+                     hover:from-kyvo-magenta hover:to-kyvo-pink
+                     text-white text-sm font-bold
+                     shadow-[0_4px_24px_rgba(92,200,255,0.35)]
+                     hover:shadow-[0_4px_28px_rgba(233,75,193,0.5)]
+                     hover:scale-[1.02]
+                     transition-all duration-200"
+        >
+          {registrationLabel}
+          <ArrowUpRight className="w-4 h-4" />
+        </a>
+      )}
+    </div>
   );
 }
 
@@ -217,7 +252,7 @@ function CampaignZoom({
       <div className="absolute inset-0 bg-kyvo-void/90 backdrop-blur-md" />
 
       <div
-        className="relative max-w-2xl max-h-[92vh] m-4
+        className="relative w-[95vw] sm:w-auto sm:max-w-3xl max-h-[92vh] m-4
                    bg-kyvo-deep border border-kyvo-cyan/40 rounded-2xl
                    shadow-[0_8px_48px_rgba(92,200,255,0.35)]
                    overflow-hidden
@@ -236,25 +271,75 @@ function CampaignZoom({
               Rewards
             </span>
           </div>
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            className="p-1.5 rounded-full hover:bg-kyvo-elevated text-kyvo-muted hover:text-white
-                       transition-colors shrink-0"
-          >
-            <XIcon className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1 shrink-0">
+            {/* "Open PDF in new tab" — fallback for users whose browser can't
+                render the iframe (rare, but ensures the PDF is always reachable). */}
+            {campaign.documentUrl && (
+              <a
+                href={campaign.documentUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open PDF in new tab"
+                className="p-1.5 rounded-full hover:bg-kyvo-elevated text-kyvo-muted hover:text-white
+                           transition-colors"
+                title="Open PDF in new tab"
+              >
+                <ExternalIcon className="w-4 h-4" />
+              </a>
+            )}
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="p-1.5 rounded-full hover:bg-kyvo-elevated text-kyvo-muted hover:text-white
+                         transition-colors"
+            >
+              <XIcon className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        {/* Image (scrollable if tall) */}
-        <div className="flex-1 overflow-auto bg-kyvo-void/40 flex items-center justify-center p-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={campaign.image}
-            alt={campaign.title ?? `${brand?.name ?? 'Brand'} reward campaign`}
-            className="max-w-full max-h-full object-contain rounded-xl"
-          />
+        {/* Content — PDF iframe when documentUrl is set, otherwise the
+            preview image. iframe renders the browser's native PDF viewer
+            (zoom/scroll/print built-in). */}
+        <div className="flex-1 overflow-auto bg-kyvo-void/40 flex items-center justify-center">
+          {campaign.documentUrl ? (
+            <iframe
+              src={campaign.documentUrl}
+              title={`${brand?.name ?? 'Brand'} reward campaign PDF`}
+              className="w-full h-[78vh] sm:h-[80vh] bg-white"
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={campaign.image}
+              alt={campaign.title ?? `${brand?.name ?? 'Brand'} reward campaign`}
+              className="max-w-full max-h-full object-contain rounded-xl p-4"
+            />
+          )}
         </div>
+
+        {/* Register CTA at the bottom of the modal — visible whether the
+            viewer scrolls the PDF or not. */}
+        {campaign.registrationUrl && (
+          <div className="px-4 py-3 border-t border-kyvo-border/50">
+            <a
+              href={campaign.registrationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2
+                         px-4 py-2.5 rounded-xl
+                         bg-gradient-to-r from-kyvo-cyan via-kyvo-violet to-kyvo-magenta
+                         hover:from-kyvo-magenta hover:to-kyvo-pink
+                         text-white text-sm font-bold
+                         shadow-[0_4px_24px_rgba(92,200,255,0.35)]
+                         hover:shadow-[0_4px_28px_rgba(233,75,193,0.5)]
+                         transition-all duration-200"
+            >
+              {campaign.registrationLabel ?? 'Register for Campaign'}
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
+        )}
 
         {(campaign.title || campaign.description) && (
           <div className="px-4 py-3 border-t border-kyvo-border/50">
@@ -293,6 +378,24 @@ function ZoomIcon({ className = '' }: { className?: string }) {
     >
       <circle cx="11" cy="11" r="7" />
       <path d="m21 21-4.3-4.3M11 8v6M8 11h6" />
+    </svg>
+  );
+}
+
+function ArrowUpRight({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+         className={className} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M7 17 17 7M7 7h10v10" />
+    </svg>
+  );
+}
+
+function ExternalIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
+         className={className} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M15 3h6v6M14 10 21 3M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" />
     </svg>
   );
 }
