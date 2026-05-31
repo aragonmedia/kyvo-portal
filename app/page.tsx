@@ -55,6 +55,14 @@ export default function HomePage() {
     });
   }
 
+  // Set of brand IDs that have at least one active reward campaign.
+  // Derived from the rewardCampaigns array so adding a campaign to a NEW
+  // brand automatically makes that brand match the "Rewards Campaigns" pill.
+  const brandsWithRewards = useMemo(
+    () => new Set(rewardCampaigns.map((c) => c.brandId)),
+    [],
+  );
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     const allMode = active.has('All Brands');
@@ -63,6 +71,7 @@ export default function HomePage() {
     // Within niches → OR.   Across other filters → AND.
     const selectedNiches = NICHE_FILTERS.filter((n) => active.has(n));
     const wantMax = active.has('MAX Commissions');
+    const wantRewards = active.has('Rewards Campaigns');
     const wantSamples = active.has('Samples Included');
     const wantTrending = active.has('Trending');
     const wantHigher = active.has('Higher Commission');
@@ -86,6 +95,7 @@ export default function HomePage() {
         }
         // MAX Commissions: explicit maxTier flag (Natural Stacks, Bold Buns, Fuel)
         if (wantMax && !brand.maxTier) return false;
+        if (wantRewards && !brandsWithRewards.has(brand.id)) return false;
         if (wantSamples && !brand.samplesIncluded) return false;
         if (wantTrending && !(brand.trending || brand.maxTier)) return false;
         if (wantHigher && !brand.highCommission) return false;
@@ -132,6 +142,7 @@ export default function HomePage() {
     return {
       'All Brands': filteredBySearch.length,
       'MAX Commissions': filteredBySearch.filter((b) => b.maxTier).length,
+      'Rewards Campaigns': filteredBySearch.filter((b) => brandsWithRewards.has(b.id)).length,
       'Samples Included': filteredBySearch.filter((b) => b.samplesIncluded).length,
       Health: filteredBySearch.filter((b) => hasNiche(b, 'Health')).length,
       Beauty: filteredBySearch.filter((b) => hasNiche(b, 'Beauty')).length,
@@ -140,7 +151,7 @@ export default function HomePage() {
       Trending: filteredBySearch.filter((b) => b.trending || b.maxTier).length,
       'Higher Commission': filteredBySearch.filter((b) => b.highCommission).length,
     } as const;
-  }, [search]);
+  }, [search, brandsWithRewards]);
 
   // Show MAX / BOOSTED section split only when "All Brands" is the only active
   // filter (no other pills layered), no search, and the "Items Sold" sort is

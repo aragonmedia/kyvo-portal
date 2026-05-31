@@ -141,6 +141,7 @@ export function niches(brand: Brand): Niche[] {
 export type FilterCategory =
   | 'All Brands'
   | 'MAX Commissions'
+  | 'Rewards Campaigns'
   | 'Samples Included'
   | 'Items Sold'
   | 'Health'

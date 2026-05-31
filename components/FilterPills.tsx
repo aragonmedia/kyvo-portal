@@ -12,9 +12,10 @@ import type { FilterCategory } from '@/lib/types';
  * At sm:+ we render the horizontal pill row.
  */
 const PILLS: FilterCategory[] = [
-  'MAX Commissions',  // leftmost, most prominent
+  'MAX Commissions',     // leftmost, most prominent
   'All Brands',
-  'Items Sold',       // sort: rank brands by total units sold descending
+  'Rewards Campaigns',   // cyan/gift treatment — ties to the Rewards section above
+  'Items Sold',          // sort: rank brands by total units sold descending
   'Samples Included',
   'Health',
   'Beauty',
@@ -26,6 +27,9 @@ const PILLS: FilterCategory[] = [
 
 /** Pills that SORT instead of filtering — no count badge, ranking icon. */
 const SORT_PILLS = new Set<FilterCategory>(['Items Sold']);
+
+/** Pills that visually share the cyan/rewards treatment. */
+const REWARDS_PILLS = new Set<FilterCategory>(['Rewards Campaigns']);
 
 interface Props {
   active: Set<FilterCategory>;
@@ -146,6 +150,7 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
             {PILLS.map((pill) => {
               const isAll = pill === 'All Brands';
               const isSort = SORT_PILLS.has(pill);
+              const isRewards = REWARDS_PILLS.has(pill);
               const isActive = isAll ? allActive : active.has(pill);
               const isHighlight =
                 pill === 'MAX Commissions' || pill === 'Samples Included';
@@ -164,7 +169,7 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
                                 isActive
                                   ? isHighlight
                                     ? 'bg-gradient-to-r from-kyvo-magenta/20 to-kyvo-pink/15 border border-kyvo-magenta/50'
-                                    : isSort
+                                    : isSort || isRewards
                                       ? 'bg-gradient-to-r from-kyvo-cyan/15 to-kyvo-violet/15 border border-kyvo-cyan/50'
                                       : 'bg-gradient-to-r from-kyvo-violet/20 to-kyvo-magenta/15 border border-kyvo-violet/50'
                                   : 'hover:bg-kyvo-elevated border border-transparent'
@@ -175,6 +180,9 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
                     <div className="flex items-center gap-1.5">
                       {pill === 'MAX Commissions' && (
                         <span className="text-sm" aria-hidden>🔥</span>
+                      )}
+                      {pill === 'Rewards Campaigns' && (
+                        <span className="text-sm" aria-hidden>🎁</span>
                       )}
                       {pill === 'Samples Included' && (
                         <PackageIcon className="w-3.5 h-3.5 text-kyvo-magenta" />
@@ -271,9 +279,13 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
         {PILLS.map((pill) => {
           const isAll = pill === 'All Brands';
           const isSort = SORT_PILLS.has(pill);
+          const isRewards = REWARDS_PILLS.has(pill);
           const isActive = isAll ? allActive : active.has(pill);
           const isHighlight = pill === 'MAX Commissions' || pill === 'Samples Included';
           const count = counts?.[pill];
+          // Rewards + sort pills share the cyan visual treatment but rewards is
+          // a real filter (gets the checkmark, gets the count badge).
+          const useCyanTreatment = isSort || isRewards;
 
           return (
             <button
@@ -287,18 +299,19 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
                             isActive
                               ? isHighlight
                                 ? 'bg-gradient-to-r from-kyvo-magenta to-kyvo-pink text-white border-transparent shadow-[0_4px_24px_rgba(233,75,193,0.45)]'
-                                : isSort
+                                : useCyanTreatment
                                   ? 'bg-gradient-to-r from-kyvo-cyan to-kyvo-violet text-white border-transparent shadow-[0_4px_24px_rgba(92,200,255,0.4)]'
                                   : 'bg-gradient-to-r from-kyvo-violet to-kyvo-magenta text-white border-transparent shadow-[0_4px_24px_rgba(123,63,228,0.4)]'
                               : isHighlight
                                 ? 'bg-kyvo-magenta/8 text-kyvo-magenta border-kyvo-magenta/40 hover:border-kyvo-magenta/80 hover:bg-kyvo-magenta/15'
-                                : isSort
+                                : useCyanTreatment
                                   ? 'bg-kyvo-cyan/8 text-kyvo-cyan border-kyvo-cyan/40 hover:border-kyvo-cyan/80 hover:bg-kyvo-cyan/15'
                                   : 'bg-kyvo-surface/60 text-kyvo-muted border-kyvo-border hover:text-white hover:border-kyvo-violet/60'
                           }`}
             >
               {isActive && !isAll && !isSort && <CheckIcon className="w-3.5 h-3.5" />}
               {pill === 'MAX Commissions' && !isActive && <FireSpan />}
+              {pill === 'Rewards Campaigns' && !isActive && <GiftSpan />}
               {pill === 'Samples Included' && !isActive && (
                 <PackageIcon className="w-3.5 h-3.5" />
               )}
@@ -354,6 +367,10 @@ function CheckBox({ active, highlight }: { active: boolean; highlight: boolean }
 
 function FireSpan() {
   return <span className="text-xs leading-none" aria-hidden>🔥</span>;
+}
+
+function GiftSpan() {
+  return <span className="text-xs leading-none" aria-hidden>🎁</span>;
 }
 
 function RankIcon({ className = '' }: { className?: string }) {
