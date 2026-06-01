@@ -144,7 +144,10 @@ export const TENANTS: Record<string, Tenant> = {
     ogDescription:
       'Browse partnered brands and tap product links to earn boosted TikTok Shop commissions instantly.',
     ogImage: '/tenants/streamline/og-image.jpg',
-    siteUrl: 'https://poweredby.streamline.com',
+    // Hosted as a subdomain of Kevin's existing kyvoco.com — zero domain
+    // purchase needed. Swap to a partner-owned domain later by editing
+    // this value + adding the new domain in Vercel + updating DNS.
+    siteUrl: 'https://streamline.kyvoco.com',
     // No twitter handles for Streamline yet
     heroPill: 'Boosted commissions live now',
     heroHeadlineTop: 'Higher Commissions.',
