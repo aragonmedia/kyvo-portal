@@ -50,6 +50,13 @@ export const brands: Brand[] = [
     tagline: 'Premium nootropics & focus stacks — Unlock 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #1a0b3e 0%, #4a1d8a 35%, #7B3FE4 70%, #22F5A3 100%)',
+    bannerGradientByTenant: {
+      // TikTok Dojo only — swap the cyan/green tail for warm red/pink so the
+      // banner doesn't clash with the red-themed portal. Kyvo + Streamline
+      // continue showing the original galaxy gradient above.
+      'tiktok-dojo':
+        'linear-gradient(135deg, #14070A 0%, #2B0D14 30%, #E53935 70%, #FE5A7F 100%)',
+    },
     bannerImage: '/banners/natural-stacks.jpg',
     logo: '/logos/natural-stacks.png',
     logoTile: { bg: '#1A1838', fg: '#22F5A3', initials: 'NS' },
@@ -139,6 +146,12 @@ export const brands: Brand[] = [
     tagline: 'Beauty, collagen & longevity — Unlock 50% MAX',
     bannerGradient:
       'linear-gradient(135deg, #0a1d3e 0%, #1d4a8a 40%, #5CC8FF 80%, #22F5A3 100%)',
+    bannerGradientByTenant: {
+      // TikTok Dojo only — replace blue/green with deep red→cyan accent
+      // so the Fuel banner harmonizes with the red/cyan dojo palette.
+      'tiktok-dojo':
+        'linear-gradient(135deg, #0A0306 0%, #1F0510 35%, #E53935 70%, #25F4EE 100%)',
+    },
     bannerImage: '/banners/fuel-nutrition.jpg',
     logo: '/logos/fuel-nutrition.png',
     logoTile: { bg: '#11203A', fg: '#5CC8FF', initials: 'FN' },

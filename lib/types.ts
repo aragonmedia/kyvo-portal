@@ -56,6 +56,12 @@ export interface Brand {
   /** Banner gradient/image for slideshow */
   bannerImage?: string;
   bannerGradient?: string;
+  /** Per-tenant banner gradient overrides. When the active tenant has an
+   *  entry here, it wins over `bannerGradient`. Use this to swap a brand's
+   *  slideshow accent colors for a specific partner portal without
+   *  affecting how the brand renders on other tenants. Key by tenant.id
+   *  (e.g. 'tiktok-dojo', 'streamline'). */
+  bannerGradientByTenant?: Record<string, string>;
   /** Marketing tagline shown in slideshow */
   tagline?: string;
 

@@ -94,15 +94,20 @@ function Slide({
   const ticketUrl = brand.ticketUrl ?? tenant.ticketUrl;
   const hasBannerImage = Boolean(brand.bannerImage);
 
+  // Resolve banner gradient: per-tenant override → brand default → fallback.
+  // The per-tenant lookup lets partner portals tint specific brand banners
+  // to match their palette without affecting other tenants' visuals.
+  const bannerGradient =
+    brand.bannerGradientByTenant?.[tenant.id] ??
+    brand.bannerGradient ??
+    'linear-gradient(135deg, var(--kyvo-deep) 0%, var(--kyvo-purple) 50%, var(--kyvo-violet) 100%)';
+
   return (
     <div
       className={`absolute inset-0 transition-opacity duration-700 ease-out
                   ${active ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
       style={{
-        // Fall back to gradient if no banner image set
-        background:
-          brand.bannerGradient ||
-          'linear-gradient(135deg, var(--kyvo-deep) 0%, var(--kyvo-purple) 50%, var(--kyvo-violet) 100%)',
+        background: bannerGradient,
       }}
     >
       {/* Banner photo layer (if set) — cover-fit, sits above the gradient fallback */}
