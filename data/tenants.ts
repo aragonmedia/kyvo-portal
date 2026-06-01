@@ -175,6 +175,49 @@ export const TENANTS: Record<string, Tenant> = {
       blue:    { hex: '#3B68FE', rgb: '59, 104, 254' },    // same as primary
     },
   },
+
+  /* ─── TIKTOK DOJO (second whitelabel partner) ─────────────────────── */
+  'tiktok-dojo': {
+    id: 'tiktok-dojo',
+    brandName: 'TikTok Dojo',
+    brandTagline: 'TikTok Shop Affiliates',
+    logoSrc: '/tenants/tiktok-dojo/logo.png',
+    logoWidth: 200,
+    // White-label: no Kyvo reference in any tier
+    boostLabel: 'Boost',
+    // No Discord URLs yet — buttons render visually but tap does nothing
+    discordUrl: null,
+    ticketUrl: null,
+    ogTitle: 'TikTok Dojo — TikTok Shop Affiliates',
+    ogDescription:
+      'Browse partnered brands and tap product links to earn boosted TikTok Shop commissions instantly.',
+    ogImage: '/tenants/tiktok-dojo/og-image.jpg',
+    // Subdomain under Kevin's kyvoco.com (zero domain purchase needed)
+    siteUrl: 'https://tiktokdojo.kyvoco.com',
+    heroPill: 'Boosted commissions live now',
+    heroHeadlineTop: 'Higher Commissions.',
+    heroHeadlineBottom: 'One Tap Away.',
+    heroSubcopy:
+      'Browse partnered brands. Tap product links. Earn boosted TikTok Shop commissions instantly.',
+
+    /* TikTok Dojo palette — TikTok red (#FE2C55) + TikTok cyan (#25F4EE)
+     * + accent red (#E53935 for the torii). Dark warm backgrounds. */
+    palette: {
+      void:     '#0A0306',
+      deep:     '#14070A',
+      surface:  '#1F0D12',
+      elevated: '#2B1219',
+      border:   '#3C1A24',
+
+      // Brand gradient stops — TikTok red/pink/cyan signature
+      violet:  { hex: '#E53935', rgb: '229, 57, 53' },    // torii red (deep brand)
+      purple:  { hex: '#F23D52', rgb: '242, 61, 82' },    // mid red-pink
+      magenta: { hex: '#FE2C55', rgb: '254, 44, 85' },    // primary TikTok pink-red
+      pink:    { hex: '#FF5A7F', rgb: '255, 90, 127' },   // lighter TikTok pink
+      cyan:    { hex: '#25F4EE', rgb: '37, 244, 238' },   // TikTok cyan
+      blue:    { hex: '#25F4EE', rgb: '37, 244, 238' },   // same as cyan (TikTok palette)
+    },
+  },
 };
 
 /** Default fallback tenant ID when NEXT_PUBLIC_TENANT is missing. */
