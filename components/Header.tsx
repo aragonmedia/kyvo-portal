@@ -1,26 +1,39 @@
 import { KyvoLogo } from './KyvoLogo';
-
-const DISCORD_URL = 'https://discord.gg/kyvo';
+import { tenant, isKyvoTenant, ctaProps } from '@/lib/tenant';
 
 export function Header() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-xl bg-kyvo-void/60 border-b border-kyvo-border/40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a href="/" className="flex items-center group">
-          <KyvoLogo size={32} />
+          {isKyvoTenant ? (
+            // Kyvo keeps the SVG wordmark for crispness
+            <KyvoLogo size={32} />
+          ) : (
+            // Other tenants ship their own logo image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={tenant.logoSrc}
+              alt={tenant.brandName}
+              className="h-8 sm:h-9 w-auto object-contain"
+              style={{ maxWidth: tenant.logoWidth ?? 180 }}
+            />
+          )}
         </a>
 
+        {/* Discord button — when tenant.discordUrl is null, the button still
+            renders (same visual treatment) but tapping does nothing. Kevin's
+            call: keep the marketing CTA visible even when the channel isn't
+            wired up yet so the partner can backfill the URL later. */}
         <a
-          href={DISCORD_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...ctaProps(tenant.discordUrl)}
           className="group flex items-center gap-2 px-4 py-2 rounded-full
                      bg-gradient-to-r from-kyvo-violet/20 to-kyvo-magenta/20
                      hover:from-kyvo-violet/40 hover:to-kyvo-magenta/40
                      border border-kyvo-border hover:border-kyvo-magenta/60
                      transition-all duration-300
-                     shadow-[0_0_0_0_rgba(123,63,228,0)]
-                     hover:shadow-[0_0_24px_0_rgba(233,75,193,0.45)]"
+                     shadow-[0_0_0_0_rgba(var(--kyvo-violet-rgb),_0)]
+                     hover:shadow-[0_0_24px_0_rgba(var(--kyvo-magenta-rgb),_0.45)]"
         >
           <DiscordIcon className="w-5 h-5 text-white" />
           <span className="text-sm font-semibold text-white hidden sm:inline">

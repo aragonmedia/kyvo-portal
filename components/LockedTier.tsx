@@ -1,18 +1,11 @@
-// Discord MAX-unlock deep-link — matches DEFAULT_TICKET_URL in data/brands.ts.
-// Points to the specific message in the Kyvo Discord that walks creators
-// through the MAX tier unlock flow. (NOT the general invite — the header
-// + footer Discord buttons still link to discord.gg/kyvo for new visitors.)
-const DISCORD_TICKET_URL =
-  'https://discord.com/channels/1407225718089191444/1432664324429709393/1504410437180194878';
+import { tenant, ctaProps } from '@/lib/tenant';
 
 export function LockedTier() {
   return (
     <section className="px-4 mt-12 sm:mt-16">
       <div className="mx-auto max-w-7xl">
         <a
-          href={DISCORD_TICKET_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...ctaProps(tenant.ticketUrl)}
           className="group relative block overflow-hidden rounded-3xl
                      border border-kyvo-border hover:border-kyvo-magenta/60
                      bg-kyvo-surface/60
@@ -24,7 +17,7 @@ export function LockedTier() {
             className="absolute inset-0 opacity-90"
             style={{
               background:
-                'radial-gradient(ellipse 70% 80% at 30% 50%, rgba(123,63,228,0.35) 0%, transparent 60%), radial-gradient(ellipse 60% 70% at 80% 60%, rgba(233,75,193,0.30) 0%, transparent 60%), linear-gradient(135deg, #0A0820 0%, #1a0b3e 100%)',
+                'radial-gradient(ellipse 70% 80% at 30% 50%, rgba(var(--kyvo-violet-rgb), 0.35) 0%, transparent 60%), radial-gradient(ellipse 60% 70% at 80% 60%, rgba(var(--kyvo-magenta-rgb), 0.30) 0%, transparent 60%), linear-gradient(135deg, var(--kyvo-deep) 0%, var(--kyvo-surface) 100%)',
             }}
           />
 
@@ -33,7 +26,7 @@ export function LockedTier() {
             className="absolute inset-0 opacity-60 mix-blend-screen"
             style={{
               backgroundImage:
-                'radial-gradient(1px 1px at 18% 22%, white, transparent), radial-gradient(1px 1px at 73% 31%, white, transparent), radial-gradient(1.5px 1.5px at 45% 78%, white, transparent), radial-gradient(1px 1px at 88% 65%, white, transparent), radial-gradient(1px 1px at 12% 84%, #5CC8FF, transparent), radial-gradient(1px 1px at 60% 12%, #FF6BCB, transparent)',
+                'radial-gradient(1px 1px at 18% 22%, white, transparent), radial-gradient(1px 1px at 73% 31%, white, transparent), radial-gradient(1.5px 1.5px at 45% 78%, white, transparent), radial-gradient(1px 1px at 88% 65%, white, transparent), radial-gradient(1px 1px at 12% 84%, var(--kyvo-cyan), transparent), radial-gradient(1px 1px at 60% 12%, var(--kyvo-pink), transparent)',
             }}
           />
 

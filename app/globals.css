@@ -6,6 +6,47 @@
   :root {
     --font-display: 'Space Grotesk', system-ui, sans-serif;
     --font-body: 'Manrope', system-ui, sans-serif;
+
+    /* ─── DEFAULT PALETTE — Kyvo galaxy ────────────────────────────────
+     * These values render the Kyvo portal. Per-tenant deployments
+     * override them via a <style> block injected by app/layout.tsx
+     * based on tenant.palette in data/tenants.ts. Each brand color
+     * carries BOTH a hex variable (for solid fills) AND an R,G,B
+     * triplet (required for rgba() shadows + gradient overlays in
+     * tailwind.config.ts). Keep the two in sync when editing.
+     * ──────────────────────────────────────────────────────────────── */
+
+    /* Backgrounds */
+    --kyvo-void:     #05030F;
+    --kyvo-deep:     #0A0820;
+    --kyvo-surface:  #100D2C;
+    --kyvo-elevated: #181438;
+    --kyvo-border:   #241D52;
+
+    /* Brand gradient stops (HEX) */
+    --kyvo-violet:  #7B3FE4;
+    --kyvo-purple:  #9D4EDD;
+    --kyvo-magenta: #E94BC1;
+    --kyvo-pink:    #FF6BCB;
+    --kyvo-cyan:    #5CC8FF;
+    --kyvo-blue:    #4A8DFF;
+
+    /* Brand gradient stops (RGB triplets — for rgba()) */
+    --kyvo-violet-rgb:  123, 63, 228;
+    --kyvo-purple-rgb:  157, 78, 221;
+    --kyvo-magenta-rgb: 233, 75, 193;
+    --kyvo-pink-rgb:    255, 107, 203;
+    --kyvo-cyan-rgb:    92, 200, 255;
+    --kyvo-blue-rgb:    74, 141, 255;
+
+    /* Accents */
+    --kyvo-green:      #22F5A3;
+    --kyvo-green-deep: #0FCB7E;
+
+    /* Text */
+    --kyvo-text:  #F5F2FF;
+    --kyvo-muted: #8A87B4;
+    --kyvo-dim:   #5A567E;
   }
 
   html {
@@ -13,23 +54,24 @@
   }
 
   body {
-    background: #05030F;
-    color: #F5F2FF;
+    background: var(--kyvo-void);
+    color: var(--kyvo-text);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
-  /* Cosmic background — layered gradients + starfield */
+  /* Cosmic background — layered gradients + starfield. Uses CSS vars so
+     per-tenant palettes (e.g. Streamline blue) get a matching glow. */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(123, 63, 228, 0.22) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(92, 200, 255, 0.10) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 85% 60%, rgba(233, 75, 193, 0.10) 0%, transparent 50%),
-      #05030F;
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--kyvo-violet-rgb), 0.22) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(var(--kyvo-cyan-rgb), 0.10) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 85% 60%, rgba(var(--kyvo-magenta-rgb), 0.10) 0%, transparent 50%),
+      var(--kyvo-void);
     z-index: -2;
     pointer-events: none;
   }
@@ -46,8 +88,8 @@
       radial-gradient(1.5px 1.5px at 63% 71%, rgba(255, 255, 255, 0.8), transparent),
       radial-gradient(1px 1px at 78% 22%, rgba(255, 255, 255, 0.5), transparent),
       radial-gradient(1px 1px at 92% 58%, rgba(255, 255, 255, 0.6), transparent),
-      radial-gradient(1px 1px at 8% 64%, rgba(92, 200, 255, 0.7), transparent),
-      radial-gradient(1px 1px at 55% 12%, rgba(233, 75, 193, 0.6), transparent),
+      radial-gradient(1px 1px at 8% 64%, rgba(var(--kyvo-cyan-rgb), 0.7), transparent),
+      radial-gradient(1px 1px at 55% 12%, rgba(var(--kyvo-magenta-rgb), 0.6), transparent),
       radial-gradient(1.5px 1.5px at 38% 92%, rgba(255, 255, 255, 0.7), transparent);
     background-size: 100% 100%;
     z-index: -1;
@@ -59,7 +101,7 @@
 
 @layer components {
   .text-gradient {
-    background: linear-gradient(135deg, #5CC8FF 0%, #B05BFF 50%, #FF6BCB 100%);
+    background: linear-gradient(135deg, var(--kyvo-cyan) 0%, var(--kyvo-purple) 50%, var(--kyvo-pink) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -74,7 +116,7 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, #5CC8FF, #7B3FE4, #E94BC1);
+    background: linear-gradient(135deg, var(--kyvo-cyan), var(--kyvo-violet), var(--kyvo-magenta));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;

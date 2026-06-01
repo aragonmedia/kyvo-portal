@@ -298,10 +298,10 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
                           ${
                             isActive
                               ? isHighlight
-                                ? 'bg-gradient-to-r from-kyvo-magenta to-kyvo-pink text-white border-transparent shadow-[0_4px_24px_rgba(233,75,193,0.45)]'
+                                ? 'bg-gradient-to-r from-kyvo-magenta to-kyvo-pink text-white border-transparent shadow-[0_4px_24px_rgba(var(--kyvo-magenta-rgb),_0.45)]'
                                 : useCyanTreatment
-                                  ? 'bg-gradient-to-r from-kyvo-cyan to-kyvo-violet text-white border-transparent shadow-[0_4px_24px_rgba(92,200,255,0.4)]'
-                                  : 'bg-gradient-to-r from-kyvo-violet to-kyvo-magenta text-white border-transparent shadow-[0_4px_24px_rgba(123,63,228,0.4)]'
+                                  ? 'bg-gradient-to-r from-kyvo-cyan to-kyvo-violet text-white border-transparent shadow-[0_4px_24px_rgba(var(--kyvo-cyan-rgb),_0.4)]'
+                                  : 'bg-gradient-to-r from-kyvo-violet to-kyvo-magenta text-white border-transparent shadow-[0_4px_24px_rgba(var(--kyvo-violet-rgb),_0.4)]'
                               : isHighlight
                                 ? 'bg-kyvo-magenta/8 text-kyvo-magenta border-kyvo-magenta/40 hover:border-kyvo-magenta/80 hover:bg-kyvo-magenta/15'
                                 : useCyanTreatment

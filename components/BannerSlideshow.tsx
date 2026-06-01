@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { Brand } from '@/lib/types';
-import { DEFAULT_TICKET_URL } from '@/data/brands';
+import { tenant, ctaProps } from '@/lib/tenant';
 
 /**
  * Auto-rotating priority-brands slideshow.
@@ -89,7 +89,9 @@ function Slide({
   active: boolean;
   onBrandClick: () => void;
 }) {
-  const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
+  // Resolve unlock destination: per-brand override → tenant default → null
+  // (when tenant has no Discord/ticket URL, ctaProps renders a no-op button).
+  const ticketUrl = brand.ticketUrl ?? tenant.ticketUrl;
   const hasBannerImage = Boolean(brand.bannerImage);
 
   return (
@@ -100,7 +102,7 @@ function Slide({
         // Fall back to gradient if no banner image set
         background:
           brand.bannerGradient ||
-          'linear-gradient(135deg, #1a0b3e 0%, #4a1d8a 50%, #7B3FE4 100%)',
+          'linear-gradient(135deg, var(--kyvo-deep) 0%, var(--kyvo-purple) 50%, var(--kyvo-violet) 100%)',
       }}
     >
       {/* Banner photo layer (if set) — cover-fit, sits above the gradient fallback */}
@@ -166,12 +168,21 @@ function Slide({
             </p>
           )}
 
-          {/* "Click to Unlock" CTA → Discord (mobile-first sizing) */}
+          {/* "Click to Unlock" CTA — visual stays identical whether or not
+              tenant.ticketUrl is set. ctaProps clears href when null so a
+              tap does nothing instead of routing to a partner-less URL.
+              The onClick stopPropagation is added on top of ctaProps. */}
           <a
-            href={ticketUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            {...(() => {
+              const props = ctaProps(ticketUrl);
+              return {
+                ...props,
+                onClick: (e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  props.onClick?.(e);
+                },
+              };
+            })()}
             className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 sm:gap-2
                        px-3 py-1.5 sm:px-4 sm:py-2
                        rounded-full bg-white text-kyvo-deep
@@ -228,7 +239,7 @@ function GlassArrow({
                   flex items-center justify-center
                   shadow-[0_4px_24px_rgba(0,0,0,0.35)]
                   hover:bg-white/25 hover:border-white/50
-                  hover:shadow-[0_4px_30px_rgba(233,75,193,0.45)]
+                  hover:shadow-[0_4px_30px_rgba(var(--kyvo-magenta-rgb),_0.45)]
                   active:scale-95
                   transition-all duration-200`}
     >

@@ -100,8 +100,8 @@ function CampaignCard({
                  bg-gradient-to-br from-kyvo-cyan/12 via-kyvo-violet/10 to-kyvo-magenta/12
                  border border-kyvo-cyan/40
                  hover:border-kyvo-cyan/80
-                 shadow-[0_4px_28px_rgba(92,200,255,0.18)]
-                 hover:shadow-[0_4px_32px_rgba(92,200,255,0.4)]
+                 shadow-[0_4px_28px_rgba(var(--kyvo-cyan-rgb),_0.18)]
+                 hover:shadow-[0_4px_32px_rgba(var(--kyvo-cyan-rgb),_0.4)]
                  transition-all duration-200
                  hover:-translate-y-0.5
                  overflow-hidden flex flex-col"
@@ -180,8 +180,8 @@ function CampaignCard({
                      bg-gradient-to-r from-kyvo-cyan via-kyvo-violet to-kyvo-magenta
                      hover:from-kyvo-magenta hover:to-kyvo-pink
                      text-white text-sm font-bold
-                     shadow-[0_4px_24px_rgba(92,200,255,0.35)]
-                     hover:shadow-[0_4px_28px_rgba(233,75,193,0.5)]
+                     shadow-[0_4px_24px_rgba(var(--kyvo-cyan-rgb),_0.35)]
+                     hover:shadow-[0_4px_28px_rgba(var(--kyvo-magenta-rgb),_0.5)]
                      hover:scale-[1.02]
                      transition-all duration-200"
         >
@@ -254,7 +254,7 @@ function CampaignZoom({
       <div
         className="relative w-[95vw] sm:w-auto sm:max-w-3xl max-h-[92vh] m-4
                    bg-kyvo-deep border border-kyvo-cyan/40 rounded-2xl
-                   shadow-[0_8px_48px_rgba(92,200,255,0.35)]
+                   shadow-[0_8px_48px_rgba(var(--kyvo-cyan-rgb),_0.35)]
                    overflow-hidden
                    flex flex-col
                    animate-slide-up"
@@ -331,8 +331,8 @@ function CampaignZoom({
                          bg-gradient-to-r from-kyvo-cyan via-kyvo-violet to-kyvo-magenta
                          hover:from-kyvo-magenta hover:to-kyvo-pink
                          text-white text-sm font-bold
-                         shadow-[0_4px_24px_rgba(92,200,255,0.35)]
-                         hover:shadow-[0_4px_28px_rgba(233,75,193,0.5)]
+                         shadow-[0_4px_24px_rgba(var(--kyvo-cyan-rgb),_0.35)]
+                         hover:shadow-[0_4px_28px_rgba(var(--kyvo-magenta-rgb),_0.5)]
                          transition-all duration-200"
             >
               {campaign.registrationLabel ?? 'Register for Campaign'}

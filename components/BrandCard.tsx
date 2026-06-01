@@ -42,7 +42,7 @@ export function BrandCard({ brand, onClick }: Props) {
             className="px-1.5 py-0.5 rounded-md
                        text-[9px] sm:text-[10px] font-bold uppercase tracking-wider
                        bg-kyvo-cyan/15 text-kyvo-cyan border border-kyvo-cyan/40
-                       shadow-[0_0_12px_rgba(92,200,255,0.35)]"
+                       shadow-[0_0_12px_rgba(var(--kyvo-cyan-rgb),_0.35)]"
             title="Newly added brand"
           >
             NEW

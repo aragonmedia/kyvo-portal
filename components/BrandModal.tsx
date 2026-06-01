@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import type { Brand, ProductLink } from '@/lib/types';
 import { niches } from '@/lib/types';
-import { DEFAULT_TICKET_URL } from '@/data/brands';
+import { tenant, ctaProps } from '@/lib/tenant';
 
 interface Props {
   brand: Brand | null;
@@ -111,17 +111,18 @@ export function BrandModal({ brand, onClose }: Props) {
  * Wires to brand.showcaseUrl, falling back to ticketUrl, then DEFAULT_TICKET_URL.
  */
 function ShowcaseAllCTA({ brand }: { brand: Brand }) {
-  const href = brand.showcaseUrl ?? brand.ticketUrl ?? DEFAULT_TICKET_URL;
+  // Showcase URL is real / tangible (TikTok showcase add-all link). When
+  // missing we fall through brand.ticketUrl → tenant.ticketUrl → null.
+  // ctaProps neutralizes the button if it ends up null.
+  const href = brand.showcaseUrl ?? brand.ticketUrl ?? tenant.ticketUrl;
   return (
     <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      {...ctaProps(href)}
       className="group relative block mb-4 overflow-hidden rounded-2xl
                  bg-gradient-to-r from-kyvo-violet via-kyvo-purple to-kyvo-magenta
                  hover:from-kyvo-magenta hover:to-kyvo-pink
-                 shadow-[0_4px_28px_rgba(123,63,228,0.35)]
-                 hover:shadow-[0_4px_32px_rgba(233,75,193,0.5)]
+                 shadow-[0_4px_28px_rgba(var(--kyvo-violet-rgb),_0.35)]
+                 hover:shadow-[0_4px_32px_rgba(var(--kyvo-magenta-rgb),_0.5)]
                  transition-all duration-200"
     >
       {/* Subtle starfield overlay */}
@@ -242,7 +243,10 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
   const showLockedMax = typeof rawMax === 'number' && rawMax > kyvoRate;
   const maxRate = rawMax ?? kyvoRate;
   const boostLift = kyvoRate - openRate;
-  const ticketUrl = brand.ticketUrl ?? DEFAULT_TICKET_URL;
+  // Per-brand override → tenant default. Will be null for white-label
+  // tenants without their own Discord — the locked MAX CTA still renders
+  // (visual-only) per Kevin's call.
+  const ticketUrl = brand.ticketUrl ?? tenant.ticketUrl;
   // Per-product samples flag — falls back to brand-level. Mixed-sample brands
   // (some products Yes, some No) set link.samplesIncluded explicitly per row.
   const hasSamples = link.samplesIncluded ?? brand.samplesIncluded ?? false;
@@ -300,7 +304,7 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
           tone="muted"
         />
         <TierRow
-          label="Kyvo Boost"
+          label={tenant.boostLabel}
           sublabel="Tap to earn at this rate"
           rate={kyvoRate}
           tone="primary"
@@ -312,7 +316,7 @@ function ProductCard({ link, brand }: { link: ProductLink; brand: Brand }) {
             sublabel="Click to Unlock"
             rate={maxRate}
             tone="locked"
-            href={ticketUrl}
+            href={ticketUrl ?? undefined}
           />
         )}
       </div>
@@ -390,14 +394,14 @@ function TierRow({
                   bg-gradient-to-r from-kyvo-violet/20 via-kyvo-purple/15 to-kyvo-magenta/20
                   border-kyvo-magenta/40
                   hover:border-kyvo-magenta/80
-                  hover:shadow-[0_0_28px_rgba(233,75,193,0.35)]
+                  hover:shadow-[0_0_28px_rgba(var(--kyvo-magenta-rgb),_0.35)]
                   animate-pulse-glow`}
     >
       <div
         className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none"
         style={{
           backgroundImage:
-            'radial-gradient(1px 1px at 20% 30%, white, transparent), radial-gradient(1px 1px at 70% 60%, white, transparent), radial-gradient(1.5px 1.5px at 40% 80%, #FF6BCB, transparent)',
+            'radial-gradient(1px 1px at 20% 30%, white, transparent), radial-gradient(1px 1px at 70% 60%, white, transparent), radial-gradient(1.5px 1.5px at 40% 80%, var(--kyvo-pink), transparent)',
         }}
       />
       <TierLeft
