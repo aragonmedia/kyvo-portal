@@ -559,7 +559,6 @@ export const brands: Brand[] = [
     trending: true,
     highCommission: true,    // +15% over open rate
     samplesIncluded: true,   // ALL products ship with samples
-    isNew: true,             // NEW pip on the brand card
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRTv0Kv0pJ7',
     tagline: 'Batana oil hair growth & scalp care — Unlock 50% MAX',
     bannerGradient:
@@ -596,7 +595,6 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,    // +5% over open rate
     samplesIncluded: false,
-    isNew: true,             // NEW pip on the brand card
     // showcaseUrl: NOT set — single product → no Add All needed
     tagline: 'Body firming mousse-to-oil — Unlock 35% MAX',
     logo: '/logos/maelys.png',
@@ -617,7 +615,6 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,    // +2% over open rate
     samplesIncluded: false,
-    isNew: true,             // NEW pip on the brand card
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWfre3zrvj',
     tagline: 'Lipliners & longwear makeup — Unlock 20% MAX',
     logo: '/logos/wonderskin.png',
@@ -642,7 +639,6 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,    // +2% over open rate
     samplesIncluded: false,
-    isNew: true,             // NEW pip on the brand card
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJRWi3blOyw1',
     tagline: '24-in-1 hair, skin & nails vitamins — Unlock 35% MAX',
     logo: '/logos/rainbow-nutrients.png',
@@ -669,7 +665,6 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,    // +5% over open rate
     samplesIncluded: true,
-    isNew: true,             // NEW pip on the brand card
     sampleRegistrationUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLScfSU27q_s0CIA3_qJVH9OX-yrcyW4_azhc68aWKvXlcSLzrQ/viewform?pli=1',
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH6f4Me9ev',
@@ -684,6 +679,37 @@ export const brands: Brand[] = [
       { productName: 'Cinnamon Coconut Oil Pulling Rinse (8oz)', slug: 'oil-pulling-cinnamon', itemsSold: 1764, price: '$15.17', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH91HXWqhG' },
       { productName: 'Oil Pulling Rinse + Whitening Powder Bundle', slug: 'rinse-powder-bundle', itemsSold: 172, price: '$38.50', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH8stXUZwF' },
       { productName: '3-Flavor Coconut Mouthwash Bundle (8oz × 3)', slug: 'three-flavor-bundle', itemsSold: 88, price: '$87.40', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH9ZeNmpCD' },
+    ],
+  },
+  {
+    id: 'beauty-of-joseon',
+    name: 'Beauty of Joseon',
+    niche: 'Beauty',
+    // Rates VARY per product on Beauty of Joseon — the SPF + Eye Patches
+    // run at 10% open while the rest are at 15%. Eye Serum + Combination
+    // Routine sit at 20% Kyvo / 25% MAX while the others are 25% / 30%.
+    // Brand-level values are the most-common tier; per-product overrides
+    // catch the exceptions. Accuracy over marketing — always show the
+    // real rate the creator earns on each link.
+    openCollabRate: 15,        // brand baseline (4 of 6 products)
+    commissionRate: 25,        // brand baseline Kyvo Boost
+    maxCommission: 30,         // brand baseline MAX
+    maxTier: false,
+    highCommission: true,      // +10% over open rate (top tier)
+    samplesIncluded: false,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJSnxSBZClX4',
+    tagline: 'K-beauty skincare — ginseng, retinal & SPF — Unlock 30% MAX',
+    logo: '/logos/beauty-of-joseon.png',
+    logoTile: { bg: '#2A2018', fg: '#FFD9B0', initials: 'BJ' },
+    // ─── 6 products, sorted by items sold (desc); per-product overrides
+    //      explicitly mark the rate exceptions.
+    links: [
+      { productName: 'Daily Tinted Fluid Sunscreen (50ml SPF)', slug: 'daily-tinted-sunscreen', itemsSold: 342727, price: '$9.99', openCollabRate: 10, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSo0vom8QdB' },
+      { productName: 'Revive Eye Serum — Ginseng + Retinal (30ml)', slug: 'revive-eye-serum', itemsSold: 38725, price: '$14.43', commission: 20, maxCommission: 25, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSo0wwIU9un' },
+      { productName: 'Combination Skin Routine — Balance, Refine, Glow', slug: 'combination-skin-routine', itemsSold: 24105, price: '$59.78', commission: 20, maxCommission: 25, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSo0afZAZNm' },
+      { productName: 'Revive Under Eye Patches — Ginseng + Retinal (60pcs)', slug: 'revive-under-eye-patches', itemsSold: 8786, price: '$16.98', openCollabRate: 10, url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSnznsZuqqD' },
+      { productName: 'Ginseng Retinal Eye Care Set', slug: 'ginseng-retinal-eye-set', itemsSold: 7508, price: '$27.72', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSo18gsf9iS' },
+      { productName: 'Radiance Care Trio — Ginseng + Retinal + Rice', slug: 'radiance-care-trio', itemsSold: 1534, price: '$37.78', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSo2Qa7FxI8' },
     ],
   },
   // ────────────────────────────────────────────────────────────

@@ -127,6 +127,20 @@
   /* Hide scrollbar but keep functionality */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Boost row "breathe" — gentle scale pulse that fires on hover, only on
+     real-pointer devices. The @media (hover: hover) guard prevents touch
+     devices from triggering the animation on tap, since the persistent
+     hover state on mobile would look glitchy. */
+  @media (hover: hover) and (pointer: fine) {
+    .breathe-on-hover:hover {
+      animation: breathe 1.8s ease-in-out infinite;
+    }
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.015); }
+  }
 }
 
 /* Fonts via @import (Next.js will handle next/font/google in layout) */

@@ -358,23 +358,36 @@ function TierRow({
         target="_blank"
         rel="noopener noreferrer"
         className={`${base}
-                    bg-gradient-to-r from-kyvo-green/15 to-kyvo-green/5
-                    border-kyvo-green/40
-                    hover:from-kyvo-green/25 hover:to-kyvo-green/10
-                    hover:border-kyvo-green/70
-                    hover:shadow-[0_0_24px_rgba(34,245,163,0.25)]`}
+                    relative overflow-hidden
+                    bg-gradient-to-r from-kyvo-green/25 via-kyvo-green/15 to-kyvo-green/10
+                    border-kyvo-green/65
+                    shadow-[0_0_18px_rgba(34,245,163,0.18)]
+                    hover:from-kyvo-green/40 hover:via-kyvo-green/25 hover:to-kyvo-green/15
+                    hover:border-kyvo-green
+                    hover:shadow-[0_0_32px_rgba(34,245,163,0.5)]
+                    breathe-on-hover`}
       >
+        {/* Subtle moving sheen so the row reads as "live / interactive"
+            even before hover — communicates "tap me" without being noisy */}
+        <div
+          className="absolute inset-0 opacity-25 pointer-events-none"
+          style={{
+            backgroundImage:
+              'radial-gradient(1px 1px at 18% 50%, rgba(34,245,163,0.5), transparent), radial-gradient(1.5px 1.5px at 72% 70%, rgba(34,245,163,0.4), transparent), radial-gradient(1px 1px at 92% 30%, rgba(34,245,163,0.4), transparent)',
+          }}
+        />
         <TierLeft
           icon={<BoltIcon className="w-4 h-4 text-kyvo-green" />}
           label={label}
           sublabel={sublabel}
         />
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="text-lg sm:text-xl font-display font-bold text-kyvo-green leading-none">
+        <div className="relative flex items-center gap-2 shrink-0">
+          <div className="text-lg sm:text-2xl font-display font-bold text-kyvo-green leading-none drop-shadow-[0_0_8px_rgba(34,245,163,0.6)]">
             {rate}%
           </div>
-          <div className="w-8 h-8 rounded-full bg-kyvo-green text-kyvo-void
+          <div className="w-9 h-9 rounded-full bg-kyvo-green text-kyvo-void
                           flex items-center justify-center
+                          shadow-[0_0_18px_rgba(34,245,163,0.45)]
                           group-hover:scale-110 transition-transform">
             <ArrowUpRight className="w-4 h-4" />
           </div>
