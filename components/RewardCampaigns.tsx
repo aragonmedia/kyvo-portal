@@ -24,41 +24,41 @@ export function RewardCampaigns({ campaigns, brands }: Props) {
   const brandById = new Map(brands.map((b) => [b.id, b]));
 
   return (
-    <section className="px-4 mt-6 sm:mt-8">
-      <div className="mx-auto max-w-7xl">
-        {/* Section header */}
-        <div className="flex items-center gap-2.5 mb-3 sm:mb-4">
-          <span className="text-base sm:text-lg" aria-hidden>
-            🎁
-          </span>
-          <h2 className="font-display font-bold text-sm sm:text-base text-kyvo-cyan
-                         tracking-tight">
-            Reward Campaigns
-          </h2>
-          <span className="text-[10px] uppercase tracking-widest text-kyvo-dim font-bold">
-            Live
-          </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-kyvo-cyan/40 via-kyvo-cyan/15 to-transparent" />
-        </div>
+    <div>
+      {/* Section header — matches the MAX/Boosted dividers in BrandGrid so
+          the embedded rewards strip reads as a sibling section. */}
+      <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
+        <span className="text-base sm:text-lg" aria-hidden>
+          🎁
+        </span>
+        <h2 className="font-display font-bold text-sm sm:text-base text-kyvo-cyan
+                       tracking-tight">
+          Reward Campaigns
+        </h2>
+        <span className="text-[10px] uppercase tracking-widest text-kyvo-dim font-bold">
+          Live
+        </span>
+        <div className="flex-1 h-px bg-gradient-to-r from-kyvo-cyan/40 via-kyvo-cyan/15 to-transparent" />
+      </div>
 
-        {/* Horizontal scrolling row of campaign cards.
-            On mobile: one-and-a-half cards visible so the row reads as scrollable.
-            On desktop: with few cards the row stays centered; with many it scrolls. */}
-        <div className="-mx-4 px-4 overflow-x-auto no-scrollbar">
-          <div className="flex gap-3 sm:gap-4 pb-2 snap-x snap-mandatory
-                          justify-start sm:justify-center">
-            {campaigns.map((c) => {
-              const brand = brandById.get(c.brandId);
-              return (
-                <CampaignCard
-                  key={`${c.brandId}-${c.image}`}
-                  campaign={c}
-                  brand={brand}
-                  onZoom={() => setZoom(c)}
-                />
-              );
-            })}
-          </div>
+      {/* Horizontal scrolling row of campaign cards.
+          Always center-aligned (mobile + desktop) — when there's only one
+          or two cards they sit in the middle of the row instead of left-
+          aligned. With many cards, the flex container overflows and the
+          parent overflow-x-auto handles horizontal scroll. */}
+      <div className="overflow-x-auto no-scrollbar">
+        <div className="flex gap-3 sm:gap-4 pb-2 snap-x snap-mandatory justify-center">
+          {campaigns.map((c) => {
+            const brand = brandById.get(c.brandId);
+            return (
+              <CampaignCard
+                key={`${c.brandId}-${c.image}`}
+                campaign={c}
+                brand={brand}
+                onZoom={() => setZoom(c)}
+              />
+            );
+          })}
         </div>
       </div>
 
@@ -70,7 +70,7 @@ export function RewardCampaigns({ campaigns, brands }: Props) {
           onClose={() => setZoom(null)}
         />
       )}
-    </section>
+    </div>
   );
 }
 

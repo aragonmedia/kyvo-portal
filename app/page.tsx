@@ -174,11 +174,6 @@ export default function HomePage() {
           onBrandClick={(b) => setOpenBrand(b)}
         />
 
-        {/* Reward Campaigns — sits BELOW the slideshow (per Kevin's call) so
-            the MAX brand slideshow keeps top-of-page prominence. Tap any
-            campaign card to zoom the image. */}
-        <RewardCampaigns campaigns={rewardCampaigns} brands={brands} />
-
         <SearchBar value={search} onChange={setSearch} />
 
         <FilterPills active={active} onToggle={toggle} counts={counts} />
@@ -188,6 +183,16 @@ export default function HomePage() {
           total={brands.length}
           showSections={showSections}
           onBrandClick={(b) => setOpenBrand(b)}
+          // Rewards Campaigns strip — in showSections mode, slots between
+          // the MAX and Boosted sections. In filtered mode, renders after
+          // the flat grid. Suppressed when the user has the "Rewards
+          // Campaigns" filter active (the grid is already showing only
+          // rewards-eligible brands, no need for a redundant strip).
+          slotBetweenSections={
+            !active.has('Rewards Campaigns') && (
+              <RewardCampaigns campaigns={rewardCampaigns} brands={brands} />
+            )
+          }
         />
 
         <LockedTier />

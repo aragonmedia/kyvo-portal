@@ -1,4 +1,5 @@
 import type { Brand } from '@/lib/types';
+import type { ReactNode } from 'react';
 import { BrandCard } from './BrandCard';
 
 interface Props {
@@ -7,9 +8,20 @@ interface Props {
   /** Show MAX / BOOSTED section split (only when "All Brands" is active and no other filters) */
   showSections?: boolean;
   onBrandClick: (brand: Brand) => void;
+  /** Optional content slotted BETWEEN the MAX Commissions and Boosted
+   *  Brands sections when showSections is on. In filtered mode, this
+   *  content renders AFTER the flat grid. Used for the Reward Campaigns
+   *  strip so it surfaces right after creators see the top-tier brands. */
+  slotBetweenSections?: ReactNode;
 }
 
-export function BrandGrid({ brands, total, showSections, onBrandClick }: Props) {
+export function BrandGrid({
+  brands,
+  total,
+  showSections,
+  onBrandClick,
+  slotBetweenSections,
+}: Props) {
   // Split brands into MAX (maxTier=true) and BOOSTED (everyone else)
   const maxBrands = brands.filter((b) => b.maxTier);
   const boostedBrands = brands.filter((b) => !b.maxTier);
@@ -40,6 +52,11 @@ export function BrandGrid({ brands, total, showSections, onBrandClick }: Props) 
               </div>
             )}
 
+            {/* Rewards Campaigns strip slots between MAX and Boosted —
+                creators see the headline MAX tier first, then the active
+                offers, then everything else. */}
+            {slotBetweenSections}
+
             {boostedBrands.length > 0 && (
               <div>
                 <SectionDivider
@@ -53,7 +70,10 @@ export function BrandGrid({ brands, total, showSections, onBrandClick }: Props) 
           </div>
         ) : (
           // Flat view: single grid (used when a filter is applied)
-          <BrandRow brands={brands} onBrandClick={onBrandClick} />
+          <>
+            <BrandRow brands={brands} onBrandClick={onBrandClick} />
+            {slotBetweenSections}
+          </>
         )}
       </div>
     </section>
