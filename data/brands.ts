@@ -712,6 +712,38 @@ export const brands: Brand[] = [
       { productName: 'Radiance Care Trio — Ginseng + Retinal + Rice', slug: 'radiance-care-trio', itemsSold: 1534, price: '$37.78', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJSo2Qa7FxI8' },
     ],
   },
+  {
+    id: 'jaje-health',
+    name: 'Jaje Health',
+    niche: 'Health',
+    // ─ Commission model ─
+    //   openCollabRate = 20% (TikTok Shop baseline)
+    //   commissionRate = 35% (Kyvo Boost on every product link)
+    //   maxCommission  = 50% (LOCKED MAX tier — unlocked via Discord)
+    openCollabRate: 20,
+    commissionRate: 35,
+    maxCommission: 50,
+    maxTier: true,           // qualifies for MAX Commissions filter + 50% slideshow
+    priority: true,
+    priorityOrder: 5,        // after Natural Stacks (1), Bold Buns (2), Fuel (3), Lebanta (4)
+    trending: true,
+    highCommission: true,    // +15% over open rate
+    samplesIncluded: true,
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJTB8XDLvUPz',
+    tagline: 'Gut support & superfood greens gummies — Unlock 50% MAX',
+    bannerGradient:
+      'linear-gradient(135deg, #0A2A18 0%, #1A5A38 35%, #22F5A3 75%, #B0FFD0 100%)',
+    bannerImage: '/banners/jaje-health.jpg',
+    logo: '/logos/jaje-health.png',
+    logoTile: { bg: '#0A2A18', fg: '#4ADE80', initials: 'JH' },
+    // ─── 2 products. NEW Shop — no items-sold history yet, so itemsSold
+    //      is intentionally undefined. The "Items Sold" sort pill will park
+    //      Jaje at the bottom until sales come in.
+    links: [
+      { productName: 'Gut Support Gummies — Berberine', slug: 'gut-support-berberine', price: '$34.95', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJTB2BspAnUT' },
+      { productName: 'Superfood Greens Gummies', slug: 'superfood-greens', price: '$34.95', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJTB8EHMuzVY' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
@@ -757,10 +789,8 @@ export const rewardCampaigns: RewardCampaign[] = [
     // High-quality PDF source — opened in an iframe by the zoom modal so
     // creators get the original crisp graphics + readable text.
     documentUrl: '/rewards/whyte.pdf',
-    // "CLIMB THE CROWN" creator rewards campaign — uses the same Whyte
-    // sample-registration Google Form as the gate.
-    registrationUrl:
-      'https://docs.google.com/forms/d/e/1FAIpQLScfSU27q_s0CIA3_qJVH9OX-yrcyW4_azhc68aWKvXlcSLzrQ/viewform?pli=1',
-    // registrationLabel: defaults to "Register for Campaign"
+    // CTA falls through to brand.showcaseUrl + "Add to Showcase" label.
+    // Set registrationUrl + registrationLabel here if a specific campaign
+    // ever needs its own landing page / button copy.
   },
 ];

@@ -87,10 +87,16 @@ function CampaignCard({
   brand: Brand | undefined;
   onZoom: () => void;
 }) {
-  // We use a <div> wrapper (not <button>) so we can nest the "Register for
-  // Campaign" button cleanly without invalid <button-in-button> HTML.
-  // The image area is its own button that triggers the zoom.
-  const registrationLabel = campaign.registrationLabel ?? 'Register for Campaign';
+  // We use a <div> wrapper (not <button>) so we can nest the CTA cleanly
+  // without invalid <button-in-button> HTML. The image area is its own
+  // button that triggers the zoom.
+  //
+  // CTA resolution: per-campaign registrationUrl takes precedence, else
+  // fall back to the brand's showcaseUrl (the "Add all products" TikTok
+  // link). Same fallback applies to the label — defaults to "Add to
+  // Showcase" since the showcase add-all is the default action.
+  const ctaUrl = campaign.registrationUrl ?? brand?.showcaseUrl ?? null;
+  const ctaLabel = campaign.registrationLabel ?? 'Add to Showcase';
 
   return (
     <div
@@ -166,11 +172,13 @@ function CampaignCard({
         </div>
       )}
 
-      {/* "Register for Campaign" CTA — sits directly below the image so the
-          offer is one tap away. Opens registration URL in a new tab. */}
-      {campaign.registrationUrl && (
+      {/* "Add to Showcase" CTA — sits directly below the image so the
+          add-all-products action is one tap away. Uses the brand's
+          showcaseUrl by default; campaign.registrationUrl overrides if
+          a specific landing page is needed. */}
+      {ctaUrl && (
         <a
-          href={campaign.registrationUrl}
+          href={ctaUrl}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
@@ -185,8 +193,8 @@ function CampaignCard({
                      hover:scale-[1.02]
                      transition-all duration-200"
         >
-          {registrationLabel}
-          <ArrowUpRight className="w-4 h-4" />
+          <PlusIcon className="w-4 h-4" />
+          {ctaLabel}
         </a>
       )}
     </div>
@@ -318,12 +326,14 @@ function CampaignZoom({
           )}
         </div>
 
-        {/* Register CTA at the bottom of the modal — visible whether the
-            viewer scrolls the PDF or not. */}
-        {campaign.registrationUrl && (
+        {/* "Add to Showcase" CTA at the bottom of the modal — visible
+            whether the viewer scrolls the PDF or not. Pulls from the
+            brand's showcaseUrl by default; campaign.registrationUrl
+            overrides if a specific landing page is set. */}
+        {(campaign.registrationUrl ?? brand?.showcaseUrl) && (
           <div className="px-4 py-3 border-t border-kyvo-border/50">
             <a
-              href={campaign.registrationUrl}
+              href={campaign.registrationUrl ?? brand?.showcaseUrl ?? '#'}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2
@@ -335,8 +345,8 @@ function CampaignZoom({
                          hover:shadow-[0_4px_28px_rgba(var(--kyvo-magenta-rgb),_0.5)]
                          transition-all duration-200"
             >
-              {campaign.registrationLabel ?? 'Register for Campaign'}
-              <ArrowUpRight className="w-4 h-4" />
+              <PlusIcon className="w-4 h-4" />
+              {campaign.registrationLabel ?? 'Add to Showcase'}
             </a>
           </div>
         )}
@@ -378,6 +388,15 @@ function ZoomIcon({ className = '' }: { className?: string }) {
     >
       <circle cx="11" cy="11" r="7" />
       <path d="m21 21-4.3-4.3M11 8v6M8 11h6" />
+    </svg>
+  );
+}
+
+function PlusIcon({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+         className={className} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 5v14M5 12h14" />
     </svg>
   );
 }
