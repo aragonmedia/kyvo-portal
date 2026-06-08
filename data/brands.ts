@@ -665,8 +665,8 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,    // +5% over open rate
     samplesIncluded: true,
-    sampleRegistrationUrl:
-      'https://docs.google.com/forms/d/e/1FAIpQLScfSU27q_s0CIA3_qJVH9OX-yrcyW4_azhc68aWKvXlcSLzrQ/viewform?pli=1',
+    // sampleRegistrationUrl: removed — samples are now bundled into the
+    // product links directly, no separate Google Form gate needed.
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJSH6f4Me9ev',
     tagline: 'Organic oil pulling & teeth whitening — 20% flat for all creators',
     logo: '/logos/whyte.png',
