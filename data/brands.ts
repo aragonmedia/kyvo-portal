@@ -744,6 +744,38 @@ export const brands: Brand[] = [
       { productName: 'Superfood Greens Gummies', slug: 'superfood-greens', price: '$34.95', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJTB8EHMuzVY' },
     ],
   },
+  {
+    id: 'why-not-natural',
+    name: 'Why Not Natural',
+    niche: 'Health',
+    // ─ Commission model (from LINKS.xlsx) ─
+    //   openCollabRate = 25% (TikTok Shop baseline)
+    //   commissionRate = 35% (Kyvo Boost — what creators get when they tap)
+    //   maxCommission  = 50% (LOCKED MAX tier: unlocked via Discord)
+    openCollabRate: 25,
+    commissionRate: 35,
+    maxCommission: 50,
+    maxTier: true,
+    priority: true,
+    priorityOrder: 6,
+    trending: true,
+    highCommission: true,
+    samplesIncluded: true,
+    isNew: true,          // NEW brand — clear after ~2 weeks
+    showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJWksovtqgo1',
+    tagline: 'Organic maca, ashwagandha & wellness supplements — Unlock 50% MAX',
+    bannerGradient:
+      'linear-gradient(135deg, #06210f 0%, #10643a 40%, #22C55E 75%, #A3F522 100%)',
+    bannerImage: '/banners/why-not-natural.jpg',
+    logo: '/logos/why-not-natural.png',
+    logoTile: { bg: '#0A2A18', fg: '#22C55E', initials: 'WN' },
+    // ─── 3 products, sorted by items sold (descending) ───
+    links: [
+      { productName: '4-in-1 Maca, Ashwagandha, Fenugreek & Ginseng', slug: '4-in-1-maca-ashwagandha', itemsSold: 87297, price: '$21.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJWktCaBIj4a' },
+      { productName: 'Glucosamine Chondroitin MSM — Joint Support', slug: 'glucosamine-chondroitin-msm', itemsSold: 51157, price: '$21.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJWku6Kc15bS' },
+      { productName: 'Organic Vitamin B12 Liquid Drops', slug: 'vitamin-b12-drops', itemsSold: 35914, price: '$21.97', url: 'https://affiliate-us.tiktok.com/api/v1/share/AJWkvFOPGHPc' },
+    ],
+  },
   // ────────────────────────────────────────────────────────────
   // Add more brands here. Use BRAND_ONBOARDING.md for the workflow.
   // ────────────────────────────────────────────────────────────
