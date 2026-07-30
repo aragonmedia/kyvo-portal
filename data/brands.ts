@@ -381,7 +381,6 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,    // +5% over open rate
     samplesIncluded: false,
-    expiresAt: '2026-06-26',  // RENEWABLE — flag set; card shows 'Until Jun 26'
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeBUgkYeHA',
     tagline: 'B12 liquid drops for energy & focus — Unlock 30% MAX',
     logo: '/logos/nusava.png',
@@ -428,7 +427,6 @@ export const brands: Brand[] = [
     maxTier: false,
     highCommission: true,
     samplesIncluded: false,
-    expiresAt: '2026-06-26',  // RENEWABLE
     showcaseUrl: 'https://affiliate-us.tiktok.com/api/v1/share/AJQeQzYpozGN',
     tagline: 'Liquid herbal supplements & adaptogens — Unlock 30% MAX',
     logo: '/logos/clean-nutra.png',
@@ -814,15 +812,11 @@ export const heroBrands = priorityBrands;
  * here referencing brandId. Multiple campaigns per brand are allowed.
  */
 export const rewardCampaigns: RewardCampaign[] = [
-  {
-    brandId: 'whyte',
-    // JPEG preview for the card thumbnail (fast load, ~220KB).
-    image: '/rewards/whyte.jpg',
-    // High-quality PDF source — opened in an iframe by the zoom modal so
-    // creators get the original crisp graphics + readable text.
-    documentUrl: '/rewards/whyte.pdf',
-    // CTA falls through to brand.showcaseUrl + "Add to Showcase" label.
-    // Set registrationUrl + registrationLabel here if a specific campaign
-    // ever needs its own landing page / button copy.
-  },
+  // Whyte campaign ended 2026-06-25 — hidden for now. Re-enable (or add new
+  // campaigns) by uncommenting / adding entries below.
+  // {
+  //   brandId: 'whyte',
+  //   image: '/rewards/whyte.jpg',
+  //   documentUrl: '/rewards/whyte.pdf',
+  // },
 ];

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import type { FilterCategory } from '@/lib/types';
+import { rewardCampaigns } from '@/data/brands';
 
 /**
  * Pill order — MAX Commissions sits LEFTMOST (most prominent, easy to find).
@@ -30,6 +31,15 @@ const SORT_PILLS = new Set<FilterCategory>(['Items Sold']);
 
 /** Pills that visually share the cyan/rewards treatment. */
 const REWARDS_PILLS = new Set<FilterCategory>(['Rewards Campaigns']);
+
+/**
+ * Visible pills. The "Rewards Campaigns" pill only appears when at least one
+ * reward campaign is live (driven by the rewardCampaigns array in data/brands).
+ * When campaigns are re-added, the pill returns automatically.
+ */
+const VISIBLE_PILLS: FilterCategory[] = PILLS.filter(
+  (p) => p !== 'Rewards Campaigns' || rewardCampaigns.length > 0,
+);
 
 interface Props {
   active: Set<FilterCategory>;
@@ -147,7 +157,7 @@ function MobileFilterDropdown({ active, onToggle, counts }: Props) {
           role="listbox"
         >
           <div className="max-h-[60vh] overflow-y-auto p-2 space-y-1">
-            {PILLS.map((pill) => {
+            {VISIBLE_PILLS.map((pill) => {
               const isAll = pill === 'All Brands';
               const isSort = SORT_PILLS.has(pill);
               const isRewards = REWARDS_PILLS.has(pill);
@@ -276,7 +286,7 @@ function DesktopPillRow({ active, onToggle, counts }: Props) {
       )}
 
       <div className="flex gap-2 flex-wrap justify-center pb-1">
-        {PILLS.map((pill) => {
+        {VISIBLE_PILLS.map((pill) => {
           const isAll = pill === 'All Brands';
           const isSort = SORT_PILLS.has(pill);
           const isRewards = REWARDS_PILLS.has(pill);
